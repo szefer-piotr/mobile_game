@@ -1,9 +1,11 @@
 extends Control
 
 var current_score = 0
+var total_score = 0
 var cards = []
 
 func _ready():
+	$RestartTimer.timeout.connect(self._on_RestartTimer_timeout)
 	reset_game()
 
 func reset_game():
@@ -11,14 +13,16 @@ func reset_game():
 	cards.clear()
 	$ScoreLabel.text = "Score: 0"
 	$ResultLabel.text = ""
+	
 	for child in $CardContainer.get_children():
 		$CardContainer.remove_child(child)
 		child.queue_free()
+
 	$DrawButton.disabled = false
 	$HoldButton.disabled = false
 
 func _on_DrawButton_pressed():
-	var value = randi() % 6 + 1  # Random number 1–6
+	var value = randi() % 6 + 1  # Random 1–6
 	cards.append(value)
 	current_score += value
 
@@ -29,23 +33,27 @@ func _on_DrawButton_pressed():
 	$ScoreLabel.text = "Score: " + str(current_score)
 
 	if current_score == 21:
-		end_game("🎉 Jackpot! You hit 21!")
+		total_score += 50
+		end_game("🎉 Jackpot! +50", true)
 	elif current_score > 21:
-		end_game("💥 Bust! You went over 21.")
+		end_game("💥 Bust!", false)
 
 func _on_HoldButton_pressed():
-	if current_score < 15:
-		end_game("😐 Low score. Try again.")
-	elif current_score < 21:
-		end_game("👍 Good job! You scored " + str(current_score) + ".")
-	# Note: exact 21 already handled in draw
+	if current_score >= 18:
+		var reward = current_score  # e.g. 18 = +18 coins
+		total_score += reward
+		end_game("👍 Scored " + str(current_score) + "! +" + str(reward), true)
+	else:
+		end_game("😐 Low score...", false)
 
-func end_game(message):
+func end_game(message: String, reward_given: bool):
 	$ResultLabel.text = message
+	$TotalScoreLabel.text = "Total: " + str(total_score)
+
 	$DrawButton.disabled = true
 	$HoldButton.disabled = true
-	# Optionally: Add restart button or auto-reset delay
 
-# Optional: You can add this method to reset the game after a delay
-# func _on_Timer_timeout():
-#     reset_game()
+	$RestartTimer.start()  # wait 1.5s, then reset
+
+func _on_RestartTimer_timeout():
+	reset_game()

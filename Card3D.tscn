@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqiltepaituur"]
+
+[ext_resource type="Script" uid="uid://c8xbm7nysu3da" path="res://Card3D.gd" id="1_eeaw3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_axxlu"]
+
+[node name="Card3D" type="Node3D"]
+script = ExtResource("1_eeaw3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.025, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_axxlu")
+
+[node name="Label3D" type="Label3D" parent="."]
