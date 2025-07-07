@@ -1,17 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcrd14o24qurl"]
+[gd_scene load_steps=3 format=3 uid="uid://dcrd14o24qurl"]
 
 [ext_resource type="Script" uid="uid://byg21kjff3r27" path="res://Main.gd" id="1_glv2v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_glv2v")
 
-[node name="Table" type="StaticBody3D" parent="."]
+[node name="Table" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.5, 0, 0, 0, 0.1, 0, 0, 0, 5, 0, -0.0595465, 0)
+mesh = SubResource("BoxMesh_glv2v")
 
 [node name="CardSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 0, 3.97176)
 
 [node name="CardRow" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.122254, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.364958, 0.931024, 0, -0.931024, 0.364958, 0, 1.5544, 1.20447)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.873636, 0.486579, 0, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -2.87101, 3.31518, 0)
+light_color = Color(1, 0.33, 0.33, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -27,12 +38,6 @@ offset_left = 105.0
 offset_top = -20.0
 offset_right = 145.0
 offset_bottom = 3.0
-
-[node name="CardContainer" type="HBoxContainer" parent="CanvasLayer"]
-offset_left = 19.0
-offset_top = 50.0
-offset_right = 92.0
-offset_bottom = 90.0
 
 [node name="DrawButton" type="Button" parent="CanvasLayer"]
 offset_top = 123.0
@@ -57,3 +62,6 @@ text = "\"\""
 [node name="RestartTimer" type="Timer" parent="CanvasLayer"]
 wait_time = 1.5
 one_shot = true
+
+[connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
