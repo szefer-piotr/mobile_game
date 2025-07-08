@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcrd14o24qurl"]
+[gd_scene load_steps=4 format=3 uid="uid://dcrd14o24qurl"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_glv2v"]
 
@@ -6,11 +6,6 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdrjr"]
 albedo_color = Color(1, 0.796078, 0.294118, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xlr5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h12kk"]
-bg_color = Color(0.961903, 0.812809, 0.389271, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_glv2v")
@@ -27,7 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 0, 3.97176)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.913176, -0.148744, -0.379453, 0.407566, 0.333271, 0.850189, 0, -0.931024, 0.364958, -0.815401, 1.94808, 1.20447)
+transform = Transform3D(1, 0, 0, 0, 0.364958, 0.931024, 0, -0.931024, 0.364958, 0, 1.94808, 1.20447)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.873636, 0.48658, 1.1432e-08, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -2.87101, 3.31518, 2.01661)
@@ -90,19 +85,16 @@ offset_right = 606.0
 offset_bottom = 45.0
 text = "Level Progress"
 
-[node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
+[node name="ScoreProgressBar" type="TextureProgressBar" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 374.0
-offset_top = 64.0
-offset_right = -416.0
-offset_bottom = 91.0
+offset_left = 377.0
+offset_top = 65.0
+offset_right = -413.0
+offset_bottom = 89.0
 grow_horizontal = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_0xlr5")
-theme_override_styles/fill = SubResource("StyleBoxFlat_h12kk")
 
 [node name="RewardReadyPopup" type="Label" parent="CanvasLayer"]
-visible = false
 offset_left = 445.0
 offset_top = 311.0
 offset_right = 666.0
