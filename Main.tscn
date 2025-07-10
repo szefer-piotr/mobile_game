@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dcrd14o24qurl"]
 
-[ext_resource type="Script" uid="uid://byg21kjff3r27" path="res://Main.gd" id="1_glv2v"]
+[ext_resource type="Script" path="res://Main.gd" id="1_glv2v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
 
@@ -30,7 +30,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)
 transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 2, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.873636, 0.48658, 1.1432e-08, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -2.87101, 3.31518, 2.01661)
+transform = Transform3D(0.873636, 0.48658, 1.2915e-08, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -4.21687, 2.41694, -4.02756)
 light_color = Color(0.985377, 0.92445, 0.950076, 1)
 shadow_enabled = true
 
@@ -45,10 +45,10 @@ text = "Score: 0"
 horizontal_alignment = 1
 
 [node name="TotalScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 277.0
-offset_top = 109.0
-offset_right = 317.0
-offset_bottom = 132.0
+offset_left = 420.0
+offset_top = 40.0
+offset_right = 460.0
+offset_bottom = 63.0
 
 [node name="DrawButton" type="Button" parent="CanvasLayer"]
 anchors_preset = 7
@@ -85,18 +85,18 @@ one_shot = true
 
 [node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
 offset_left = 500.0
-offset_top = 40.0
+offset_top = 92.0
 offset_right = 612.0
-offset_bottom = 63.0
+offset_bottom = 115.0
 text = "Level Progress"
 
 [node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 380.0
-offset_top = 80.0
-offset_right = -410.0
-offset_bottom = 107.0
+offset_left = 460.0
+offset_top = 132.0
+offset_right = -492.0
+offset_bottom = 155.0
 grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_0xlr5")
 theme_override_styles/fill = SubResource("StyleBoxFlat_h12kk")
@@ -115,6 +115,14 @@ text = "🎁
 REWARD READY!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CoinLabel" type="Label" parent="CanvasLayer"]
+offset_left = 620.0
+offset_top = 40.0
+offset_right = 742.0
+offset_bottom = 67.0
+text = "Coins: 0"
+horizontal_alignment = 2
 
 [connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]

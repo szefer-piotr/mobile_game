@@ -93,6 +93,15 @@ func _on_HoldButton_pressed():
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
 	total_label.text = "Total: " + str(total_score)
+	
+	# Give coins as Blackjack reward
+	var reward = 0
+	if current_score == 21:
+		reward = 50
+	elif current_score >= 18:
+		reward = current_score
+
+	CurrencyManager.add_coins(reward)
 
 	# Update progress bar target value (modulo if you want looped bar)
 	target_score_bar_value = float(total_score % 100)
