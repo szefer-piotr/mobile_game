@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dcrd14o24qurl"]
 
-[ext_resource type="Script" path="res://Main.gd" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://byg21kjff3r27" path="res://Main.gd" id="1_glv2v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
 
@@ -27,7 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 0, 3.97176)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.913176, -0.148744, -0.379453, 0.407566, 0.333271, 0.850189, 0, -0.931024, 0.364958, -0.815401, 1.94808, 1.20447)
+transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 2, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.873636, 0.48658, 1.1432e-08, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -2.87101, 3.31518, 2.01661)
@@ -37,11 +37,12 @@ shadow_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 522.0
-offset_top = 466.0
-offset_right = 583.0
-offset_bottom = 489.0
+offset_left = 520.0
+offset_top = 400.0
+offset_right = 600.0
+offset_bottom = 423.0
 text = "Score: 0"
+horizontal_alignment = 1
 
 [node name="TotalScoreLabel" type="Label" parent="CanvasLayer"]
 offset_left = 277.0
@@ -55,27 +56,26 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -83.0
-offset_top = -139.0
-offset_right = -33.0
-offset_bottom = -108.0
+offset_left = -116.0
+offset_top = -148.0
+offset_right = -36.0
+offset_bottom = -117.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Draw"
 
 [node name="HoldButton" type="Button" parent="CanvasLayer"]
-offset_left = 564.0
-offset_top = 508.0
-offset_right = 609.0
-offset_bottom = 539.0
+offset_left = 580.0
+offset_top = 500.0
+offset_right = 660.0
+offset_bottom = 531.0
 text = "Hold"
 
 [node name="ResultLabel" type="Label" parent="CanvasLayer"]
-offset_left = 503.0
-offset_top = 254.0
-offset_right = 612.0
-offset_bottom = 316.0
-text = "\"\""
+offset_left = 520.0
+offset_top = 200.0
+offset_right = 620.0
+offset_bottom = 260.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -84,19 +84,19 @@ wait_time = 1.5
 one_shot = true
 
 [node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
-offset_left = 494.0
-offset_top = 22.0
-offset_right = 606.0
-offset_bottom = 45.0
+offset_left = 500.0
+offset_top = 40.0
+offset_right = 612.0
+offset_bottom = 63.0
 text = "Level Progress"
 
 [node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 374.0
-offset_top = 64.0
-offset_right = -416.0
-offset_bottom = 91.0
+offset_left = 380.0
+offset_top = 80.0
+offset_right = -410.0
+offset_bottom = 107.0
 grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_0xlr5")
 theme_override_styles/fill = SubResource("StyleBoxFlat_h12kk")
