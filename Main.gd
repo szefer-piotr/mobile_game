@@ -12,6 +12,7 @@ extends Node3D
 @onready var score_bar = $CanvasLayer/ScoreProgressBar
 @onready var score_bar_label = $CanvasLayer/ScoreProgressLabel
 @onready var reward_popup = $CanvasLayer/RewardReadyPopup
+@onready var cam = $Camera3D
 
 var current_score = 0
 var total_score = 0
@@ -20,6 +21,18 @@ var cards = []
 var displayed_score_value: float = 0.0
 var target_score_bar_value: float = 0.0
 var fill_speed = 6.0
+
+var buildings = {
+	"Peon Hut": { 
+		"level": 0, 
+		"costs": [100, 200, 400, 800, 1600] 
+	},
+	"Card Shrine": {
+		"level": 0,
+		"costs": [150, 300, 600, 1200, 2400]
+	},
+	# Add the rest later…
+}
 
 func _ready():
 	randomize()
@@ -31,6 +44,9 @@ func _ready():
 	displayed_score_value = 0.0
 	target_score_bar_value = 0.0
 	reward_popup.visible = false
+	
+	for building in $KingdomRoot.get_children():
+		building.visible = false
 
 	reset_game()
 
@@ -90,6 +106,22 @@ func _on_HoldButton_pressed():
 	else:
 		end_game("😐 Low score...", false)
 
+func _on_KingdomButton_pressed():
+	show_kingdom_mode()
+
+func show_kingdom_mode():
+	var tween = get_tree().create_tween()
+	tween.tween_property(cam, "global_position", Vector3(0, 10, -10), 1.0)
+	tween.tween_property(cam, "rotation_degrees", Vector3(45, 0, 0), 1.0)
+	show_building_ui()
+
+func show_building_ui():
+	$CanvasLayer/KingdomPanel.visible = true
+	$CanvasLayer/DrawButton.visible = false
+	$CanvasLayer/HoldButton.visible = false
+	$KingdomRoot.visible = true
+	update_all_building_buttons()
+
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
 	total_label.text = "Total: " + str(total_score)
@@ -125,3 +157,32 @@ func show_reward_popup():
 
 func _on_restart_timer_timeout():
 	reset_game()
+
+func _on_PeonHutButton_pressed():
+	var b = buildings["Peon Hut"]
+	var lvl = b["level"]
+	if lvl < 5:
+		var cost = b["costs"][lvl]
+		if CurrencyManager.spend_coins(cost):
+			b["level"] += 1
+			buildings["Peon Hut"] = b  # Save updated level
+			$CanvasLayer/KingdomPanel/BuildingList/PeonHutLabel.text = "Peon Hut (Lv. %d)" % b["level"]
+			$KingdomRoot/PeonHut.visible = true
+			#update_building_mesh("Peon Hut", b["level"])
+			update_building_button("PeonHutButton", b)
+
+
+func update_building_button(button_name: String, data: Dictionary):
+	var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node(button_name)
+	var lvl = data["level"]
+	if lvl < 5:
+		var cost = data["costs"][lvl]
+		btn.text = "Upgrade (%d)" % cost
+	else:
+		btn.text = "MAXED"
+		btn.disabled = true
+
+func update_all_building_buttons():
+	for name in buildings.keys():
+		var data = buildings[name]
+		update_building_button(name + "Button", data)
