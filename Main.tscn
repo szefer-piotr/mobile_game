@@ -148,9 +148,9 @@ text = "🏰 Kingdom"
 
 [node name="KingdomPanel" type="Panel" parent="CanvasLayer"]
 visible = false
-anchor_left = 0.0
-anchor_right = 1.0
+anchors_preset = -1
 anchor_top = 0.8
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2

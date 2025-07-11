@@ -23,46 +23,46 @@ var target_score_bar_value: float = 0.0
 var fill_speed = 6.0
 
 var buildings = {
-        "Peon Hut": {
-                "level": 0,
-                "costs": [100, 200, 400, 800, 1600]
-        },
-        "Card Shrine": {
-                "level": 0,
-                "costs": [150, 300, 600, 1200, 2400]
-        },
-        "Barracks": {
-                "level": 0,
-                "costs": [200, 400, 800, 1600, 3200]
-        },
-        "Farm": {
-                "level": 0,
-                "costs": [120, 240, 480, 960, 1920]
-        },
-        "Blacksmith": {
-                "level": 0,
-                "costs": [250, 500, 1000, 2000, 4000]
-        },
-        "Archery Range": {
-                "level": 0,
-                "costs": [180, 360, 720, 1440, 2880]
-        },
-        "Stable": {
-                "level": 0,
-                "costs": [220, 440, 880, 1760, 3520]
-        },
-        "Wizard Tower": {
-                "level": 0,
-                "costs": [300, 600, 1200, 2400, 4800]
-        },
-        "Market": {
-                "level": 0,
-                "costs": [160, 320, 640, 1280, 2560]
-        },
-        "Wall": {
-                "level": 0,
-                "costs": [140, 280, 560, 1120, 2240]
-        }
+		"Peon Hut": {
+				"level": 0,
+				"costs": [100, 200, 400, 800, 1600]
+		},
+		"Card Shrine": {
+				"level": 0,
+				"costs": [150, 300, 600, 1200, 2400]
+		},
+		"Barracks": {
+				"level": 0,
+				"costs": [200, 400, 800, 1600, 3200]
+		},
+		"Farm": {
+				"level": 0,
+				"costs": [120, 240, 480, 960, 1920]
+		},
+		"Blacksmith": {
+				"level": 0,
+				"costs": [250, 500, 1000, 2000, 4000]
+		},
+		"Archery Range": {
+				"level": 0,
+				"costs": [180, 360, 720, 1440, 2880]
+		},
+		"Stable": {
+				"level": 0,
+				"costs": [220, 440, 880, 1760, 3520]
+		},
+		"Wizard Tower": {
+				"level": 0,
+				"costs": [300, 600, 1200, 2400, 4800]
+		},
+		"Market": {
+				"level": 0,
+				"costs": [160, 320, 640, 1280, 2560]
+		},
+		"Wall": {
+				"level": 0,
+				"costs": [140, 280, 560, 1120, 2240]
+		}
 }
 
 func _ready():
@@ -147,21 +147,21 @@ func show_kingdom_mode():
 	show_building_ui()
 
 func show_building_ui():
-        $CanvasLayer/KingdomPanel.visible = true
-        $CanvasLayer/DrawButton.visible = false
-        $CanvasLayer/HoldButton.visible = false
-        $KingdomRoot.visible = true
-        connect_building_buttons()
-        update_all_building_buttons()
+	$CanvasLayer/KingdomPanel.visible = true
+	$CanvasLayer/DrawButton.visible = false
+	$CanvasLayer/HoldButton.visible = false
+	$KingdomRoot.visible = true
+	connect_building_buttons()
+	update_all_building_buttons()
 
 func connect_building_buttons():
-        for key in buildings.keys():
-                var btn_name = key.replace(" ", "") + "Button"
-                var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(btn_name)
-                if btn:
-                        btn.set_meta("building_key", key)
-                        if not btn.pressed.is_connected(_on_BuildingButton_pressed):
-                                btn.pressed.connect(_on_BuildingButton_pressed.bind(btn))
+	for key in buildings.keys():
+		var btn_name = key.replace(" ", "") + "Button"
+		var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(btn_name)
+		if btn:
+			btn.set_meta("building_key", key)
+			if not btn.pressed.is_connected(_on_BuildingButton_pressed):
+				btn.pressed.connect(_on_BuildingButton_pressed.bind(btn))
 
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
@@ -200,32 +200,31 @@ func _on_restart_timer_timeout():
 	reset_game()
 
 func _on_BuildingButton_pressed(btn: Button):
-        if not btn.has_meta("building_key"):
-                return
+	if not btn.has_meta("building_key"):
+		return
 
-        var key = btn.get_meta("building_key")
-        if not buildings.has(key):
-                return
+	var key = btn.get_meta("building_key")
+	if not buildings.has(key):
+		return
 
-        var data = buildings[key]
-        var lvl = data["level"]
-        if lvl < data["costs"].size():
-                var cost = data["costs"][lvl]
-                if CurrencyManager.spend_coins(cost):
-                        data["level"] += 1
-                        buildings[key] = data
-
-                        var label_name = key.replace(" ", "") + "Label"
-                        var label = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(label_name)
-                        if label:
-                                label.text = "%s (Lv. %d)" % [key, data["level"]]
-
-                        var node_name = key.replace(" ", "")
-                        var build_node = $KingdomRoot.get_node_or_null(node_name)
-                        if build_node:
-                                build_node.visible = true
-
-                        update_building_button(btn.name, data)
+	var data = buildings[key]
+	var lvl = data["level"]
+	if lvl < data["costs"].size():
+		var cost = data["costs"][lvl]
+		if CurrencyManager.spend_coins(cost):
+			data["level"] += 1
+			buildings[key] = data
+	
+			var label_name = key.replace(" ", "") + "Label"
+			var label = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(label_name)
+			if label:
+				label.text = "%s (Lv. %d)" % [key, data["level"]]
+			
+			var node_name = key.replace(" ", "")
+			var build_node = $KingdomRoot.get_node_or_null(node_name)
+			if build_node:
+				build_node.visible = true
+			update_building_button(btn.name, data)
 
 
 func update_building_button(button_name: String, data: Dictionary):
@@ -233,16 +232,16 @@ func update_building_button(button_name: String, data: Dictionary):
 	if btn == null:
 		return
 
-        var lvl = data["level"]
-        if lvl < data["costs"].size():
-                var cost = data["costs"][lvl]
-                if lvl == 0:
-                        btn.text = "Build (%d)" % cost
-                else:
-                        btn.text = "Upgrade (%d)" % cost
-        else:
-                btn.text = "MAXED"
-                btn.disabled = true
+	var lvl = data["level"]
+	if lvl < data["costs"].size():
+		var cost = data["costs"][lvl]
+		if lvl == 0:
+			btn.text = "Build (%d)" % cost
+		else:
+			btn.text = "Upgrade (%d)" % cost
+	else:
+		btn.text = "MAXED"
+		btn.disabled = true
 
 func update_all_building_buttons():
 	for name in buildings.keys():
