@@ -22,6 +22,9 @@ var displayed_score_value: float = 0.0
 var target_score_bar_value: float = 0.0
 var fill_speed = 6.0
 
+var default_cam_pos = Vector3()
+var default_cam_rot = Vector3()
+
 var buildings = {
 		"Peon Hut": {
 				"level": 0,
@@ -68,6 +71,9 @@ var buildings = {
 func _ready():
 	randomize()
 	restart_timer.timeout.connect(_on_restart_timer_timeout)
+
+	default_cam_pos = cam.global_position
+	default_cam_rot = cam.rotation_degrees
 
 	score_bar.min_value = 0
 	score_bar.max_value = 100
@@ -244,7 +250,26 @@ func update_building_button(button_name: String, data: Dictionary):
 		btn.disabled = true
 
 func update_all_building_buttons():
-	for name in buildings.keys():
-		var data = buildings[name]
-		var button_name = name.replace(" ", "") + "Button"
-		update_building_button(button_name, data)
+        for name in buildings.keys():
+                var data = buildings[name]
+                var button_name = name.replace(" ", "") + "Button"
+                update_building_button(button_name, data)
+
+func hide_building_ui():
+	$CanvasLayer/KingdomPanel.visible = false
+	$CanvasLayer/DrawButton.visible = true
+	$CanvasLayer/HoldButton.visible = true
+	$KingdomRoot.visible = false
+
+func hide_kingdom_mode():
+        hide_building_ui()
+        var tween = get_tree().create_tween()
+        tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
+        tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
+
+func _unhandled_input(event):
+	if $CanvasLayer/KingdomPanel.visible and event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var rect = $CanvasLayer/KingdomPanel.get_global_rect()
+			if not rect.has_point(event.position):
+				hide_kingdom_mode()
