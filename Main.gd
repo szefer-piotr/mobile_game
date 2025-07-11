@@ -173,16 +173,20 @@ func _on_PeonHutButton_pressed():
 
 
 func update_building_button(button_name: String, data: Dictionary):
-	var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node(button_name)
-	var lvl = data["level"]
-	if lvl < 5:
-		var cost = data["costs"][lvl]
-		btn.text = "Upgrade (%d)" % cost
-	else:
-		btn.text = "MAXED"
-		btn.disabled = true
+        var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(button_name)
+        if btn == null:
+                return
+
+        var lvl = data["level"]
+        if lvl < 5:
+                var cost = data["costs"][lvl]
+                btn.text = "Upgrade (%d)" % cost
+        else:
+                btn.text = "MAXED"
+                btn.disabled = true
 
 func update_all_building_buttons():
-	for name in buildings.keys():
-		var data = buildings[name]
-		update_building_button(name + "Button", data)
+        for name in buildings.keys():
+                var data = buildings[name]
+                var button_name = name.replace(" ", "") + "Button"
+                update_building_button(button_name, data)
