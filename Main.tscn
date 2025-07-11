@@ -148,8 +148,9 @@ text = "🏰 Kingdom"
 
 [node name="KingdomPanel" type="Panel" parent="CanvasLayer"]
 visible = false
-anchors_preset = 15
+anchor_left = 0.0
 anchor_right = 1.0
+anchor_top = 0.8
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -160,57 +161,156 @@ offset_right = 40.0
 offset_bottom = 40.0
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="PeonHutContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
 layout_mode = 2
 
-[node name="PeonHutLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/VBoxContainer"]
+[node name="PeonHutLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/PeonHutContainer"]
 layout_mode = 2
-text = "Peon Hut (Lv. 1)"
+text = "Peon Hut (Lv. 0)"
 
-[node name="PeonHutButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/VBoxContainer"]
+[node name="PeonHutButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/PeonHutContainer"]
 layout_mode = 2
 text = "Build (100 Coins)"
+
+[node name="CardShrineContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="CardShrineLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/CardShrineContainer"]
+layout_mode = 2
+text = "Card Shrine (Lv. 0)"
+
+[node name="CardShrineButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/CardShrineContainer"]
+layout_mode = 2
+text = "Build (150 Coins)"
+
+[node name="BarracksContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="BarracksLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/BarracksContainer"]
+layout_mode = 2
+text = "Barracks (Lv. 0)"
+
+[node name="BarracksButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/BarracksContainer"]
+layout_mode = 2
+text = "Build (200 Coins)"
+
+[node name="FarmContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="FarmLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/FarmContainer"]
+layout_mode = 2
+text = "Farm (Lv. 0)"
+
+[node name="FarmButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/FarmContainer"]
+layout_mode = 2
+text = "Build (120 Coins)"
+
+[node name="BlacksmithContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="BlacksmithLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/BlacksmithContainer"]
+layout_mode = 2
+text = "Blacksmith (Lv. 0)"
+
+[node name="BlacksmithButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/BlacksmithContainer"]
+layout_mode = 2
+text = "Build (250 Coins)"
+
+[node name="ArcheryRangeContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="ArcheryRangeLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/ArcheryRangeContainer"]
+layout_mode = 2
+text = "Archery Range (Lv. 0)"
+
+[node name="ArcheryRangeButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/ArcheryRangeContainer"]
+layout_mode = 2
+text = "Build (180 Coins)"
+
+[node name="StableContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="StableLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/StableContainer"]
+layout_mode = 2
+text = "Stable (Lv. 0)"
+
+[node name="StableButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/StableContainer"]
+layout_mode = 2
+text = "Build (220 Coins)"
+
+[node name="WizardTowerContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="WizardTowerLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/WizardTowerContainer"]
+layout_mode = 2
+text = "Wizard Tower (Lv. 0)"
+
+[node name="WizardTowerButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/WizardTowerContainer"]
+layout_mode = 2
+text = "Build (300 Coins)"
+
+[node name="MarketContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="MarketLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/MarketContainer"]
+layout_mode = 2
+text = "Market (Lv. 0)"
+
+[node name="MarketButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/MarketContainer"]
+layout_mode = 2
+text = "Build (160 Coins)"
+
+[node name="WallContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+layout_mode = 2
+
+[node name="WallLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/WallContainer"]
+layout_mode = 2
+text = "Wall (Lv. 0)"
+
+[node name="WallButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/WallContainer"]
+layout_mode = 2
+text = "Build (140 Coins)"
 
 [node name="KingdomRoot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39106, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="PeonHut" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.22581, -2, 2)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="CardShrine" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.77419, -2, 0)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="Barracks" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.77419, -2, 2)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="Farm" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.77419, -2, -2)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="Blacksmith" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22581, -2, 0)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="ArcheryRange" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.225815, -2.10306, -4)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="Stable" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06578, -2, 0)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D8" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="WizardTower" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.44914, -2, 0)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D9" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="Market" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.22581, -2, -2)
 mesh = SubResource("BoxMesh_oe445")
 
-[node name="MeshInstance3D10" type="MeshInstance3D" parent="KingdomRoot"]
+[node name="Wall" type="MeshInstance3D" parent="KingdomRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22581, -2, 0)
 mesh = SubResource("BoxMesh_oe445")
 
@@ -224,4 +324,13 @@ mesh = SubResource("BoxMesh_qyvxw")
 [connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/VBoxContainer/PeonHutButton" to="." method="_on_PeonHutButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/PeonHutContainer/PeonHutButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/CardShrineContainer/CardShrineButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/BarracksContainer/BarracksButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/FarmContainer/FarmButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/BlacksmithContainer/BlacksmithButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/ArcheryRangeContainer/ArcheryRangeButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/StableContainer/StableButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/WizardTowerContainer/WizardTowerButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/MarketContainer/MarketButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]
