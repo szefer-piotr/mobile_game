@@ -250,10 +250,10 @@ func update_building_button(button_name: String, data: Dictionary):
 		btn.disabled = true
 
 func update_all_building_buttons():
-        for name in buildings.keys():
-                var data = buildings[name]
-                var button_name = name.replace(" ", "") + "Button"
-                update_building_button(button_name, data)
+	for name in buildings.keys():
+		var data = buildings[name]
+		var button_name = name.replace(" ", "") + "Button"
+		update_building_button(button_name, data)
 
 func hide_building_ui():
 	$CanvasLayer/KingdomPanel.visible = false
@@ -262,10 +262,10 @@ func hide_building_ui():
 	$KingdomRoot.visible = false
 
 func hide_kingdom_mode():
-        hide_building_ui()
-        var tween = get_tree().create_tween()
-        tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
-        tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
+	hide_building_ui()
+	var tween = get_tree().create_tween()
+	tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
+	tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
 
 func _unhandled_input(event):
 	if $CanvasLayer/KingdomPanel.visible and event is InputEventMouseButton:
