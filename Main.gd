@@ -111,8 +111,8 @@ func _on_KingdomButton_pressed():
 
 func show_kingdom_mode():
 	var tween = get_tree().create_tween()
-	tween.tween_property(cam, "global_position", Vector3(0, 10, -10), 1.0)
-	tween.tween_property(cam, "rotation_degrees", Vector3(45, 0, 0), 1.0)
+	tween.tween_property(cam, "global_position", Vector3(0, 5, 1), 0.25)
+	tween.tween_property(cam, "rotation_degrees", Vector3(-55, 0, 0), 0.25)
 	show_building_ui()
 
 func show_building_ui():
@@ -173,20 +173,20 @@ func _on_PeonHutButton_pressed():
 
 
 func update_building_button(button_name: String, data: Dictionary):
-        var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(button_name)
-        if btn == null:
-                return
+	var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(button_name)
+	if btn == null:
+		return
 
-        var lvl = data["level"]
-        if lvl < 5:
-                var cost = data["costs"][lvl]
-                btn.text = "Upgrade (%d)" % cost
-        else:
-                btn.text = "MAXED"
-                btn.disabled = true
+	var lvl = data["level"]
+	if lvl < 5:
+		var cost = data["costs"][lvl]
+		btn.text = "Upgrade (%d)" % cost
+	else:
+		btn.text = "MAXED"
+		btn.disabled = true
 
 func update_all_building_buttons():
-        for name in buildings.keys():
-                var data = buildings[name]
-                var button_name = name.replace(" ", "") + "Button"
-                update_building_button(button_name, data)
+	for name in buildings.keys():
+		var data = buildings[name]
+		var button_name = name.replace(" ", "") + "Button"
+		update_building_button(button_name, data)
