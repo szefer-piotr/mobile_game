@@ -153,21 +153,28 @@ func show_kingdom_mode():
 	show_building_ui()
 
 func show_building_ui():
-	$CanvasLayer/KingdomPanel.visible = true
-	$CanvasLayer/DrawButton.visible = false
-	$CanvasLayer/HoldButton.visible = false
-	$KingdomRoot.visible = true
-	connect_building_buttons()
-	update_all_building_buttons()
+        $CanvasLayer/KingdomPanel.visible = true
+        $CanvasLayer/DrawButton.visible = false
+        $CanvasLayer/HoldButton.visible = false
+        $KingdomRoot.visible = true
+        connect_building_buttons()
+        update_all_building_buttons()
+
+func get_building_button(key: String) -> Button:
+        var base = key.replace(" ", "")
+        return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%sContainer/%sButton" % [base, base])
+
+func get_building_label(key: String) -> Label:
+        var base = key.replace(" ", "")
+        return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%sContainer/%sLabel" % [base, base])
 
 func connect_building_buttons():
-	for key in buildings.keys():
-		var btn_name = key.replace(" ", "") + "Button"
-		var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(btn_name)
-		if btn:
-			btn.set_meta("building_key", key)
-			if not btn.pressed.is_connected(_on_BuildingButton_pressed):
-				btn.pressed.connect(_on_BuildingButton_pressed.bind(btn))
+        for key in buildings.keys():
+                var btn = get_building_button(key)
+                if btn:
+                        btn.set_meta("building_key", key)
+                        if not btn.pressed.is_connected(_on_BuildingButton_pressed):
+                                btn.pressed.connect(_on_BuildingButton_pressed.bind(btn))
 
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
@@ -206,12 +213,12 @@ func _on_restart_timer_timeout():
 	reset_game()
 
 func _on_BuildingButton_pressed(btn: Button):
-	if not btn.has_meta("building_key"):
-		return
+        if not btn.has_meta("building_key"):
+                return
 
-	var key = btn.get_meta("building_key")
-	if not buildings.has(key):
-		return
+        var key = btn.get_meta("building_key")
+        if not buildings.has(key):
+                return
 
 	var data = buildings[key]
 	var lvl = data["level"]
@@ -221,22 +228,21 @@ func _on_BuildingButton_pressed(btn: Button):
 			data["level"] += 1
 			buildings[key] = data
 	
-			var label_name = key.replace(" ", "") + "Label"
-			var label = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(label_name)
-			if label:
-				label.text = "%s (Lv. %d)" % [key, data["level"]]
+                        var label = get_building_label(key)
+                        if label:
+                                label.text = "%s (Lv. %d)" % [key, data["level"]]
 			
 			var node_name = key.replace(" ", "")
 			var build_node = $KingdomRoot.get_node_or_null(node_name)
 			if build_node:
 				build_node.visible = true
-			update_building_button(btn.name, data)
+                        update_building_button(key, data)
 
 
-func update_building_button(button_name: String, data: Dictionary):
-	var btn = $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null(button_name)
-	if btn == null:
-		return
+func update_building_button(key: String, data: Dictionary):
+        var btn = get_building_button(key)
+        if btn == null:
+                return
 
 	var lvl = data["level"]
 	if lvl < data["costs"].size():
@@ -250,10 +256,8 @@ func update_building_button(button_name: String, data: Dictionary):
 		btn.disabled = true
 
 func update_all_building_buttons():
-	for name in buildings.keys():
-		var data = buildings[name]
-		var button_name = name.replace(" ", "") + "Button"
-		update_building_button(button_name, data)
+        for key in buildings.keys():
+                update_building_button(key, buildings[key])
 
 func hide_building_ui():
 	$CanvasLayer/KingdomPanel.visible = false
