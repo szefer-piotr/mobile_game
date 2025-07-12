@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dcrd14o24qurl"]
 
-[ext_resource type="Script" uid="uid://byg21kjff3r27" path="res://Main.gd" id="1_glv2v"]
+[ext_resource type="Script" path="res://Main.gd" id="1_glv2v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
 
@@ -324,13 +324,4 @@ mesh = SubResource("BoxMesh_qyvxw")
 [connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/PeonHutContainer/PeonHutButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/CardShrineContainer/CardShrineButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/BarracksContainer/BarracksButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/FarmContainer/FarmButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/BlacksmithContainer/BlacksmithButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/ArcheryRangeContainer/ArcheryRangeButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/StableContainer/StableButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/WizardTowerContainer/WizardTowerButton" to="." method="_on_BuildingButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/MarketContainer/MarketButton" to="." method="_on_BuildingButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]

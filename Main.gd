@@ -182,13 +182,23 @@ func get_building_label(key: String) -> Label:
 	var base = key.replace(" ", "")
 	return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%sContainer/%sLabel" % [base, base])
 
+#func connect_building_buttons():
+	#for key in buildings.keys():
+		#var btn = get_building_button(key)
+		#if btn:
+			#btn.set_meta("building_key", key)
+			## Always disconnect before connecting to avoid duplicate connections
+			#btn.pressed.disconnect_all()
+			#btn.pressed.connect(func(): _on_BuildingButton_pressed(btn))
+
 func connect_building_buttons():
 	for key in buildings.keys():
 		var btn = get_building_button(key)
 		if btn:
 			btn.set_meta("building_key", key)
-			if not btn.pressed.is_connected(_on_BuildingButton_pressed):
-				btn.pressed.connect(_on_BuildingButton_pressed.bind(btn))
+			btn.pressed.connect(func(): _on_BuildingButton_pressed(btn))
+
+
 
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
