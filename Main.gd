@@ -52,12 +52,12 @@ func load_kingdom(index: int):
 	current_kingdom_idx = index
 	var data: KingdomData = kingdoms[index]
 	buildings.clear()
-	for key in data.buildings.keys():
-		var entry = data.buildings[key]
-		buildings[key] = {
-			"level": entry.get("level", 0),
-			"costs": entry.get("costs", []).duplicate()
-		}
+       for building_key in data.buildings.keys():
+               var entry = data.buildings[building_key]
+               buildings[building_key] = {
+                       "level": entry.get("level", 0),
+                       "costs": entry.get("costs", []).duplicate()
+               }
 
         var old_root = get_node_or_null("KingdomRoot")
         if old_root:
@@ -73,18 +73,18 @@ func load_kingdom(index: int):
         new_root.name = "KingdomRoot"
         add_child(new_root)
 
-	for key in buildings.keys():
-		var label = get_building_label(key)
-		if label:
-			label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
+       for label_key in buildings.keys():
+               var label = get_building_label(label_key)
+               if label:
+                       label.text = "%s (Lv. %d)" % [label_key, buildings[label_key]["level"]]
 
         for building in new_root.get_children():
                 building.visible = false
 
-        for building in new_root.get_children():
-                var key = building.name.replace("_", " ")
-                if buildings.has(key) and buildings[key]["level"] > 0:
-                        building.visible = true
+       for building in new_root.get_children():
+               var child_key = building.name.replace("_", " ")
+               if buildings.has(child_key) and buildings[child_key]["level"] > 0:
+                       building.visible = true
 
 	connect_building_buttons()
 	update_all_building_buttons()
