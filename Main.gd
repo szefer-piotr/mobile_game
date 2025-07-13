@@ -33,85 +33,84 @@ var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
 func setup_kingdoms():
-        kingdoms.clear()
-        var k1 = KingdomData.new()
-        k1.name = "Kingdom 1"
-        k1.buildings = KingdomData.default_buildings()
-        kingdoms.append(k1)
+	kingdoms.clear()
+	var k1 = KingdomData.new()
+	k1.name = "Kingdom 1"
+	k1.buildings = KingdomData.default_buildings()
+	kingdoms.append(k1)
 
-        var k2 = KingdomData.new()
-        k2.name = "Kingdom 2"
-        k2.buildings = KingdomData.default_buildings()
-        kingdoms.append(k2)
+	var k2 = KingdomData.new()
+	k2.name = "Kingdom 2"
+	k2.buildings = KingdomData.default_buildings()
+	kingdoms.append(k2)
 
 func load_kingdom(index: int):
-        if index >= kingdoms.size():
-                return
-        current_kingdom_idx = index
-        var data: KingdomData = kingdoms[index]
-        buildings.clear()
-        for key in data.buildings.keys():
-                var entry = data.buildings[key]
-                buildings[key] = {
-                        "level": entry.get("level", 0),
-                        "costs": entry.get("costs", []).duplicate()
-                }
+	if index >= kingdoms.size():
+		return
+	current_kingdom_idx = index
+	var data: KingdomData = kingdoms[index]
+	buildings.clear()
+	for key in data.buildings.keys():
+		var entry = data.buildings[key]
+		buildings[key] = {
+			"level": entry.get("level", 0),
+			"costs": entry.get("costs", []).duplicate()
+		}
 
-        var old_root = get_node_or_null("KingdomRoot")
-        var new_root: Node3D = null
-        if data.scene_path != "":
-                var scene = load(data.scene_path)
-                if scene:
-                        new_root = scene.instantiate()
-        if new_root == null:
-                new_root = Node3D.new()
-        new_root.name = "KingdomRoot"
-        if old_root:
-                remove_child(old_root)
-                old_root.queue_free()
-        add_child(new_root)
+	var old_root = get_node_or_null("KingdomRoot")
+	var new_root: Node3D = null
+	if data.scene_path != "":
+		var scene = load(data.scene_path)
+		if scene:
+			new_root = scene.instantiate()
+	if new_root == null:
+		new_root = Node3D.new()
+	new_root.name = "KingdomRoot"
+	if old_root:
+		remove_child(old_root)
+		old_root.queue_free()
+	add_child(new_root)
 
-        for key in buildings.keys():
-                var label = get_building_label(key)
-                if label:
-                        label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
+	for key in buildings.keys():
+		var label = get_building_label(key)
+		if label:
+			label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
 
-        for building in new_root.get_children():
-                var key = building.name.replace("_", " ")
-                building.visible = buildings.has(key) and buildings[key]["level"] > 0
+	for building in new_root.get_children():
+		var key = building.name.replace("_", " ")
+		building.visible = buildings.has(key) and buildings[key]["level"] > 0
 
-        connect_building_buttons()
-        update_all_building_buttons()
+	connect_building_buttons()
+	update_all_building_buttons()
 
 func check_kingdom_complete():
-        for key in buildings.keys():
-                var data = buildings[key]
-                if data["level"] < data["costs"].size():
-                        return false
-        load_kingdom(current_kingdom_idx + 1)
-        return true
+	for key in buildings.keys():
+		var data = buildings[key]
+		if data["level"] < data["costs"].size():
+			return false
+	load_kingdom(current_kingdom_idx + 1)
+	return true
 
 func _ready():
-        randomize()
-        restart_timer.timeout.connect(_on_restart_timer_timeout)
+	randomize()
+	restart_timer.timeout.connect(_on_restart_timer_timeout)
 
-        default_cam_pos = cam.global_position
-        default_cam_rot = cam.rotation_degrees
+	default_cam_pos = cam.global_position
+	default_cam_rot = cam.rotation_degrees
 
-        score_bar.min_value = 0
-        score_bar.max_value = 100
-        score_bar.value = 0
-        displayed_score_value = 0.0
-        target_score_bar_value = 0.0
-        reward_popup.visible = false
+	score_bar.min_value = 0
+	score_bar.max_value = 100
+	score_bar.value = 0
+	displayed_score_value = 0.0
+	target_score_bar_value = 0.0
+	reward_popup.visible = false
 
-        setup_kingdoms()
-        load_kingdom(0)
+	setup_kingdoms()
+	load_kingdom(0)
 
-        reset_game()
+	reset_game()
 
 func _process(delta):
-	# Animate the progress bar toward the target
 	if abs(displayed_score_value - target_score_bar_value) > 0.1:
 		displayed_score_value = lerp(
 			displayed_score_value,
@@ -131,15 +130,14 @@ func reset_game():
 	draw_button.disabled = false
 	hold_button.disabled = false
 
-	# remove old cards
 	for c in card_row.get_children():
 		c.queue_free()
 
 func _position_new_card(card):
-		var target_x = float(cards.size() - 1) * 0.25
-		var target_y = float(cards.size() - 1) * 0.025
-		var target_z = randf_range(-0.025, 0.025)
-		card.target_position = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
+	var target_x = float(cards.size() - 1) * 0.25
+	var target_y = float(cards.size() - 1) * 0.025
+	var target_z = randf_range(-0.025, 0.025)
+	card.target_position = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
 
 func _on_DrawButton_pressed():
 	var value = randi() % 6 + 1
@@ -152,7 +150,6 @@ func _on_DrawButton_pressed():
 	card_row.add_child(card)
 	cards.append(card)
 
-	# Defer position to next frame to guarantee all nodes are inside tree
 	call_deferred("_finalize_card_position", card)
 
 	if current_score == 21:
@@ -163,7 +160,7 @@ func _on_DrawButton_pressed():
 
 func _finalize_card_position(card):
 	if not card_row.is_inside_tree():
-		await get_tree().process_frame  # Just in case
+		await get_tree().process_frame
 
 	var target_x = float(cards.size() - 1) * 0.25
 	var target_y = float(cards.size() - 1) * 0.025
@@ -171,7 +168,6 @@ func _finalize_card_position(card):
 	var target_position = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
 
 	card.set_target_position(target_position)
-
 
 func _on_HoldButton_pressed():
 	if current_score >= 18:
@@ -221,15 +217,6 @@ func get_building_label(key: String) -> Label:
        var base = key.replace(" ", "")
        return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%s/Label" % base)
 
-#func connect_building_buttons():
-	#for key in buildings.keys():
-		#var btn = get_building_button(key)
-		#if btn:
-			#btn.set_meta("building_key", key)
-			## Always disconnect before connecting to avoid duplicate connections
-			#btn.pressed.disconnect_all()
-			#btn.pressed.connect(func(): _on_BuildingButton_pressed(btn))
-
 func connect_building_buttons():
        for key in buildings.keys():
                var btn = get_building_button(key)
@@ -237,13 +224,10 @@ func connect_building_buttons():
                        btn.pressed.disconnect_all()
                        btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
 
-
-
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
 	total_label.text = "Total: " + str(total_score)
-	
-	# Give coins as Blackjack reward
+
 	var reward = 0
 	if current_score == 21:
 		reward = 50
@@ -251,8 +235,6 @@ func end_game(msg: String, gave_reward: bool):
 		reward = current_score
 
 	CurrencyManager.add_coins(reward)
-
-	# Update progress bar target value (modulo if you want looped bar)
 	target_score_bar_value = float(total_score % 100)
 
 	if target_score_bar_value >= score_bar.max_value:
@@ -298,7 +280,6 @@ func _on_BuildingButton_pressed(key: String):
                        update_building_button(key, data)
                        check_kingdom_complete()
 
-
 func update_building_button(key: String, data: Dictionary):
 	var btn = get_building_button(key)
 	if btn == null:
@@ -323,7 +304,6 @@ func hide_building_ui():
 	$CanvasLayer/KingdomPanel.visible = false
 	$CanvasLayer/DrawButton.visible = true
 	$CanvasLayer/HoldButton.visible = true
-	#$KingdomRoot.visible = false
 
 func hide_kingdom_mode():
 	hide_building_ui()
