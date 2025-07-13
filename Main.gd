@@ -25,72 +25,89 @@ var fill_speed = 6.0
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
 
-var buildings = {
-		"Peon Hut": {
-				"level": 0,
-				"costs": [100, 200, 400, 800, 1600]
-		},
-		"Card Shrine": {
-				"level": 0,
-				"costs": [150, 300, 600, 1200, 2400]
-		},
-		"Barracks": {
-				"level": 0,
-				"costs": [200, 400, 800, 1600, 3200]
-		},
-		"Farm": {
-				"level": 0,
-				"costs": [120, 240, 480, 960, 1920]
-		},
-		"Blacksmith": {
-				"level": 0,
-				"costs": [250, 500, 1000, 2000, 4000]
-		},
-		"Archery Range": {
-				"level": 0,
-				"costs": [180, 360, 720, 1440, 2880]
-		},
-		"Stable": {
-				"level": 0,
-				"costs": [220, 440, 880, 1760, 3520]
-		},
-		"Wizard Tower": {
-				"level": 0,
-				"costs": [300, 600, 1200, 2400, 4800]
-		},
-		"Market": {
-				"level": 0,
-				"costs": [160, 320, 640, 1280, 2560]
-		},
-		"Wall": {
-				"level": 0,
-				"costs": [140, 280, 560, 1120, 2240]
-		}
-}
+const KingdomData = preload("res://KingdomData.gd")
+
+var kingdoms: Array = []
+var current_kingdom_idx: int = 0
+var buildings: Dictionary = {}
+
+func setup_kingdoms():
+        kingdoms.clear()
+        var k1 = KingdomData.new()
+        k1.name = "Kingdom 1"
+        k1.buildings = KingdomData.default_buildings()
+        kingdoms.append(k1)
+
+        var k2 = KingdomData.new()
+        k2.name = "Kingdom 2"
+        k2.buildings = KingdomData.default_buildings()
+        kingdoms.append(k2)
+
+func load_kingdom(index: int):
+        if index >= kingdoms.size():
+                return
+        current_kingdom_idx = index
+        var data: KingdomData = kingdoms[index]
+        buildings.clear()
+        for key in data.buildings.keys():
+                var entry = data.buildings[key]
+                buildings[key] = {
+                        "level": entry.get("level", 0),
+                        "costs": entry.get("costs", []).duplicate()
+                }
+
+        var old_root = get_node_or_null("KingdomRoot")
+        var new_root: Node3D = null
+        if data.scene_path != "":
+                var scene = load(data.scene_path)
+                if scene:
+                        new_root = scene.instantiate()
+        if new_root == null:
+                new_root = Node3D.new()
+        new_root.name = "KingdomRoot"
+        if old_root:
+                remove_child(old_root)
+                old_root.queue_free()
+        add_child(new_root)
+
+        for key in buildings.keys():
+                var label = get_building_label(key)
+                if label:
+                        label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
+
+        for building in new_root.get_children():
+                var key = building.name.replace("_", " ")
+                building.visible = buildings.has(key) and buildings[key]["level"] > 0
+
+        connect_building_buttons()
+        update_all_building_buttons()
+
+func check_kingdom_complete():
+        for key in buildings.keys():
+                var data = buildings[key]
+                if data["level"] < data["costs"].size():
+                        return false
+        load_kingdom(current_kingdom_idx + 1)
+        return true
 
 func _ready():
-	randomize()
-	restart_timer.timeout.connect(_on_restart_timer_timeout)
+        randomize()
+        restart_timer.timeout.connect(_on_restart_timer_timeout)
 
-	default_cam_pos = cam.global_position
-	default_cam_rot = cam.rotation_degrees
+        default_cam_pos = cam.global_position
+        default_cam_rot = cam.rotation_degrees
 
-	score_bar.min_value = 0
-	score_bar.max_value = 100
-	score_bar.value = 0
-	displayed_score_value = 0.0
-	target_score_bar_value = 0.0
-	reward_popup.visible = false
-	
-	for building in $KingdomRoot.get_children():
-		var key = building.name.replace("_", " ") # Adjust if your node names differ
-		if buildings.has(key) and buildings[key]["level"] > 0:
-			building.visible = true
-		else:
-			building.visible = false
+        score_bar.min_value = 0
+        score_bar.max_value = 100
+        score_bar.value = 0
+        displayed_score_value = 0.0
+        target_score_bar_value = 0.0
+        reward_popup.visible = false
 
+        setup_kingdoms()
+        load_kingdom(0)
 
-	reset_game()
+        reset_game()
 
 func _process(delta):
 	# Animate the progress bar toward the target
@@ -263,9 +280,10 @@ func _on_BuildingButton_pressed(btn: Button):
 			
 			var node_name = key.replace(" ", "")
 			var build_node = $KingdomRoot.get_node_or_null(node_name)
-			if build_node:
-				build_node.visible = true
-				update_building_button(key, data)
+                       if build_node:
+                               build_node.visible = true
+                               update_building_button(key, data)
+                               check_kingdom_complete()
 
 
 func update_building_button(key: String, data: Dictionary):
