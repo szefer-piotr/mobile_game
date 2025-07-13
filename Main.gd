@@ -33,18 +33,18 @@ var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
 func setup_kingdoms():
-        kingdoms.clear()
-        var k1 = KingdomData.new()
-        k1.name = "Kingdom 1"
-        k1.scene_path = "res://Kingdom1.tscn"
-        k1.buildings = KingdomData.default_buildings()
-        kingdoms.append(k1)
+	kingdoms.clear()
+	var k1 = KingdomData.new()
+	k1.name = "Kingdom 1"
+	k1.scene_path = "res://Kingdom1.tscn"
+	k1.buildings = KingdomData.default_buildings()
+	kingdoms.append(k1)
 
-        var k2 = KingdomData.new()
-        k2.name = "Kingdom 2"
-        k2.scene_path = "res://Kingdom2.tscn"
-        k2.buildings = KingdomData.default_buildings()
-        kingdoms.append(k2)
+	var k2 = KingdomData.new()
+	k2.name = "Kingdom 2"
+	k2.scene_path = "res://Kingdom2.tscn"
+	k2.buildings = KingdomData.default_buildings()
+	kingdoms.append(k2)
 
 func load_kingdom(index: int):
 	if index >= kingdoms.size():
@@ -59,32 +59,32 @@ func load_kingdom(index: int):
 			"costs": entry.get("costs", []).duplicate()
 		}
 
-        var old_root = get_node_or_null("KingdomRoot")
-        if old_root:
-                old_root.queue_free()
+	var old_root = get_node_or_null("KingdomRoot")
+	if old_root:
+		old_root.queue_free()
 
-        var new_root: Node3D = null
-        if data.scene_path != "":
-                var scene = load(data.scene_path)
-                if scene:
-                        new_root = scene.instantiate()
-        if new_root == null:
-                new_root = Node3D.new()
-        new_root.name = "KingdomRoot"
-        add_child(new_root)
+	var new_root: Node3D = null
+	if data.scene_path != "":
+		var scene = load(data.scene_path)
+		if scene:
+			new_root = scene.instantiate()
+	if new_root == null:
+		new_root = Node3D.new()
+	new_root.name = "KingdomRoot"
+	add_child(new_root)
 
 	for key in buildings.keys():
 		var label = get_building_label(key)
 		if label:
 			label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
 
-        for building in new_root.get_children():
-                building.visible = false
+	for building in new_root.get_children():
+		building.visible = false
 
-        for building in new_root.get_children():
-                var key = building.name.replace("_", " ")
-                if buildings.has(key) and buildings[key]["level"] > 0:
-                        building.visible = true
+	for building in new_root.get_children():
+		var key = building.name.replace("_", " ")
+		if buildings.has(key) and buildings[key]["level"] > 0:
+			building.visible = true
 
 	connect_building_buttons()
 	update_all_building_buttons()
