@@ -1,0 +1,45 @@
+[gd_scene format=4]
+
+[sub_resource type="BoxMesh" id="BoxMesh_default"]
+
+[node name="KingdomRoot" type="Node3D"]
+
+[node name="PeonHut" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="CardShrine" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="Barracks" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="Farm" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="Blacksmith" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="ArcheryRange" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="Stable" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="WizardTower" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="Market" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
+
+[node name="Wall" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_default")
+visible = false
