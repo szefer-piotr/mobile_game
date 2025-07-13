@@ -13,6 +13,7 @@ extends Node3D
 @onready var score_bar_label = $CanvasLayer/ScoreProgressLabel
 @onready var reward_popup = $CanvasLayer/RewardReadyPopup
 @onready var cam = $Camera3D
+@onready var building_entry_scene = preload("res://BuildingEntry.tscn")
 
 var current_score = 0
 var total_score = 0
@@ -185,27 +186,43 @@ func show_kingdom_mode():
 	show_building_ui()
 
 func show_building_ui():
-	$CanvasLayer/KingdomPanel.visible = true
-	$CanvasLayer/DrawButton.visible = false
-	$CanvasLayer/HoldButton.visible = false
-	$KingdomRoot.visible = true
-	connect_building_buttons()
-	update_all_building_buttons()
+       $CanvasLayer/KingdomPanel.visible = true
+       $CanvasLayer/DrawButton.visible = false
+       $CanvasLayer/HoldButton.visible = false
+       $KingdomRoot.visible = true
+
+       var list = $CanvasLayer/KingdomPanel/BuildingList
+       for child in list.get_children():
+               child.queue_free()
+
+       for key in buildings.keys():
+               var entry = building_entry_scene.instantiate()
+               var base = key.replace(" ", "")
+               entry.name = base
+               list.add_child(entry)
+
+               var label: Label = entry.get_node("Label")
+               label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
+
+               var btn: Button = entry.get_node("Button")
+               btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
+
+       update_all_building_buttons()
 
 func get_building_button(key: String) -> Button:
-	var base = key.replace(" ", "")
-	return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%sContainer/%sButton" % [base, base])
+       var base = key.replace(" ", "")
+       return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%s/Button" % base)
 
 func get_building_label(key: String) -> Label:
-	var base = key.replace(" ", "")
-	return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%sContainer/%sLabel" % [base, base])
+       var base = key.replace(" ", "")
+       return $CanvasLayer/KingdomPanel/BuildingList.get_node_or_null("%s/Label" % base)
 
 func connect_building_buttons():
-	for key in buildings.keys():
-		var btn = get_building_button(key)
-		if btn:
-			btn.set_meta("building_key", key)
-			btn.pressed.connect(func(): _on_BuildingButton_pressed(btn))
+       for key in buildings.keys():
+               var btn = get_building_button(key)
+               if btn:
+                       btn.pressed.disconnect_all()
+                       btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
 
 func end_game(msg: String, gave_reward: bool):
 	result_label.text = msg
@@ -240,32 +257,28 @@ func show_reward_popup():
 func _on_restart_timer_timeout():
 	reset_game()
 
-func _on_BuildingButton_pressed(btn: Button):
-	if not btn.has_meta("building_key"):
-		return
+func _on_BuildingButton_pressed(key: String):
+       if not buildings.has(key):
+               return
 
-	var key = btn.get_meta("building_key")
-	if not buildings.has(key):
-		return
+       var data = buildings[key]
+       var lvl = data["level"]
+       if lvl < data["costs"].size():
+               var cost = data["costs"][lvl]
+               if CurrencyManager.spend_coins(cost):
+                       data["level"] += 1
+                       buildings[key] = data
 
-	var data = buildings[key]
-	var lvl = data["level"]
-	if lvl < data["costs"].size():
-		var cost = data["costs"][lvl]
-		if CurrencyManager.spend_coins(cost):
-			data["level"] += 1
-			buildings[key] = data
+                       var label = get_building_label(key)
+                       if label:
+                               label.text = "%s (Lv. %d)" % [key, data["level"]]
 
-			var label = get_building_label(key)
-			if label:
-				label.text = "%s (Lv. %d)" % [key, data["level"]]
-
-			var node_name = key.replace(" ", "")
-			var build_node = $KingdomRoot.get_node_or_null(node_name)
-			if build_node:
-				build_node.visible = true
-				update_building_button(key, data)
-				check_kingdom_complete()
+                       var node_name = key.replace(" ", "")
+                       var build_node = $KingdomRoot.get_node_or_null(node_name)
+                       if build_node:
+                               build_node.visible = true
+                       update_building_button(key, data)
+                       check_kingdom_complete()
 
 func update_building_button(key: String, data: Dictionary):
 	var btn = get_building_button(key)
