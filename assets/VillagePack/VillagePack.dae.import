@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://djl0tsfw1jhb7"
-path="res://.godot/imported/fishing_village_pack.glb-683eb2b62d293dcaa39012b15840de1b.scn"
+uid="uid://dbwd1x5u7u7hj"
+path="res://.godot/imported/VillagePack.dae-6f39c90459d2931c271f330ea0b66533.scn"
 
 [deps]
 
-source_file="res://assets/fishing_village_pack.glb"
-dest_files=["res://.godot/imported/fishing_village_pack.glb-683eb2b62d293dcaa39012b15840de1b.scn"]
+source_file="res://assets/VillagePack/VillagePack.dae"
+dest_files=["res://.godot/imported/VillagePack.dae-6f39c90459d2931c271f330ea0b66533.scn"]
 
 [params]
 
@@ -33,5 +33,3 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=1
-gltf/embedded_image_handling=1

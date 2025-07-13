@@ -83,7 +83,12 @@ func _ready():
 	reward_popup.visible = false
 	
 	for building in $KingdomRoot.get_children():
-		building.visible = false
+		var key = building.name.replace("_", " ") # Adjust if your node names differ
+		if buildings.has(key) and buildings[key]["level"] > 0:
+			building.visible = true
+		else:
+			building.visible = false
+
 
 	reset_game()
 
@@ -287,7 +292,7 @@ func hide_building_ui():
 	$CanvasLayer/KingdomPanel.visible = false
 	$CanvasLayer/DrawButton.visible = true
 	$CanvasLayer/HoldButton.visible = true
-	$KingdomRoot.visible = false
+	#$KingdomRoot.visible = false
 
 func hide_kingdom_mode():
 	hide_building_ui()
