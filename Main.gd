@@ -192,10 +192,12 @@ func show_kingdom_mode():
 	show_building_ui()
 
 func show_building_ui():
-	$CanvasLayer/KingdomPanel.visible = true
-	$CanvasLayer/DrawButton.visible = false
-	$CanvasLayer/HoldButton.visible = false
-	$KingdomRoot.visible = true
+        $CanvasLayer/KingdomPanel.visible = true
+        $CanvasLayer/DrawButton.visible = false
+        $CanvasLayer/HoldButton.visible = false
+        var kroot = get_node_or_null("KingdomRoot")
+        if kroot:
+                kroot.visible = true
 
 	var list = $CanvasLayer/KingdomPanel/BuildingList
 	for child in list.get_children():
@@ -312,10 +314,13 @@ func hide_building_ui():
 	$CanvasLayer/HoldButton.visible = true
 
 func hide_kingdom_mode():
-	hide_building_ui()
-	var tween = get_tree().create_tween()
-	tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
-	tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
+        hide_building_ui()
+        var kroot = get_node_or_null("KingdomRoot")
+        if kroot:
+                kroot.visible = false
+        var tween = get_tree().create_tween()
+        tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
+        tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
 
 func _unhandled_input(event):
 	if $CanvasLayer/KingdomPanel.visible and event is InputEventMouseButton:
