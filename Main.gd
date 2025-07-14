@@ -213,7 +213,7 @@ func _on_KingdomButton_pressed():
 func show_kingdom_mode():
 	var tween = get_tree().create_tween()
 	tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
-	tween.tween_property(cam, "rotation_degrees", Vector3(-60, 0, 0), 0.15)
+	tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
 	show_building_ui()
 
 func show_building_ui():
