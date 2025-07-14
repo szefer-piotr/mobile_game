@@ -53,11 +53,16 @@ func setup_kingdoms():
 	kingdoms.append(k3)
 
 func load_kingdom(index: int):
+	
 	if index >= kingdoms.size():
 		return
+	
 	current_kingdom_idx = index
+	
 	var data: KingdomData = kingdoms[index]
+	
 	buildings.clear()
+	
 	for key in data.buildings.keys():
 		var entry = data.buildings[key]
 		buildings[key] = {
@@ -70,13 +75,18 @@ func load_kingdom(index: int):
 		old_root.queue_free()
 
 	var new_root: Node3D = null
+	
 	if data.scene_path != "":
 		var scene = load(data.scene_path)
+		print(data.scene_path)
 		if scene:
 			new_root = scene.instantiate()
+	
 	if new_root == null:
 		new_root = Node3D.new()
+	
 	new_root.name = "KingdomRoot"
+	
 	add_child(new_root)
 
 	for key in buildings.keys():
@@ -118,8 +128,9 @@ func _ready():
 	reward_popup.visible = false
 
 	setup_kingdoms()
+	print("Loading kingdoms...")
 	load_kingdom(0)
-
+	
 	reset_game()
 
 func _process(delta):
