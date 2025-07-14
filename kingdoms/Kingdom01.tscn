@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=4 uid="uid://bpiwtmual2xh6"]
 
-[ext_resource type="Texture2D" uid="uid://bvwok255kmb5n" path="res://assets/MedievalPack/medieval_village_pack_Untitled.png" id="2_txtrp"]
-[ext_resource type="Texture2D" uid="uid://ijt2oa2h76f0" path="res://assets/fishing_village_pack_Untitled.png" id="2_uuysx"]
+[ext_resource type="Texture2D" uid="uid://ijt2oa2h76f0" path="res://assets/fishing_village_pack_Untitled.png" id="1_k0vey"]
+[ext_resource type="Texture2D" uid="uid://bvwok255kmb5n" path="res://assets/MedievalPack/medieval_village_pack_Untitled.png" id="2_10tuq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_oe445"]
 
@@ -13,7 +13,7 @@ albedo_color = Color(0.039466, 0.368571, 0.123005, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqywn"]
 resource_name = "ArenaAtlas"
 cull_mode = 2
-albedo_texture = ExtResource("2_uuysx")
+albedo_texture = ExtResource("1_k0vey")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8b5jw"]
 _surfaces = [{
@@ -51,7 +51,7 @@ shadow_mesh = SubResource("ArrayMesh_8b5jw")
 resource_name = "village_atlas"
 cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_txtrp")
+albedo_texture = ExtResource("2_10tuq")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_1hsv3"]
 _surfaces = [{
