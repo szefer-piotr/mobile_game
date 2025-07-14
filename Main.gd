@@ -93,14 +93,22 @@ func load_kingdom(index: int):
 		var label = get_building_label(key)
 		if label:
 			label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
+			
+	var buildings_node = new_root.get_node_or_null("Buildings")
+	if buildings_node:
+		for building in buildings_node.get_children():
+			building.visible = false
+			var key = building.name.replace("_", " ")
+			if buildings.has(key) and buildings[key]["level"] > 0:
+				building.visible = true
 
-	for building in new_root.get_children():
-		building.visible = false
-
-	for building in new_root.get_children():
-		var key = building.name.replace("_", " ")
-		if buildings.has(key) and buildings[key]["level"] > 0:
-			building.visible = true
+	#for building in new_root.get_children():
+		#building.visible = false
+#
+	#for building in new_root.get_children():
+		#var key = building.name.replace("_", " ")
+		#if buildings.has(key) and buildings[key]["level"] > 0:
+			#building.visible = true
 
 	connect_building_buttons()
 	update_all_building_buttons()
@@ -212,6 +220,7 @@ func show_building_ui():
 	$CanvasLayer/KingdomPanel.visible = true
 	$CanvasLayer/DrawButton.visible = false
 	$CanvasLayer/HoldButton.visible = false
+	$CanvasLayer/KingdomButton.visible = false
 	var kroot = get_node_or_null("KingdomRoot")
 	if kroot:
 		kroot.visible = true
@@ -299,11 +308,14 @@ func _on_BuildingButton_pressed(key: String):
 				label.text = "%s (Lv. %d)" % [key, data["level"]]
 
 			var node_name = key.replace(" ", "")
-			var build_node = $KingdomRoot.get_node_or_null(node_name)
-			if build_node:
-				build_node.visible = true
-			update_building_button(key, data)
-			check_kingdom_complete()
+			var buildings_node = $KingdomRoot.get_node_or_null("Buildings")
+			if buildings_node:
+				var build_node = buildings_node.get_node_or_null(node_name)
+				if build_node:
+					build_node.visible = true
+					
+		update_building_button(key, data)
+		check_kingdom_complete()
 
 func update_building_button(key: String, data: Dictionary):
 	var btn = get_building_button(key)
@@ -332,12 +344,13 @@ func hide_building_ui():
 
 func hide_kingdom_mode():
 		hide_building_ui()
-		var kroot = get_node_or_null("KingdomRoot")
-		if kroot:
-				kroot.visible = false
+		#var kroot = get_node_or_null("KingdomRoot")
+		#if kroot:
+				#kroot.visible = false
 		var tween = get_tree().create_tween()
 		tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
 		tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
+		$CanvasLayer/KingdomButton.visible = true
 
 func _unhandled_input(event):
 	if $CanvasLayer/KingdomPanel.visible and event is InputEventMouseButton:
