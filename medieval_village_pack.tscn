@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b25nhhv3slgsi"]
+
+[ext_resource type="PackedScene" uid="uid://bvg8ghefgum3h" path="res://assets/MedievalPack/medieval_village_pack.glb" id="1_lj0um"]
+
+[node name="medieval_village_pack" instance=ExtResource("1_lj0um")]
