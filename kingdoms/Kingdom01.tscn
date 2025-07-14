@@ -213,6 +213,6 @@ mesh = SubResource("ArrayMesh_uuysx")
 skeleton = NodePath("")
 
 [node name="Market" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.707107, -0.707107, 3.09086e-08, 0, -4.37114e-08, -1, 0.707107, 0.707107, -3.09086e-08, 3.81138, 0.0999877, -1.84817)
+transform = Transform3D(0.707107, -0.707107, 3.09086e-08, 0, -4.37114e-08, -1, 0.707107, 0.707107, -3.09086e-08, 3.81138, -0.0265621, -1.84817)
 mesh = SubResource("ArrayMesh_2tqal")
 skeleton = NodePath("")

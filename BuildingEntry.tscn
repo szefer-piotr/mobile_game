@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://cd2wkpri0amqe"]
 
 [node name="BuildingEntry" type="VBoxContainer"]
-layout_mode = 2
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
