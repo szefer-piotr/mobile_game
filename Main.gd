@@ -36,15 +36,21 @@ func setup_kingdoms():
 	kingdoms.clear()
 	var k1 = KingdomData.new()
 	k1.name = "Kingdom 1"
-	k1.scene_path = "res://Kingdom1.tscn"
+	k1.scene_path = "res://kingdoms/Kingdom01.tscn"
 	k1.buildings = KingdomData.default_buildings()
 	kingdoms.append(k1)
-
+	
 	var k2 = KingdomData.new()
 	k2.name = "Kingdom 2"
-	k2.scene_path = "res://Kingdom2.tscn"
+	k2.scene_path = "res://kingdoms/Kingdom02.tscn"
 	k2.buildings = KingdomData.default_buildings()
 	kingdoms.append(k2)
+	
+	var k3 = KingdomData.new()
+	k3.name = "Kingdom 3"
+	k3.scene_path = "res://kingdoms/Kingdom03.tscn"
+	k3.buildings = KingdomData.default_buildings()
+	kingdoms.append(k3)
 
 func load_kingdom(index: int):
 	if index >= kingdoms.size():
