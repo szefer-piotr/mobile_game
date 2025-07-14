@@ -212,8 +212,8 @@ func _on_KingdomButton_pressed():
 
 func show_kingdom_mode():
 	var tween = get_tree().create_tween()
-	tween.tween_property(cam, "global_position", Vector3(0, 5, 1), 0.25)
-	tween.tween_property(cam, "rotation_degrees", Vector3(-55, 0, 0), 0.25)
+	tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
+	tween.tween_property(cam, "rotation_degrees", Vector3(-60, 0, 0), 0.15)
 	show_building_ui()
 
 func show_building_ui():
@@ -348,7 +348,7 @@ func hide_kingdom_mode():
 		#if kroot:
 				#kroot.visible = false
 		var tween = get_tree().create_tween()
-		tween.tween_property(cam, "global_position", default_cam_pos, 0.25)
+		tween.tween_property(cam, "global_position", default_cam_pos, 0.05)
 		tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
 		$CanvasLayer/KingdomButton.visible = true
 
