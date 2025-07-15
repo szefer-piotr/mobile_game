@@ -1,0 +1,6 @@
+[
+	{"points_needed": 150, "reward_type": "coins", "amount": 15},
+	{"points_needed": 300, "reward_type": "building", "amount": 1},
+	{"points_needed": 600, "reward_type": "draw", "amount": 2},
+	{"points_needed": 1000, "reward_type": "coins", "amount": 50},
+]

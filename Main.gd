@@ -32,6 +32,46 @@ var kingdoms: Array = []
 var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
+var current_path_name:String = ""
+var reward_path: Array = []
+var current_reward_index: int = 0
+var progress_towards_current: int = 0
+
+
+func update_score_bar():
+	if current_reward_index >= reward_path.size():
+		score_bar.value = score_bar.max_value
+		score_bar_label.text = "Path Complete!"
+		return
+
+	var current_goal = reward_path[current_reward_index]["points_needed"]
+	var ratio = float(progress_towards_current) / current_goal
+	score_bar.value = ratio * score_bar.max_value
+	score_bar_label.text = "%d / %d" % [progress_towards_current, current_goal]
+	
+
+func load_reward_path(path_name: String):
+	var file_path = "res://reward_paths/%s.json" % path_name
+	if not FileAccess.file_exists(file_path):
+		push_error("Reward path not found: " + file_path)
+		return
+
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	var data = file.get_as_text()
+	var result = JSON.parse_string(data)
+
+	if typeof(result) == TYPE_ARRAY:
+		reward_path = result
+		current_path_name = path_name
+		current_reward_index = 0
+		progress_towards_current = 0
+		update_score_bar()
+		print("Loaded reward path: ", path_name)
+	else:
+		push_error("Failed to parse JSON reward path.")
+
+
+
 func setup_kingdoms():
 	kingdoms.clear()
 	var k1 = KingdomData.new()
@@ -53,47 +93,34 @@ func setup_kingdoms():
 	kingdoms.append(k3)
 
 func load_kingdom(index: int):
-	
 	if index >= kingdoms.size():
 		return
-	
 	current_kingdom_idx = index
-	
 	var data: KingdomData = kingdoms[index]
-	
 	buildings.clear()
-	
 	for key in data.buildings.keys():
 		var entry = data.buildings[key]
 		buildings[key] = {
 			"level": entry.get("level", 0),
 			"costs": entry.get("costs", []).duplicate()
 		}
-	
 	var old_root = get_node_or_null("KingdomRoot")
 	if old_root:
 		old_root.queue_free()
-
 	var new_root: Node3D = null
-	
 	if data.scene_path != "":
 		var scene = load(data.scene_path)
 		print(data.scene_path)
 		if scene:
 			new_root = scene.instantiate()
-	
 	if new_root == null:
 		new_root = Node3D.new()
-	
 	new_root.name = "KingdomRoot"
-	
 	add_child(new_root)
-
 	for key in buildings.keys():
 		var label = get_building_label(key)
 		if label:
 			label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
-			
 	var buildings_node = new_root.get_node_or_null("Buildings")
 	if buildings_node:
 		for building in buildings_node.get_children():
@@ -101,14 +128,6 @@ func load_kingdom(index: int):
 			var key = building.name.replace("_", " ")
 			if buildings.has(key) and buildings[key]["level"] > 0:
 				building.visible = true
-
-	#for building in new_root.get_children():
-		#building.visible = false
-#
-	#for building in new_root.get_children():
-		#var key = building.name.replace("_", " ")
-		#if buildings.has(key) and buildings[key]["level"] > 0:
-			#building.visible = true
 
 	connect_building_buttons()
 	update_all_building_buttons()
@@ -122,6 +141,7 @@ func check_kingdom_complete():
 	return true
 
 func _ready():
+	load_reward_path("starter_path")
 	randomize()
 	restart_timer.timeout.connect(_on_restart_timer_timeout)
 

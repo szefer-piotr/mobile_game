@@ -8,11 +8,23 @@
 script = ExtResource("1_eeaw3")
 
 [node name="MeshInstance3D" type="CSGMesh3D" parent="."]
-transform = Transform3D(0.36, 0, 0, 0, 0.015, 0, 0, 0, 0.6, 0, 0, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.021, 0, 0, 0, 0.834, 0, 0, 0)
 mesh = SubResource("BoxMesh_axxlu")
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.697541, 0, 0.716546, 0, 1, 0, -0.716546, 0, -0.697541, 0.88493, 0, 0.633645)
+operation = 2
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.697541, 0, 0.716546, 0, 1, 0, -0.716546, 0, -0.697541, -0.90339, 0, -0.599238)
+operation = 2
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.697541, 0, 0.716546, 0, 1, 0, -0.716546, 0, -0.697541, 0.88493, 0, -0.63445)
+operation = 2
+
 [node name="CSGBox3D" type="CSGBox3D" parent="MeshInstance3D"]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -0.715805, 0, 0.821708)
+transform = Transform3D(0.63909, 0, 0.769132, 0, 1, 0, -0.769132, 0, 0.63909, -0.715805, 0, 0.821708)
 operation = 2
 
 [node name="ValueLabel" type="Label3D" parent="."]
