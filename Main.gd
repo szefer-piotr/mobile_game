@@ -32,6 +32,7 @@ var kingdoms: Array = []
 var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
+# Reward paths
 var current_path_name:String = ""
 var reward_path: Array = []
 var current_reward_index: int = 0
@@ -158,7 +159,6 @@ func _ready():
 	setup_kingdoms()
 	print("Loading kingdoms...")
 	load_kingdom(0)
-	
 	reset_game()
 
 func _process(delta):
@@ -183,6 +183,30 @@ func reset_game():
 
 	for c in card_row.get_children():
 		c.queue_free()
+
+
+func add_score(amount: int):
+	current_score += amount
+	progress_towards_current += amount
+	
+	while current_reward_index < reward_path.size():
+		var reward = reward_path[current_reward_index]
+		var required = reward["points_needed"]
+		
+		if progress_towards_current < required:
+			break
+			
+		progress_towards_current -= required
+		give_reward(reward)
+		current_reward_index += 1
+		
+	update_score_bar()
+
+
+func give_reward(reward: Dictionary):
+	CurrencyManager.add_currency(reward["reward_type"], reward["amount"])
+	show_reward_popup()
+
 
 func _position_new_card(card):
 	var target_x = float(cards.size() - 1) * 0.25
@@ -287,8 +311,9 @@ func end_game(msg: String, gave_reward: bool):
 		reward = 50
 	elif current_score >= 18:
 		reward = current_score
-
-	CurrencyManager.add_coins(reward)
+		
+	CurrencyManager.add_currency("coins", reward)
+	#CurrencyManager.add_coins(reward)
 	target_score_bar_value = float(total_score % 100)
 
 	if target_score_bar_value >= score_bar.max_value:

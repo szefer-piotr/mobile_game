@@ -28,9 +28,9 @@ static func kingdom1_buildings() -> Dictionary:
 				"Windmill": {"level": 0, "costs": [90, 180, 360, 720, 1440]},
 				"Archery Range": {"level": 0, "costs": [70, 140, 280, 560, 1120]},
 				"Mine": {"level": 0, "costs": [75, 150, 300, 600, 1200]},
-				"Wizard Tower": {"level": 0, "costs": [100, 200, 400, 800, 1600]},
+				"House": {"level": 0, "costs": [100, 200, 400, 800, 1600]},
 				"Market": {"level": 0, "costs": [65, 130, 260, 520, 1040]},
-				"Wall": {"level": 0, "costs": [55, 110, 220, 440, 880]},
+				"Main House": {"level": 0, "costs": [55, 110, 220, 440, 880]},
 		}
 
 static func kingdom2_buildings() -> Dictionary:

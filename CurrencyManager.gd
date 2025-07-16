@@ -1,12 +1,53 @@
 extends Node
 
 var coins: int = 100000
+var draws: int = 10
+var gems: int = 0
+var stars: int = 0
+
 @onready var coin_label = null
+@onready var draw_label = null
+@onready var gem_label = null
+@onready var star_label = null
 
 func _ready():
-	if coin_label == null and get_tree().root.has_node("Main/CanvasLayer/CoinLabel"):
-		coin_label = get_tree().root.get_node("Main/CanvasLayer/CoinLabel")
-	update_coin_ui()
+	var root = get_tree().root
+	if root.has_node("Main/CanvasLayer/CoinLabel"):
+		coin_label = root.get_node("Main/CanvasLayer/CoinLabel")
+	if root.has_node("Main/CanvasLayer/DrawLabel"):
+		coin_label = root.get_node("Main/CanvasLayer/DrawLabel")
+	if root.has_node("Main/CanvasLayer/GemLabel"):
+		coin_label = root.get_node("Main/CanvasLayer/GemLabel")
+	if root.has_node("Main/CanvasLayer/CoinLabel"):
+		coin_label = root.get_node("Main/CanvasLayer/StarLabel")
+	
+	#update_coin_ui()
+	update_all_ui()
+
+func add_currency(type: String, amount: int):
+	match type:
+		"coins":
+			coins += amount
+		"draw":
+			draws += amount
+		"gems":
+			gems += amount
+		"stars":
+			stars += amount
+		_:
+			push_error("Unknown currency type: " + type)
+
+	update_all_ui()
+
+func update_all_ui():
+	if coin_label:
+		coin_label.text = "🪙 Coins: " + str(coins)
+	if draw_label:
+		draw_label.text = "🎯 Draws: " + str(draws)
+	if gem_label:
+		gem_label.text = "💎 Gems: " + str(gems)
+	if star_label:
+		star_label.text = "⭐ Stars: " + str(stars)
 
 func add_coins(amount: int):
 	coins += amount
