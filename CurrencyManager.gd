@@ -15,11 +15,11 @@ func _ready():
 	if root.has_node("Main/CanvasLayer/CoinLabel"):
 		coin_label = root.get_node("Main/CanvasLayer/CoinLabel")
 	if root.has_node("Main/CanvasLayer/DrawLabel"):
-		coin_label = root.get_node("Main/CanvasLayer/DrawLabel")
+		draw_label = root.get_node("Main/CanvasLayer/DrawLabel")
 	if root.has_node("Main/CanvasLayer/GemLabel"):
-		coin_label = root.get_node("Main/CanvasLayer/GemLabel")
+		gem_label = root.get_node("Main/CanvasLayer/GemLabel")
 	if root.has_node("Main/CanvasLayer/CoinLabel"):
-		coin_label = root.get_node("Main/CanvasLayer/StarLabel")
+		star_label = root.get_node("Main/CanvasLayer/StarLabel")
 	
 	#update_coin_ui()
 	update_all_ui()

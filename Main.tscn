@@ -33,10 +33,10 @@ shadow_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 520.0
-offset_top = 400.0
-offset_right = 600.0
-offset_bottom = 423.0
+offset_left = -100.0
+offset_top = 160.0
+offset_right = -20.0
+offset_bottom = 183.0
 text = "Score: 0"
 horizontal_alignment = 1
 
@@ -52,20 +52,28 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -116.0
-offset_top = -148.0
-offset_right = -36.0
-offset_bottom = -117.0
+offset_left = -200.0
+offset_top = -260.0
+offset_right = -20.0
+offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Draw"
+theme_override_font_sizes/font_size = 50
+text = "DRAW"
 
 [node name="HoldButton" type="Button" parent="CanvasLayer"]
-offset_left = 580.0
-offset_top = 500.0
-offset_right = 660.0
-offset_bottom = 531.0
-text = "Hold"
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -260.0
+offset_right = 180.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "HOLD"
 
 [node name="ResultLabel" type="Label" parent="CanvasLayer"]
 offset_left = 520.0
@@ -79,10 +87,10 @@ vertical_alignment = 1
 one_shot = true
 
 [node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
-offset_left = 500.0
-offset_top = 92.0
-offset_right = 612.0
-offset_bottom = 115.0
+offset_left = 300.0
+offset_top = 100.0
+offset_right = 412.0
+offset_bottom = 123.0
 text = "Level Progress"
 
 [node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
@@ -112,56 +120,69 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CoinLabel" type="Label" parent="CanvasLayer"]
-offset_left = 620.0
-offset_top = 40.0
-offset_right = 742.0
-offset_bottom = 67.0
+offset_left = 120.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 30
 text = "Coins: 0"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="DrawLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -142.0
-offset_top = 70.0
-offset_right = -20.0
-offset_bottom = 97.0
+offset_left = -480.0
+offset_top = 1200.0
+offset_right = -240.0
+offset_bottom = 1227.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 40
 text = "Draws: 0"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="GemLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -142.0
-offset_top = 100.0
-offset_right = -20.0
-offset_bottom = 127.0
+offset_left = -880.0
+offset_top = 200.0
+offset_right = -758.0
+offset_bottom = 227.0
+grow_horizontal = 0
 text = "Gems: 0"
 horizontal_alignment = 2
 
 [node name="StarLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -142.0
-offset_top = 130.0
-offset_right = -20.0
-offset_bottom = 157.0
+offset_left = -400.0
+offset_top = 20.0
+offset_right = -140.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 30
 text = "Stars: 0"
 horizontal_alignment = 2
 
 [node name="KingdomButton" type="Button" parent="CanvasLayer"]
-offset_left = 507.0
-offset_top = 553.0
-offset_right = 610.0
-offset_bottom = 628.0
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.984375
+anchor_right = 1.02361
+anchor_bottom = 1.01953
+offset_left = -140.0
+offset_top = -120.0
+offset_right = -37.0
+offset_bottom = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_27khb")
-text = "🏰 Kingdom"
+text = "🏰 
+BUILD"
+metadata/_edit_use_anchors_ = true
 
 [node name="KingdomPanel" type="Panel" parent="CanvasLayer"]
 visible = false
@@ -173,9 +194,14 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BuildingList" type="HBoxContainer" parent="CanvasLayer/KingdomPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -58.0
+grow_horizontal = 2
+grow_vertical = 0
 alignment = 1
 
 [node name="PeonHutContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
