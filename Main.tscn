@@ -119,6 +119,42 @@ offset_bottom = 67.0
 text = "Coins: 0"
 horizontal_alignment = 2
 
+[node name="DrawLabel" type="Label" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -142.0
+offset_top = 70.0
+offset_right = -20.0
+offset_bottom = 97.0
+text = "Draws: 0"
+horizontal_alignment = 2
+
+[node name="GemLabel" type="Label" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -142.0
+offset_top = 100.0
+offset_right = -20.0
+offset_bottom = 127.0
+text = "Gems: 0"
+horizontal_alignment = 2
+
+[node name="StarLabel" type="Label" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -142.0
+offset_top = 130.0
+offset_right = -20.0
+offset_bottom = 157.0
+text = "Stars: 0"
+horizontal_alignment = 2
+
 [node name="KingdomButton" type="Button" parent="CanvasLayer"]
 offset_left = 507.0
 offset_top = 553.0
