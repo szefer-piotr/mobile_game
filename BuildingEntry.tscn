@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://cd2wkpri0amqe"]
 
 [node name="BuildingEntry" type="VBoxContainer"]
+offset_right = 160.0
+offset_bottom = 160.0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 text = "Label"
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2

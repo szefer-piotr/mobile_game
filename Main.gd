@@ -45,11 +45,19 @@ func update_score_bar():
 		score_bar_label.text = "Path Complete!"
 		return
 
-	var current_goal = reward_path[current_reward_index]["points_needed"]
+	var reward = reward_path[current_reward_index]
+	var current_goal = reward["points_needed"]
 	var ratio = float(progress_towards_current) / current_goal
 	score_bar.value = ratio * score_bar.max_value
-	score_bar_label.text = "%d / %d" % [progress_towards_current, current_goal]
 	
+	var reward_type = reward.get("reward_type", "")
+	var reward_amount = reward.get("amount", 0)
+	score_bar_label.text = "%d / %d -> %s %d" % [
+		progress_towards_current,
+		current_goal,
+		reward_type,
+		reward_amount
+	]
 
 func load_reward_path(path_name: String):
 	var file_path = "res://reward_paths/%s.json" % path_name
