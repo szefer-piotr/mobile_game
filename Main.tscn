@@ -23,7 +23,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 0, 3.97176)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 2, 1)
+transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 5.94966, 1.73001)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.873636, 0.48658, 1.2915e-08, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -4.21687, 2.41694, -4.02756)
@@ -33,18 +33,19 @@ shadow_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = -100.0
-offset_top = 160.0
-offset_right = -20.0
-offset_bottom = 183.0
+offset_left = 300.0
+offset_top = 260.0
+offset_right = 432.0
+offset_bottom = 309.0
+theme_override_font_sizes/font_size = 35
 text = "Score: 0"
 horizontal_alignment = 1
 
 [node name="TotalScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 420.0
-offset_top = 40.0
-offset_right = 460.0
-offset_bottom = 63.0
+offset_left = 20.0
+offset_top = 320.0
+offset_right = 60.0
+offset_bottom = 343.0
 
 [node name="DrawButton" type="Button" parent="CanvasLayer"]
 anchors_preset = 7
@@ -76,10 +77,11 @@ theme_override_font_sizes/font_size = 50
 text = "HOLD"
 
 [node name="ResultLabel" type="Label" parent="CanvasLayer"]
-offset_left = 520.0
-offset_top = 200.0
-offset_right = 620.0
-offset_bottom = 260.0
+offset_left = 280.0
+offset_top = 360.0
+offset_right = 480.0
+offset_bottom = 480.0
+theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -87,29 +89,32 @@ vertical_alignment = 1
 one_shot = true
 
 [node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
-offset_left = 300.0
+offset_left = 280.0
 offset_top = 100.0
-offset_right = 412.0
-offset_bottom = 123.0
+offset_right = 454.0
+offset_bottom = 135.0
+theme_override_font_sizes/font_size = 25
 text = "Level Progress"
 
 [node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 460.0
-offset_top = 132.0
-offset_right = -492.0
-offset_bottom = 155.0
+anchors_preset = -1
+anchor_left = 0.056
+anchor_right = 0.944
+anchor_bottom = 0.031
+offset_left = 79.68
+offset_top = 160.0
+offset_right = -79.6801
+offset_bottom = 168.32
 grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_0xlr5")
 theme_override_styles/fill = SubResource("StyleBoxFlat_h12kk")
 
 [node name="RewardReadyPopup" type="Label" parent="CanvasLayer"]
 visible = false
-offset_left = 445.0
-offset_top = 311.0
-offset_right = 666.0
-offset_bottom = 381.0
+offset_left = 260.0
+offset_top = 380.0
+offset_right = 481.0
+offset_bottom = 461.0
 theme_override_colors/font_color = Color(0.839216, 0.909804, 0, 1)
 theme_override_colors/font_shadow_color = Color(1, 0.701961, 0, 1)
 theme_override_colors/font_outline_color = Color(0.878431, 1, 0, 1)
@@ -145,10 +150,10 @@ horizontal_alignment = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -880.0
-offset_top = 200.0
-offset_right = -758.0
-offset_bottom = 227.0
+offset_left = -700.0
+offset_top = 380.0
+offset_right = -578.0
+offset_bottom = 407.0
 grow_horizontal = 0
 text = "Gems: 0"
 horizontal_alignment = 2

@@ -18,7 +18,7 @@ func _ready():
 		draw_label = root.get_node("Main/CanvasLayer/DrawLabel")
 	if root.has_node("Main/CanvasLayer/GemLabel"):
 		gem_label = root.get_node("Main/CanvasLayer/GemLabel")
-	if root.has_node("Main/CanvasLayer/CoinLabel"):
+	if root.has_node("Main/CanvasLayer/StarLabel"):
 		star_label = root.get_node("Main/CanvasLayer/StarLabel")
 	
 	#update_coin_ui()

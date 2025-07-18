@@ -194,7 +194,7 @@ func reset_game():
 
 
 func add_score(amount: int):
-	current_score += amount
+	#current_score += amount
 	progress_towards_current += amount
 	
 	while current_reward_index < reward_path.size():
@@ -213,7 +213,8 @@ func add_score(amount: int):
 
 func give_reward(reward: Dictionary):
 	CurrencyManager.add_currency(reward["reward_type"], reward["amount"])
-	show_reward_popup()
+	var text = "Recieved %d %s!" % [reward["amount"], reward["reward_type"]]
+	show_reward_popup(text)
 
 
 func _position_new_card(card):
@@ -321,7 +322,7 @@ func end_game(msg: String, gave_reward: bool):
 		reward = current_score
 		
 	CurrencyManager.add_currency("coins", reward)
-	#CurrencyManager.add_coins(reward)
+	add_score(reward)
 	target_score_bar_value = float(total_score % 100)
 
 	if target_score_bar_value >= score_bar.max_value:
@@ -331,7 +332,9 @@ func end_game(msg: String, gave_reward: bool):
 	hold_button.disabled = true
 	restart_timer.start()
 
-func show_reward_popup():
+func show_reward_popup(text: String = ""):
+	if text != "":
+		reward_popup.text = text
 	reward_popup.visible = true
 	reward_popup.modulate.a = 0
 
