@@ -283,8 +283,8 @@ func show_building_ui():
 	var kroot = get_node_or_null("KingdomRoot")
 	if kroot:
 		kroot.visible = true
-
-       var list = $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList
+	var list = $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList
+	
 	for child in list.get_children():
 		child.queue_free()
 
@@ -304,11 +304,11 @@ func show_building_ui():
 
 func get_building_button(key: String) -> Button:
 	var base = key.replace(" ", "")
-       return $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList.get_node_or_null("%s/Button" % base)
+	return $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList.get_node_or_null("%s/Button" % base)
 
 func get_building_label(key: String) -> Label:
 	var base = key.replace(" ", "")
-       return $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList.get_node_or_null("%s/Label" % base)
+	return $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList.get_node_or_null("%s/Label" % base)
 
 func connect_building_buttons():
 	for key in buildings.keys():
