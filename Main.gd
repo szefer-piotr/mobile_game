@@ -15,13 +15,23 @@ extends Node3D
 @onready var cam = $Camera3D
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
 
+# Resources
 var current_score = 0
 var total_score = 0
-var cards = []
+
+# Reward paths
+var current_path_name:String = ""
+var reward_path: Array = []
+var current_reward_index: int = 0
+var progress_towards_current: int = 0
 
 var displayed_score_value: float = 0.0
 var target_score_bar_value: float = 0.0
 var fill_speed = 6.0
+
+
+var cards = []
+
 
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
@@ -32,23 +42,19 @@ var kingdoms: Array = []
 var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
-# Reward paths
-var current_path_name:String = ""
-var reward_path: Array = []
-var current_reward_index: int = 0
-var progress_towards_current: int = 0
+
 
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
-		score_bar.value = score_bar.max_value
+		target_score_bar_value = score_bar.max_value
 		score_bar_label.text = "Path Complete!"
 		return
 
 	var reward = reward_path[current_reward_index]
 	var current_goal = reward["points_needed"]
 	var ratio = float(progress_towards_current) / current_goal
-	score_bar.value = ratio * score_bar.max_value
+	target_score_bar_value = ratio * score_bar.max_value
 	
 	var reward_type = reward.get("reward_type", "")
 	var reward_amount = reward.get("amount", 0)
@@ -323,10 +329,6 @@ func end_game(msg: String, gave_reward: bool):
 		
 	CurrencyManager.add_currency("coins", reward)
 	add_score(reward)
-	target_score_bar_value = float(total_score % 100)
-
-	if target_score_bar_value >= score_bar.max_value:
-		show_reward_popup()
 
 	draw_button.disabled = true
 	hold_button.disabled = true
