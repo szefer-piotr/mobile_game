@@ -198,129 +198,143 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BuildingList" type="HBoxContainer" parent="CanvasLayer/KingdomPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/KingdomPanel"]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="BuildingList" type="HBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 1.5
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -260.0
-offset_right = 365.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="PeonHutContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="PeonHutContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="PeonHutLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/PeonHutContainer"]
+[node name="PeonHutLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/PeonHutContainer"]
 layout_mode = 2
 text = "Peon Hut (Lv. 0)"
 
-[node name="PeonHutButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/PeonHutContainer"]
+[node name="PeonHutButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/PeonHutContainer"]
 layout_mode = 2
 text = "Build (100 Coins)"
 
-[node name="CardShrineContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="CardShrineContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="CardShrineLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/CardShrineContainer"]
+[node name="CardShrineLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/CardShrineContainer"]
 layout_mode = 2
 text = "Card Shrine (Lv. 0)"
 
-[node name="CardShrineButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/CardShrineContainer"]
+[node name="CardShrineButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/CardShrineContainer"]
 layout_mode = 2
 text = "Build (150 Coins)"
 
-[node name="BarracksContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="BarracksContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="BarracksLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/BarracksContainer"]
+[node name="BarracksLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/BarracksContainer"]
 layout_mode = 2
 text = "Barracks (Lv. 0)"
 
-[node name="BarracksButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/BarracksContainer"]
+[node name="BarracksButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/BarracksContainer"]
 layout_mode = 2
 text = "Build (200 Coins)"
 
-[node name="FarmContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="FarmContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="FarmLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/FarmContainer"]
+[node name="FarmLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/FarmContainer"]
 layout_mode = 2
 text = "Farm (Lv. 0)"
 
-[node name="FarmButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/FarmContainer"]
+[node name="FarmButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/FarmContainer"]
 layout_mode = 2
 text = "Build (120 Coins)"
 
-[node name="BlacksmithContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="BlacksmithContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="BlacksmithLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/BlacksmithContainer"]
+[node name="BlacksmithLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/BlacksmithContainer"]
 layout_mode = 2
 text = "Blacksmith (Lv. 0)"
 
-[node name="BlacksmithButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/BlacksmithContainer"]
+[node name="BlacksmithButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/BlacksmithContainer"]
 layout_mode = 2
 text = "Build (250 Coins)"
 
-[node name="ArcheryRangeContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="ArcheryRangeContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="ArcheryRangeLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/ArcheryRangeContainer"]
+[node name="ArcheryRangeLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/ArcheryRangeContainer"]
 layout_mode = 2
 text = "Archery Range (Lv. 0)"
 
-[node name="ArcheryRangeButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/ArcheryRangeContainer"]
+[node name="ArcheryRangeButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/ArcheryRangeContainer"]
 layout_mode = 2
 text = "Build (180 Coins)"
 
-[node name="StableContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="StableContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="StableLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/StableContainer"]
+[node name="StableLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/StableContainer"]
 layout_mode = 2
 text = "Stable (Lv. 0)"
 
-[node name="StableButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/StableContainer"]
+[node name="StableButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/StableContainer"]
 layout_mode = 2
 text = "Build (220 Coins)"
 
-[node name="WizardTowerContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="WizardTowerContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="WizardTowerLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/WizardTowerContainer"]
+[node name="WizardTowerLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WizardTowerContainer"]
 layout_mode = 2
 text = "Wizard Tower (Lv. 0)"
 
-[node name="WizardTowerButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/WizardTowerContainer"]
+[node name="WizardTowerButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WizardTowerContainer"]
 layout_mode = 2
 text = "Build (300 Coins)"
 
-[node name="MarketContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="MarketContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="MarketLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/MarketContainer"]
+[node name="MarketLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/MarketContainer"]
 layout_mode = 2
 text = "Market (Lv. 0)"
 
-[node name="MarketButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/MarketContainer"]
+[node name="MarketButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/MarketContainer"]
 layout_mode = 2
 text = "Build (160 Coins)"
 
-[node name="WallContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/BuildingList"]
+[node name="WallContainer" type="VBoxContainer" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList"]
 layout_mode = 2
 
-[node name="WallLabel" type="Label" parent="CanvasLayer/KingdomPanel/BuildingList/WallContainer"]
+[node name="WallLabel" type="Label" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer"]
 layout_mode = 2
 text = "Wall (Lv. 0)"
 
-[node name="WallButton" type="Button" parent="CanvasLayer/KingdomPanel/BuildingList/WallContainer"]
+[node name="WallButton" type="Button" parent="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer"]
 layout_mode = 2
 text = "Build (140 Coins)"
 
 [connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/KingdomPanel/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]
