@@ -206,15 +206,16 @@ func add_score(amount: int):
 	while current_reward_index < reward_path.size():
 		var reward = reward_path[current_reward_index]
 		var required = reward["points_needed"]
-		
 		if progress_towards_current < required:
 			break
-			
 		progress_towards_current -= required
 		give_reward(reward)
 		current_reward_index += 1
 		
 	update_score_bar()
+	
+	if current_reward_index >= reward_path.size():
+		load_reward_path("kingdom_path")
 
 
 func give_reward(reward: Dictionary):
@@ -327,7 +328,8 @@ func end_game(msg: String, gave_reward: bool):
 	elif current_score >= 18:
 		reward = current_score
 		
-	CurrencyManager.add_currency("coins", reward)
+	#CurrencyManager.add_currency("coins", reward)
+	
 	add_score(reward)
 
 	draw_button.disabled = true
