@@ -33,7 +33,6 @@ var fill_speed = 6.0
 
 var cards = []
 
-
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
 
@@ -43,7 +42,7 @@ var kingdoms: Array = []
 var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
-var auto_draw_enabled = false
+var auto_draw_enabled = true
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
@@ -174,8 +173,8 @@ func _ready():
 	setup_kingdoms()
 	print("Loading kingdoms...")
 	load_kingdom(0)
-	
 	reset_game()
+	$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
 
 func _process(delta):
 	if abs(displayed_score_value - target_score_bar_value) > 0.1:
@@ -196,11 +195,13 @@ func reset_game():
 	result_label.text = ""
 	draw_button.disabled = false
 	hold_button.disabled = false
-
+	
+	auto_draw_timer.stop()
+	
 	for c in card_row.get_children():
 		c.queue_free()
 		
-	start_auto_draw()
+	#start_auto_draw()
 
 
 func add_score(amount: int):
@@ -242,7 +243,7 @@ func start_auto_draw():
 	else:
 		auto_draw_timer.stop()
 		$CanvasLayer/DrawButton.disabled = false
-		$CanvasLayer/HoldButton.disables = false
+		$CanvasLayer/HoldButton.disabled = false
 	
 func draw_card():
 	var value = randi() % 6 + 1
@@ -341,8 +342,6 @@ func end_game(msg: String, gave_reward: bool):
 		reward = 50
 	elif current_score >= 18:
 		reward = current_score
-		
-	#CurrencyManager.add_currency("coins", reward)
 	
 	add_score(reward)
 
@@ -438,17 +437,18 @@ func _on_AutoDrawTimer_timeout():
 	if current_score < 15:
 		draw_card()
 	if current_score >= 15:
-		$DrawButton.disabled = false
-		$HoldButton.disabled = false
+		$CanvasLayer/DrawButton.disabled = false
+		$CanvasLayer/HoldButton.disabled = false
 		auto_draw_timer.stop()
 
 func _on_DrawButton_pressed():
 	draw_card()
+	if auto_draw_enabled:
+		start_auto_draw()
 	
 func _on_AutoToggleButton_pressed():
 	auto_draw_enabled = !auto_draw_enabled
 	if auto_draw_enabled:
-		start_auto_draw()
 		$CanvasLayer/AutoToggleButton.text = "Auto: ON"
 	else:
 		auto_draw_timer.stop()

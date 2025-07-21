@@ -104,8 +104,7 @@ vertical_alignment = 1
 one_shot = true
 
 [node name="AutoDrawTimer" type="Timer" parent="CanvasLayer"]
-wait_time = 0.5
-one_shot = true
+wait_time = 0.1
 
 [node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
 offset_left = 280.0
