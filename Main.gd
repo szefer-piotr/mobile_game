@@ -14,6 +14,7 @@ extends Node3D
 @onready var reward_popup = $CanvasLayer/RewardReadyPopup
 @onready var cam = $Camera3D
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
+@onready var auto_draw_timer = $CanvasLayer/AutoDrawTimer
 
 # Resources
 var current_score = 0
@@ -42,8 +43,7 @@ var kingdoms: Array = []
 var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
-
-
+var auto_draw_enabled = false
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
@@ -86,7 +86,6 @@ func load_reward_path(path_name: String):
 		push_error("Failed to parse JSON reward path.")
 
 
-
 func setup_kingdoms():
 	kingdoms.clear()
 	var k1 = KingdomData.new()
@@ -106,6 +105,7 @@ func setup_kingdoms():
 	k3.scene_path = "res://kingdoms/Kingdom03.tscn"
 	k3.buildings = KingdomData.kingdom3_buildings()
 	kingdoms.append(k3)
+
 
 func load_kingdom(index: int):
 	if index >= kingdoms.size():
@@ -159,6 +159,7 @@ func _ready():
 	load_reward_path("starter_path")
 	randomize()
 	restart_timer.timeout.connect(_on_restart_timer_timeout)
+	auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
 
 	default_cam_pos = cam.global_position
 	default_cam_rot = cam.rotation_degrees
@@ -173,6 +174,7 @@ func _ready():
 	setup_kingdoms()
 	print("Loading kingdoms...")
 	load_kingdom(0)
+	
 	reset_game()
 
 func _process(delta):
@@ -197,6 +199,8 @@ func reset_game():
 
 	for c in card_row.get_children():
 		c.queue_free()
+		
+	start_auto_draw()
 
 
 func add_score(amount: int):
@@ -230,7 +234,17 @@ func _position_new_card(card):
 	var target_z = randf_range(-0.025, 0.025)
 	card.target_position = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
 
-func _on_DrawButton_pressed():
+func start_auto_draw():
+	if current_score < 15:
+		$CanvasLayer/DrawButton.disabled = true
+		$CanvasLayer/HoldButton.disabled = true
+		auto_draw_timer.start()
+	else:
+		auto_draw_timer.stop()
+		$CanvasLayer/DrawButton.disabled = false
+		$CanvasLayer/HoldButton.disables = false
+	
+func draw_card():
 	var value = randi() % 6 + 1
 	current_score += value
 	score_label.text = "Score: " + str(current_score)
@@ -418,3 +432,26 @@ func _unhandled_input(event):
 			var rect = $CanvasLayer/KingdomPanel.get_global_rect()
 			if not rect.has_point(event.position):
 				hide_kingdom_mode()
+
+
+func _on_AutoDrawTimer_timeout():
+	if current_score < 15:
+		draw_card()
+	if current_score >= 15:
+		$DrawButton.disabled = false
+		$HoldButton.disabled = false
+		auto_draw_timer.stop()
+
+func _on_DrawButton_pressed():
+	draw_card()
+	
+func _on_AutoToggleButton_pressed():
+	auto_draw_enabled = !auto_draw_enabled
+	if auto_draw_enabled:
+		start_auto_draw()
+		$CanvasLayer/AutoToggleButton.text = "Auto: ON"
+	else:
+		auto_draw_timer.stop()
+		$CanvasLayer/DrawButton.disabled = false
+		$CanvasLayer/HoldButton.disabled = false
+		$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
