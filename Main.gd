@@ -42,7 +42,7 @@ var kingdoms: Array = []
 var current_kingdom_idx: int = 0
 var buildings: Dictionary = {}
 
-var auto_draw_enabled = true
+var auto_draw_enabled = false
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
@@ -200,9 +200,6 @@ func reset_game():
 	
 	for c in card_row.get_children():
 		c.queue_free()
-		
-	#start_auto_draw()
-
 
 func add_score(amount: int):
 	#current_score += amount
@@ -344,11 +341,11 @@ func end_game(msg: String, gave_reward: bool):
 		reward = current_score
 	else:
 		reward = 0
-	
 	add_score(reward)
 
 	draw_button.disabled = true
 	hold_button.disabled = true
+	auto_draw_timer.stop()
 	restart_timer.start()
 
 func show_reward_popup(text: String = ""):
@@ -365,6 +362,8 @@ func show_reward_popup(text: String = ""):
 
 func _on_restart_timer_timeout():
 	reset_game()
+	if auto_draw_enabled:
+		start_auto_draw()
 
 func _on_BuildingButton_pressed(key: String):
 	if not buildings.has(key):
@@ -436,12 +435,23 @@ func _unhandled_input(event):
 
 
 func _on_AutoDrawTimer_timeout():
+	if not auto_draw_enabled:
+		auto_draw_timer.stop()
+		return
+		
 	if current_score < 15:
 		draw_card()
-	if current_score >= 15:
-		$CanvasLayer/DrawButton.disabled = false
-		$CanvasLayer/HoldButton.disabled = false
-		auto_draw_timer.stop()
+		auto_draw_timer.start()
+	else:
+		if randi() % 2 == 0:
+			draw_card()
+			auto_draw_timer.start()
+		else:
+			_on_HoldButton_pressed()
+	#if current_score >= 15:
+		#$CanvasLayer/DrawButton.disabled = false
+		#$CanvasLayer/HoldButton.disabled = false
+		#auto_draw_timer.stop()
 
 func _on_DrawButton_pressed():
 	draw_card()
