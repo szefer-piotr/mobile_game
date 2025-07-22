@@ -340,8 +340,10 @@ func end_game(msg: String, gave_reward: bool):
 	var reward = 0
 	if current_score == 21:
 		reward = 50
-	elif current_score >= 18:
+	elif current_score >= 18 and current_score < 21:
 		reward = current_score
+	else:
+		reward = 0
 	
 	add_score(reward)
 
