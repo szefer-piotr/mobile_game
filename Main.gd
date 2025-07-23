@@ -459,19 +459,19 @@ func _on_AutoDrawTimer_timeout():
 func _on_DrawButton_pressed():
 	if auto_draw_enabled:
 		start_auto_draw()
-		draw_button.disabled = true
-		hold_button.disabled = true
+	draw_button.disabled = true
+	hold_button.disabled = true
+	draw_card()
+		
+	while current_score < 15 and restart_timer.is_stopped():
+		await get_tree().create_timer(0.1).timeout
 		draw_card()
 		
-		while current_score < 15 and restart_timer.is_stopped():
-			await get_tree().create_timer(0.3).timeout
-			draw_card()
+	draw_button.disabled = false
+	hold_button.disabled = false
 		
-		draw_button.disabled = false
-		hold_button.disabled = false
-		
-		if auto_draw_enabled:
-			start_auto_draw()
+	if auto_draw_enabled:
+		start_auto_draw()
 			
 
 func _on_AutoToggleButton_pressed():
