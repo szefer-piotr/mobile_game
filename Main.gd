@@ -245,6 +245,9 @@ func start_auto_draw():
 		$CanvasLayer/HoldButton.disabled = false
 	
 func draw_card():
+	if current_score == 0:
+		if not CurrencyManager.spend_draw(1):
+			return
 	var value = randi() % 6 + 1
 	current_score += value
 	score_label.text = "Score: " + str(current_score)
@@ -459,20 +462,17 @@ func _on_AutoDrawTimer_timeout():
 func _on_DrawButton_pressed():
 	if auto_draw_enabled:
 		start_auto_draw()
-	draw_button.disabled = true
-	hold_button.disabled = true
-	draw_card()
-		
-	while current_score < 15 and restart_timer.is_stopped():
-		await get_tree().create_timer(0.1).timeout
+	else:
+		draw_button.disabled = true
+		hold_button.disabled = true
 		draw_card()
-		
-	draw_button.disabled = false
-	hold_button.disabled = false
-		
-	if auto_draw_enabled:
-		start_auto_draw()
 			
+		while current_score < 15 and restart_timer.is_stopped():
+			await get_tree().create_timer(0.1).timeout
+			draw_card()
+			
+		draw_button.disabled = false
+		hold_button.disabled = false	
 
 func _on_AutoToggleButton_pressed():
 	auto_draw_enabled = !auto_draw_enabled

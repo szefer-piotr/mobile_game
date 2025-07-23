@@ -60,6 +60,13 @@ func spend_coins(amount: int) -> bool:
 		return true
 	return false
 
+func spend_draw(amount: int) -> bool:
+	if draws >= amount:
+		draws -= amount
+		update_all_ui()
+		return true
+	return false
+
 func update_coin_ui():
 	if coin_label:
 		coin_label.text = "🪙 Coins: " + str(coins)
