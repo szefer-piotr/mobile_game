@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://bpiwtmual2xh6"]
+[gd_scene load_steps=89 format=4 uid="uid://bpiwtmual2xh6"]
 
 [ext_resource type="Texture2D" uid="uid://ijt2oa2h76f0" path="res://assets/fishing_village_pack_Untitled.png" id="1_k0vey"]
 [ext_resource type="Texture2D" uid="uid://bvwok255kmb5n" path="res://assets/MedievalPack/medieval_village_pack_Untitled.png" id="2_10tuq"]
@@ -11,6 +11,9 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdrjr"]
 albedo_color = Color(0.0392157, 0.686275, 0.121569, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_te58d"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqywn"]
 resource_name = "ArenaAtlas"
@@ -1364,6 +1367,11 @@ transform = Transform3D(20, 0, 0, 0, 0.1, 0, 0, 0, 20, 0, -0.0595465, 0)
 mesh = SubResource("BoxMesh_glv2v")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xdrjr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Background/Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background/Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_te58d")
 
 [node name="Table" type="MeshInstance3D" parent="Background"]
 transform = Transform3D(-1.31134e-07, 0, 1, 0, 1, 0, -3, 0, -4.37114e-08, 2.11374, -0.016243, 0.444299)

@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4gah1ogqg1s0"]
+[gd_scene load_steps=4 format=3 uid="uid://b4gah1ogqg1s0"]
 
 [ext_resource type="Script" uid="uid://cjffdepxk28jr" path="res://Knight.gd" id="1_ii6qd"]
 [ext_resource type="PackedScene" uid="uid://bn3ar3os7dt5m" path="res://Knight2.tscn" id="2_ii6qd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nsuie"]
+height = 2.35527
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_ii6qd")
 
 [node name="Knight" parent="." instance=ExtResource("2_ii6qd")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2013, 0)
+shape = SubResource("CapsuleShape3D_nsuie")
