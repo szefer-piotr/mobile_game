@@ -15,6 +15,7 @@ extends Node3D
 @onready var cam = $Camera3D
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
 @onready var auto_draw_timer = $CanvasLayer/AutoDrawTimer
+@onready var knight_scene = preload("res://Knight.tscn")
 
 # Resources
 var current_score = 0
@@ -131,6 +132,12 @@ func load_kingdom(index: int):
 	if new_root == null:
 		new_root = Node3D.new()
 	new_root.name = "KingdomRoot"
+	
+	# Spawn a Knight
+	var npc = knight_scene.instantiate()
+	npc.global_position = Vector3(randf_range(-5,5), 0, randf_range(-5,5))
+	new_root.add_child(npc)
+	
 	add_child(new_root)
 	for key in buildings.keys():
 		var label = get_building_label(key)

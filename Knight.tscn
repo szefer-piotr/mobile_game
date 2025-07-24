@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4gah1ogqg1s0"]
+
+[ext_resource type="Script" uid="uid://cjffdepxk28jr" path="res://Knight.gd" id="1_ii6qd"]
+[ext_resource type="PackedScene" uid="uid://bn3ar3os7dt5m" path="res://Knight2.tscn" id="2_ii6qd"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_ii6qd")
+
+[node name="Knight" parent="." instance=ExtResource("2_ii6qd")]
