@@ -10,7 +10,11 @@ height = 2.35527
 script = ExtResource("1_ii6qd")
 
 [node name="Knight" parent="." instance=ExtResource("2_ii6qd")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2013, 0)
 shape = SubResource("CapsuleShape3D_nsuie")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
