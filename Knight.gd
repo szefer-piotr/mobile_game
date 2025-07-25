@@ -25,15 +25,26 @@ func _physics_process(delta: float) -> void:
 		
 	var to_target = target_pos - global_position
 	to_target.y = 0
+	
 	if to_target.length() < 0.2:
 		pick_new_target()
 		to_target = target_pos - global_position
 		to_target.y = 0
+	
 	var dir = to_target.normalized()
+	
 	velocity.x = dir.x * speed
 	velocity.z = dir.z * speed
 	velocity.y -= 9.8 * delta
+	
 	move_and_slide()
+	
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		velocity = Vector3.ZERO
+	else:
+		move_and_slide()
+	
 	if velocity.length() > 0.1:
 		look_at(global_position + Vector3(dir.x, 0, dir.z), Vector3.UP)
 		
