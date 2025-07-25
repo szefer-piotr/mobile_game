@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed: float = 2.0
+@export var speed: float = 1.0
 @export var area_size: float = 8.0
 @export var idle_time_range: Vector2 = Vector2(1.5, 3.0)
 @export var move_time_range: Vector2 = Vector2(3.0, 7.0)
@@ -46,7 +46,7 @@ func enter_move_state():
 	is_idle = false
 	pick_new_target()
 	if anim_player:
-		anim_player.play("Walking_A")
+		anim_player.play("Walking_B")
 	timer.start(randf_range(move_time_range.x, move_time_range.y))
 	
 func enter_idle_state():
