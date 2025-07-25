@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed: float = 1.0
+@export var speed: float = 3.0
 @export var area_size: float = 8.0
 @export var idle_time_range: Vector2 = Vector2(1.5, 3.0)
 @export var move_time_range: Vector2 = Vector2(3.0, 7.0)
@@ -37,16 +37,17 @@ func _physics_process(delta: float) -> void:
 	velocity.z = dir.z * speed
 	velocity.y -= 9.8 * delta
 	
-	move_and_slide()
+	look_at(global_position + Vector3(dir.x, 0, dir.z), Vector3.UP)
 	
 	var collision = move_and_collide(velocity * delta)
+	
 	if collision:
 		velocity = Vector3.ZERO
 	else:
 		move_and_slide()
-	
-	if velocity.length() > 0.1:
-		look_at(global_position + Vector3(dir.x, 0, dir.z), Vector3.UP)
+	#
+	#if velocity.length() > 0.1:
+		#look_at(global_position + Vector3(dir.x, 0, dir.z), Vector3.UP)
 		
 func pick_new_target():
 	var x = randf_range(-area_size, area_size)
