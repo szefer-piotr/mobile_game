@@ -32,7 +32,6 @@ func _physics_process(delta: float) -> void:
 		to_target.y = 0
 	
 	var dir = to_target.normalized()
-	
 	velocity.x = dir.x * speed
 	velocity.z = dir.z * speed
 	velocity.y -= 9.8 * delta
@@ -42,12 +41,9 @@ func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	
 	if collision:
-		velocity = Vector3.ZERO
+		enter_idle_state()
 	else:
 		move_and_slide()
-	#
-	#if velocity.length() > 0.1:
-		#look_at(global_position + Vector3(dir.x, 0, dir.z), Vector3.UP)
 		
 func pick_new_target():
 	var x = randf_range(-area_size, area_size)

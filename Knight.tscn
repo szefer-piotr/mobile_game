@@ -13,7 +13,7 @@ script = ExtResource("1_ii6qd")
 transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.59662, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.617635, 0)
 shape = SubResource("CapsuleShape3D_nsuie")
 
 [node name="Timer" type="Timer" parent="."]
