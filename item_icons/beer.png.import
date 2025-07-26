@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1j868q1cotm4"
-path="res://.godot/imported/mug_full_icon.png-57d385c6952d857badbb2b86377c1257.ctex"
+uid="uid://doi07fb8jpbnk"
+path="res://.godot/imported/beer.png-3cb4ceab1b79213277912a8631d977e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mug_full_icon.png"
-dest_files=["res://.godot/imported/mug_full_icon.png-57d385c6952d857badbb2b86377c1257.ctex"]
+source_file="res://item_icons/beer.png"
+dest_files=["res://.godot/imported/beer.png-3cb4ceab1b79213277912a8631d977e0.ctex"]
 
 [params]
 
