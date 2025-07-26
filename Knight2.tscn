@@ -31428,7 +31428,7 @@ bones/49/rotation = Quaternion(-0.674362, 0.0851905, 0.727687, -0.0919271)
 bones/49/scale = Vector3(1, 1, 1)
 
 [node name="Spike_Shield" type="BoneAttachment3D" parent="Rig/Skeleton3D"]
-transform = Transform3D(-0.0183814, 0.325065, 0.945513, 0.998405, 0.0564559, 1.22268e-06, -0.0533792, 0.944004, -0.325584, 0.654895, 0.612594, -0.163751)
+transform = Transform3D(-0.0183813, 0.325065, 0.945513, 0.998405, 0.0564558, 1.38928e-06, -0.0533791, 0.944004, -0.325584, 0.654895, 0.612594, -0.163751)
 bone_name = "Spike_Shield"
 bone_idx = 13
 
@@ -31437,7 +31437,7 @@ mesh = SubResource("ArrayMesh_2ompd")
 skeleton = NodePath("")
 
 [node name="1H_Sword" type="BoneAttachment3D" parent="Rig/Skeleton3D"]
-transform = Transform3D(0.039672, -0.154517, 0.987193, 0.968584, 0.248686, -5.28368e-07, -0.245501, 0.956179, 0.159528, -0.491485, 0.612485, 0.0511801)
+transform = Transform3D(0.0396721, -0.154517, 0.987193, 0.968583, 0.248686, -6.5834e-07, -0.245501, 0.956179, 0.159528, -0.491485, 0.612486, 0.0511801)
 bone_name = "1H_Sword"
 bone_idx = 19
 

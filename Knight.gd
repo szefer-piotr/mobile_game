@@ -9,14 +9,19 @@ extends CharacterBody3D
 @onready var knight_model: Node3D = $Knight
 @onready var timer: Timer = $Timer
 
+@export var follow_center_node: Node3D
 var target_pos: Vector3
+var center_pos: Vector3
 var is_idle := false
 
 func _ready():
 	knight_model.rotation_degrees.y = 180
 	randomize()
 	timer.one_shot = true
-	timer.connect("timeout", _on_Timer_timeout)
+	timer.timeout.connect(_on_Timer_timeout)
+	# Knight.gd
+	center_pos = follow_center_node.global_position if follow_center_node else global_position
+	#center_pos = follow_center_node != null ? follow_center_node.global_position : global_position
 	enter_move_state()
 		
 func _physics_process(delta: float) -> void:
@@ -42,10 +47,17 @@ func _physics_process(delta: float) -> void:
 	if is_on_wall():
 		enter_idle_state()
 		
+#func pick_new_target():
+	#var x = randf_range(-area_size, area_size)
+	#var z = randf_range(-area_size, area_size)
+	#target_pos = Vector3(x, global_position.y, z)
+
 func pick_new_target():
+	if follow_center_node:
+		center_pos = follow_center_node.global_position
 	var x = randf_range(-area_size, area_size)
 	var z = randf_range(-area_size, area_size)
-	target_pos = Vector3(x, global_position.y, z)
+	target_pos = center_pos + Vector3(x, 0, z)
 
 func enter_move_state():
 	is_idle = false

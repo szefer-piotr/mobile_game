@@ -133,10 +133,7 @@ func load_kingdom(index: int):
 		new_root = Node3D.new()
 	new_root.name = "KingdomRoot"
 	
-	# Spawn a Knight
-	var npc = knight_scene.instantiate()
-	npc.global_position = Vector3(randf_range(-5,5), 0, randf_range(-5,5))
-	new_root.add_child(npc)
+
 	
 	add_child(new_root)
 	for key in buildings.keys():
@@ -401,9 +398,16 @@ func _on_BuildingButton_pressed(key: String):
 				var build_node = buildings_node.get_node_or_null(node_name)
 				if build_node:
 					build_node.visible = true
+					if key == "Castle" and data["level"] == 1:
+						var npc = knight_scene.instantiate()
+						npc.global_position = build_node.global_position + Vector3(2, 0, 0)
+						npc.follow_center_node = build_node   # new property described below
+						npc.area_size = 5                     # keep the knight near the castle
+						$KingdomRoot.add_child(npc)
 					
 		update_building_button(key, data)
 		check_kingdom_complete()
+		
 
 func update_building_button(key: String, data: Dictionary):
 	var btn = get_building_button(key)
