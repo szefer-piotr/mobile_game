@@ -19,3 +19,6 @@ transform = Transform3D(0.230423, 0, 0.97309, 0, 1, 0, -0.97309, 0, 0.230423, 0.
 
 [node name="mug_full2" parent="." instance=ExtResource("2_85vdf")]
 transform = Transform3D(0.197503, 0, 0.980302, 0, 1, 0, -0.980302, 0, 0.197503, -0.0533632, -1.19209e-07, -0.0672133)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.855039, 0, 0.518564, 0.223591, 0.902269, 0.368669, -0.467885, 0.431173, -0.771475, 1.03004, 0.83109, -2.40806)
