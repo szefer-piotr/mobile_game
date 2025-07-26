@@ -1,5 +1,6 @@
-extends Node
+extends SubViewport
 
 func _ready():
-	var image = $WorldEnvironment.get_texture().get_image()
+	await get_tree().process_frame # let the viewport render
+	var image = get_texture().get_image()
 	image.save_png("res://mug_full_icon.png")

@@ -199,7 +199,7 @@ func reset_game():
 	score_label.text = "Score: 0"
 	result_label.text = ""
 	draw_button.disabled = false
-	hold_button.disabled = false
+	hold_button.disabled = true
 	force_draw_until_15 = false
 	auto_draw_timer.stop()
 	
@@ -246,7 +246,7 @@ func start_auto_draw():
 	else:
 		auto_draw_timer.stop()
 		$CanvasLayer/DrawButton.disabled = false
-		$CanvasLayer/HoldButton.disabled = false
+		$CanvasLayer/HoldButton.disabled = current_score < 18
 	
 func draw_card():
 	if current_score == 0:
@@ -254,6 +254,7 @@ func draw_card():
 			return
 	var value = randi() % 6 + 1
 	current_score += value
+	hold_button.disabled = current_score < 18
 	score_label.text = "Score: " + str(current_score)
 
 	var card = card_scene.instantiate()
@@ -456,9 +457,9 @@ func _on_AutoDrawTimer_timeout():
 	if not auto_draw_enabled:
 		auto_draw_timer.stop()
 		return
-	
+
 	draw_card()
-	
+	hold_button.disabled = current_score < 18
 	if current_score >= 21:
 		return
 	
@@ -481,9 +482,9 @@ func _on_DrawButton_pressed():
 		while current_score < 15 and restart_timer.is_stopped():
 			await get_tree().create_timer(0.1).timeout
 			draw_card()
-			
-		draw_button.disabled = false
-		hold_button.disabled = false	
+		if restart_timer.is_stopped():
+			draw_button.disabled = false
+			hold_button.disabled = current_score < 18
 
 func _on_AutoToggleButton_pressed():
 	auto_draw_enabled = !auto_draw_enabled
@@ -492,5 +493,5 @@ func _on_AutoToggleButton_pressed():
 	else:
 		auto_draw_timer.stop()
 		$CanvasLayer/DrawButton.disabled = false
-		$CanvasLayer/HoldButton.disabled = false
+		$CanvasLayer/HoldButton.disabled = current_score < 18
 		$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
