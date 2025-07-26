@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://cescgvk7w21yj"]
+
+[ext_resource type="Script" uid="uid://clkgeu1248qq8" path="res://sub_viewport.gd" id="1_ktqrk"]
+[ext_resource type="PackedScene" uid="uid://cq2me8nsnv8wv" path="res://assets/KayKit_Adventurers_1.0_FREE/Assets/gltf/mug_full.gltf" id="2_85vdf"]
+
+[sub_resource type="Environment" id="Environment_fkvck"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_nas4s"]
+
+[node name="SubViewport" type="SubViewport"]
+script = ExtResource("1_ktqrk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fkvck")
+camera_attributes = SubResource("CameraAttributesPhysical_nas4s")
+
+[node name="mug_full2" parent="WorldEnvironment" instance=ExtResource("2_85vdf")]
+transform = Transform3D(0.142629, 0, 0.989776, 0, 1, 0, -0.989776, 0, 0.142629, -0.0309572, -1.19209e-07, -0.0672133)
