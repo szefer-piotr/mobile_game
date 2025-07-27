@@ -16,6 +16,7 @@ extends Node3D
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
 @onready var auto_draw_timer = $CanvasLayer/AutoDrawTimer
 @onready var knight_scene = preload("res://Knight.tscn")
+@onready var deck_spawn = $DeckSpawn
 
 # Resources
 var current_score = 0
@@ -45,6 +46,7 @@ var buildings: Dictionary = {}
 
 var auto_draw_enabled = false
 var force_draw_until_15 = false
+
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
@@ -259,7 +261,7 @@ func draw_card():
 
 	var card = card_scene.instantiate()
 	card.value = value
-	card.global_position = card_spawn.global_position + Vector3(0,1,0)
+	card.global_position = deck_spawn.global_position
 	card_row.add_child(card)
 	cards.append(card)
 
