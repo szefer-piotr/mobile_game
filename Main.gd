@@ -232,10 +232,11 @@ func give_reward(reward: Dictionary):
 
 
 func _position_new_card(card):
-	var target_x = float(cards.size() - 1) * 0.25
-	var target_y = float(cards.size() - 1) * 0.025
-	var target_z = randf_range(-0.025, 0.025)
-	card.target_position = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
+        var target_x = float(cards.size() - 1) * 0.25
+        var target_y = float(cards.size() - 1) * 0.025
+        var target_z = randf_range(-0.025, 0.025)
+        var pos = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
+        card.set_target_position(pos)
 
 
 func start_auto_draw():
@@ -258,8 +259,8 @@ func draw_card():
 	score_label.text = "Score: " + str(current_score)
 
 	var card = card_scene.instantiate()
-	card.value = value
-	card.global_position = card_spawn.global_position
+        card.value = value
+        card.global_position = card_spawn.global_position + Vector3(0, 1, 0)
 	card_row.add_child(card)
 	cards.append(card)
 
