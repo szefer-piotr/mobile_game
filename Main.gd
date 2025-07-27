@@ -260,8 +260,8 @@ func draw_card():
 	score_label.text = "Score: " + str(current_score)
 
 	var card = card_scene.instantiate()
-	card.value = value
-	card.global_position = deck_spawn.global_position
+    card.value = value
+    card.global_position = card_spawn.global_position + Vector3(0, 1, 0)
 	card_row.add_child(card)
 	cards.append(card)
 

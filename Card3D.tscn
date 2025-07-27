@@ -4,11 +4,14 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_axxlu"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_eeaw3"]
-size = Vector3(0.9021, 0.0222473, 1)
+[sub_resource type="BoxShape3D" id="BoxShape_card"]
+size = Vector3(0.9, 0.05, 1.0)
 
 [node name="Card3D" type="RigidBody3D"]
 script = ExtResource("1_eeaw3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_card")
 
 [node name="MeshInstance3D" type="CSGMesh3D" parent="."]
 transform = Transform3D(0.91, 0, 0, 0, 0.021, 0, 0, 0, 1.0008, 0, 0.0225056, 0)
