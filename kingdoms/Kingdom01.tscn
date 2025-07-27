@@ -10,7 +10,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdrjr"]
-albedo_color = Color(0.0392157, 0.686275, 0.121569, 1)
+albedo_color = Color(0.207843, 0.560784, 0.121569, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_te58d"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
@@ -1490,8 +1490,7 @@ num_trees = 100
 area_size = 10.0
 
 [node name="Assets" type="Node3D" parent="Background"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -26.2281)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.2208, 5.22714, 15.4458)
 
 [node name="barrel_1" type="MeshInstance3D" parent="Background/Assets"]
 transform = Transform3D(0.23531, 0.97192, -1.49012e-07, -2.98023e-08, -2.38419e-07, -1, -0.97192, 0.23531, 0, -3.12735, 0.153491, -22.8946)
@@ -1564,7 +1563,7 @@ mesh = SubResource("ArrayMesh_88di3")
 skeleton = NodePath("")
 
 [node name="railway_2" type="MeshInstance3D" parent="Background/Assets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.49328, 0.183112, -23.0372)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89522, -0.288694, -23.8835)
 mesh = SubResource("ArrayMesh_r4aom")
 skeleton = NodePath("")
 

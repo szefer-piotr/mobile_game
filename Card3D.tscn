@@ -28,8 +28,8 @@ transform = Transform3D(0.63909, 0, 0.769132, 0, 1, 0, -0.769132, 0, 0.63909, -0
 operation = 2
 
 [node name="ValueLabel" type="Label3D" parent="."]
-transform = Transform3D(1.82, 0, 0, 0, -5.24537e-08, 1, 0, -1.2, -4.37114e-08, 0, 0.0475056, 0)
+transform = Transform3D(1.82, 0, 0, 0, -5.24537e-08, 1, 0, -1.2, -4.37114e-08, 0.265471, 0.0881699, -0.168988)
 offset = Vector2(0, 20)
 text = "0"
-font_size = 70
+font_size = 38
 outline_size = 13

@@ -274,13 +274,29 @@ func draw_card():
 func _finalize_card_position(card):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
-
-	var target_x = float(cards.size() - 1) * 0.25
-	var target_y = float(cards.size() - 1) * 0.025
-	var target_z = randf_range(-0.025, 0.025)
-	var target_position = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
-
-	card.set_target_position(target_position)
+		
+	var i = cards.size() -1
+	var col = i % 4
+	var row = i / 4
+	var base_pos = card_row.global_transform.origin
+	
+	var spacing = Vector3(0.9, -0.5, 0)
+	var offset = Vector3(col, row, 0) * spacing
+	
+	var rand_offset = Vector3(
+		randf_range(-0.1, 0.1),
+		randf_range(-0.1, 0.1),
+		randf_range(-0.1, 0.1)
+	)
+	
+	card.set_target_position(base_pos + offset + rand_offset)
+	
+	card.rotation_degrees = Vector3(
+		randf_range(-10, 10),
+		randf_range(-10, 10),
+		randf_range(-10, 10)
+	)
+	
 
 func _on_HoldButton_pressed():
 	if current_score >= 18:
