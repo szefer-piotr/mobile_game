@@ -17,7 +17,10 @@ corner_radius_bottom_left = 32
 script = ExtResource("1_glv2v")
 
 [node name="CardSpawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 0, 3.97176)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 1.66567, -0.00576186)
+
+[node name="DeckSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31606, 6.9511)
 
 [node name="CardRow" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)

@@ -39,3 +39,7 @@ offset = Vector2(0, 20)
 text = "0"
 font_size = 38
 outline_size = 13
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744629, 0.0216522, 0)
+shape = SubResource("BoxShape3D_eeaw3")
