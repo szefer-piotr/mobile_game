@@ -273,7 +273,7 @@ func draw_card():
 		icon_type = opts[randi() % opts.size()]
 	if card.has_variable("icon_type"):
 		card.icon_type = icon_type
-		icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
+	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
 	if icon_couts[icon_type] == 3:
 		print("Collected three % icons" % icon_type)
 	
