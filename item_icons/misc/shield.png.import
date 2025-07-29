@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cac7mkjprnqhe"
-path="res://.godot/imported/question_mark.jpg-7ebe4ee49eb24afb65c4ac4a8eb29c23.ctex"
+uid="uid://blje7jxj4gg83"
+path="res://.godot/imported/shield.png-e042d86dddac7f8b374ea702b236535e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://item_icons/question_mark.jpg"
-dest_files=["res://.godot/imported/question_mark.jpg-7ebe4ee49eb24afb65c4ac4a8eb29c23.ctex"]
+source_file="res://item_icons/misc/shield.png"
+dest_files=["res://.godot/imported/shield.png-e042d86dddac7f8b374ea702b236535e.ctex"]
 
 [params]
 

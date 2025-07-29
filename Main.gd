@@ -32,10 +32,17 @@ var displayed_score_value: float = 0.0
 var target_score_bar_value: float = 0.0
 var fill_speed = 6.0
 
+var icon_textures = {
+	"attack": preload("res://item_icons/attack_256_256.png"),
+	"shield": preload("res://item_icons/shield_256_256.png"),
+	"gold": preload("res://item_icons/gold_256_256.png"),
+	"pillage": preload("res://item_icons/pillage_256_256.png"),
+	"special_item": preload("res://item_icons/special_item_256_256.png")
+}
 
 var cards = []
 var icon_counts: Dictionary = {}
-var available_icons := ["coins", "attack", "extra_draws", "question_mark", "special_item"]
+var available_icons := ["attack", "shield", "gold", "pillage", "special_item"]
 
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
@@ -268,9 +275,8 @@ func draw_card():
 	card.value = value
 	
 	var icon_type = available_icons[randi() % available_icons.size()]
-	if icon_type == "question_mark":
-		var opts = ["raid", "steal", "coins", "attack", "extra draws"]
-		icon_type = opts[randi() % opts.size()]
+	if icon_textures.has(icon_type):
+		card.icon_texture = icon_textures[icon_type]
 	if "icon_type" in card:
 		card.icon_type = icon_type
 	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
