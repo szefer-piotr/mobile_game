@@ -1,7 +1,7 @@
 extends Node
 
 var coins: int = 100000
-var draws: int = 10
+var draws: int = 100
 var gems: int = 0
 var stars: int = 0
 

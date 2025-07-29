@@ -271,11 +271,11 @@ func draw_card():
 	if icon_type == "question_mark":
 		var opts = ["raid", "steal", "coins", "attack", "extra draws"]
 		icon_type = opts[randi() % opts.size()]
-	if card.has_variable("icon_type"):
+	if "icon_type" in card:
 		card.icon_type = icon_type
 	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
 	if icon_counts[icon_type] == 3:
-		print("Collected three % icons" % icon_type)
+		print("Collected three %s icons" % icon_type)
 	
 	var i  = cards.size()
 	var col = i % 4
