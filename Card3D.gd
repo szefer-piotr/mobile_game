@@ -1,6 +1,7 @@
 extends RigidBody3D
 
 @export var value: int = 0
+@export var icon_texture: Texture2D
 
 var label_assigned := false
 
@@ -12,6 +13,7 @@ func set_target_position(pos: Vector3):
 
 func _ready():
 	update_label()
+	update_icon()
 
 func update_label():
 	if has_node("ValueLabel"):
@@ -19,3 +21,9 @@ func update_label():
 		if label:
 			label.text = str(value)
 			label_assigned = true
+			
+func update_icon():
+	if has_node("IconSprite"):
+		var sprite = $IconSprite
+		if sprite:
+			sprite.texture = icon_texture
