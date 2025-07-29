@@ -2,6 +2,7 @@ extends RigidBody3D
 
 @export var value: int = 0
 @export var icon_texture: Texture2D
+@export var icon_type: String = ""
 
 var label_assigned := false
 

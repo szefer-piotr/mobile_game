@@ -34,6 +34,8 @@ var fill_speed = 6.0
 
 
 var cards = []
+var icon_couts: Dictionary = {}
+var available_icons := ["coins", "attack", "extra_draws", "question_mark", "special_item"]
 
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
@@ -197,6 +199,9 @@ func _process(delta):
 
 func reset_game():
 	current_score = 0
+	icon_couts.clear()
+	for icon in available_icons:
+		icon_counts[icon] = 0
 	cards.clear()
 	score_label.text = "Score: 0"
 	result_label.text = ""
@@ -261,6 +266,16 @@ func draw_card():
 
 	var card = card_scene.instantiate()
 	card.value = value
+	
+	var icon_type = available_icons[randi() % available_icons.size()]
+	if icon_type == "question_mark":
+		var opts = ["raid", "steal", "coins", "attack", "extra draws"]
+		icon_type = opts[randi() % opts.size()]
+	if card.has_variable("icon_type"):
+		card.icon_type = icon_type
+		icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
+	if icon_couts[icon_type] == 3:
+		print("Collected three % icons" % icon_type)
 	
 	var i  = cards.size()
 	var col = i % 4
