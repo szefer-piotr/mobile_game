@@ -381,7 +381,9 @@ func connect_building_buttons():
 	for key in buildings.keys():
 		var btn = get_building_button(key)
 		if btn:
-			btn.pressed.disconnect_all()
+			if btn.pressed.get_connections():
+				for c in btn.pressed.get_connections():
+					btn.pressed.disconnect(c.callable)
 			btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
 
 func end_game(msg: String, gave_reward: bool):
