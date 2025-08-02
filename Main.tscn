@@ -16,15 +16,6 @@ corner_radius_bottom_left = 32
 [node name="Main" type="Node3D"]
 script = ExtResource("1_glv2v")
 
-[node name="CardSpawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 1.66567, -2.30465)
-
-[node name="DeckSpawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0164801, 1.00785, -0.34959)
-
-[node name="CardRow" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 5.94966, 1.73001)
 
@@ -34,163 +25,6 @@ light_color = Color(0.985377, 0.92445, 0.950076, 1)
 shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 300.0
-offset_top = 260.0
-offset_right = 432.0
-offset_bottom = 309.0
-theme_override_font_sizes/font_size = 35
-text = "Score: 0"
-horizontal_alignment = 1
-
-[node name="TotalScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 20.0
-offset_top = 320.0
-offset_right = 60.0
-offset_bottom = 343.0
-
-[node name="DrawButton" type="Button" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -260.0
-offset_right = -20.0
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 50
-text = "DRAW"
-
-[node name="AutoToggleButton" type="Button" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -140.0
-offset_right = -160.0
-offset_bottom = -80.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 20
-text = "Auto"
-
-[node name="HoldButton" type="Button" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_top = -260.0
-offset_right = 180.0
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 50
-text = "HOLD"
-
-[node name="ResultLabel" type="Label" parent="CanvasLayer"]
-offset_left = 280.0
-offset_top = 360.0
-offset_right = 480.0
-offset_bottom = 480.0
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RestartTimer" type="Timer" parent="CanvasLayer"]
-one_shot = true
-
-[node name="AutoDrawTimer" type="Timer" parent="CanvasLayer"]
-wait_time = 0.1
-
-[node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
-offset_left = 280.0
-offset_top = 100.0
-offset_right = 454.0
-offset_bottom = 135.0
-theme_override_font_sizes/font_size = 25
-text = "Level Progress"
-
-[node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.056
-anchor_right = 0.944
-anchor_bottom = 0.031
-offset_left = 79.68
-offset_top = 160.0
-offset_right = -79.6801
-offset_bottom = 168.32
-grow_horizontal = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_0xlr5")
-theme_override_styles/fill = SubResource("StyleBoxFlat_h12kk")
-
-[node name="RewardReadyPopup" type="Label" parent="CanvasLayer"]
-visible = false
-offset_left = 260.0
-offset_top = 380.0
-offset_right = 481.0
-offset_bottom = 461.0
-theme_override_colors/font_color = Color(0.839216, 0.909804, 0, 1)
-theme_override_colors/font_shadow_color = Color(1, 0.701961, 0, 1)
-theme_override_colors/font_outline_color = Color(0.878431, 1, 0, 1)
-theme_override_font_sizes/font_size = 28
-text = "🎁 
-REWARD READY!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CoinLabel" type="Label" parent="CanvasLayer"]
-offset_left = 120.0
-offset_top = 20.0
-offset_right = 320.0
-offset_bottom = 75.0
-theme_override_font_sizes/font_size = 30
-text = "Coins: 0"
-horizontal_alignment = 1
-
-[node name="DrawLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -480.0
-offset_top = 1200.0
-offset_right = -240.0
-offset_bottom = 1227.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 40
-text = "Draws: 0"
-horizontal_alignment = 1
-
-[node name="GemLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -700.0
-offset_top = 380.0
-offset_right = -578.0
-offset_bottom = 407.0
-grow_horizontal = 0
-text = "Gems: 0"
-horizontal_alignment = 2
-
-[node name="StarLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -400.0
-offset_top = 20.0
-offset_right = -140.0
-offset_bottom = 80.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 30
-text = "Stars: 0"
-horizontal_alignment = 2
 
 [node name="KingdomButton" type="Button" parent="CanvasLayer"]
 anchors_preset = -1
@@ -338,7 +172,5 @@ text = "Wall (Lv. 0)"
 layout_mode = 2
 text = "Build (140 Coins)"
 
-[connection signal="pressed" from="CanvasLayer/AutoToggleButton" to="." method="_on_AutoToggleButton_pressed"]
-[connection signal="timeout" from="CanvasLayer/AutoDrawTimer" to="." method="_on_AutoDrawTimer_timeout"]
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]
