@@ -338,9 +338,7 @@ text = "Wall (Lv. 0)"
 layout_mode = 2
 text = "Build (140 Coins)"
 
-[connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/AutoToggleButton" to="." method="_on_AutoToggleButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
 [connection signal="timeout" from="CanvasLayer/AutoDrawTimer" to="." method="_on_AutoDrawTimer_timeout"]
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]

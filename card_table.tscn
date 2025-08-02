@@ -1,5 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://dfkgd251da7vy"]
+[gd_scene load_steps=24 format=3 uid="uid://dfkgd251da7vy"]
 
+[ext_resource type="Script" path="res://CardTable.gd" id="1_vn8pc"]
 [ext_resource type="PackedScene" uid="uid://m222llrppvl2" path="res://assets/models/building/floor_stone.glb" id="2_tk758"]
 [ext_resource type="PackedScene" uid="uid://dk8ngwlaasy1b" path="res://assets/card_table.tscn" id="3_a57dv"]
 [ext_resource type="PackedScene" uid="uid://byqffxe6glphu" path="res://assets/models/props/torch_mounted.glb" id="4_043sh"]
@@ -24,6 +25,65 @@
 [ext_resource type="PackedScene" uid="uid://bofghkh3f8hxg" path="res://assets/misc/KayKit_Adventurers_1.0_FREE/Characters/gltf/Rogue_Hooded.glb" id="21_2jkan"]
 
 [node name="CardTable" type="Node3D"]
+script = ExtResource("1_vn8pc")
+
+[node name="CardSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0224791, 1.66567, -2.30465)
+
+[node name="DeckSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0164801, 1.00785, -0.34959)
+
+[node name="CardRow" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.122254, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 300.0
+offset_top = 260.0
+offset_right = 432.0
+offset_bottom = 309.0
+theme_override_font_sizes/font_size = 35
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="TotalScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 320.0
+offset_right = 60.0
+offset_bottom = 343.0
+
+[node name="DrawButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -260.0
+offset_right = -20.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "DRAW"
+
+[node name="HoldButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -260.0
+offset_right = 180.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "HOLD"
+
+[node name="RestartTimer" type="Timer" parent="CanvasLayer"]
+one_shot = true
 
 [node name="Chest" parent="." instance=ExtResource("5_ud6sj")]
 transform = Transform3D(0.63388, 0, 0.773431, 0, 1, 0, -0.773431, 0, 0.63388, 1.97483, 0, 7.39904)
@@ -194,3 +254,6 @@ transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107
 
 [node name="Rogue_Hooded" parent="." instance=ExtResource("21_2jkan")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -5, 0, 8)
+
+[connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
