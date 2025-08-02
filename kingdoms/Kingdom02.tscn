@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=4 uid="uid://e5ycftmv7wkk"]
 
-[ext_resource type="PackedScene" uid="uid://c21q33prets5q" path="res://assets/VillagePack/VillagePack.glb" id="1_alqc5"]
-[ext_resource type="Texture2D" uid="uid://mwrt3qjrs1nf" path="res://assets/VillagePack/VillagePack_color palette.png" id="1_cht1b"]
+[ext_resource type="PackedScene" uid="uid://c21q33prets5q" path="res://assets/misc/VillagePack/VillagePack.glb" id="1_alqc5"]
+[ext_resource type="Texture2D" uid="uid://mwrt3qjrs1nf" path="res://assets/misc/VillagePack/VillagePack_color palette.png" id="1_cht1b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtaf"]
 resource_name = "atlas_asia_pack"
@@ -146,7 +146,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0ejv0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_venkv"]
-albedo_color = Color(0.0826285, 0.708597, 1.92523e-07, 1)
+albedo_color = Color(0.0823529, 0.709804, 0.364706, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhsoy"]
 albedo_color = Color(0.164706, 1, 1, 1)
@@ -236,5 +236,9 @@ material = SubResource("StandardMaterial3D_venkv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.298923, -0.375058, -2.43742)
 size = Vector3(25, 0.337646, 19)
 material = SubResource("StandardMaterial3D_rhsoy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.836535, 1.05703e-08, -0.547914, 0.0634696, 0.993268, 0.0969031, 0.544225, -0.115839, 0.830903, -6.56783, 2.35235, 5.2747)
+light_color = Color(1, 0.823529, 1, 1)
 
 [editable path="VillagePack"]

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b1nretpyxj1c7"
+path="res://.godot/imported/siege-trebuchet-demolished.obj-1ad9ba59a17a12d7cd7338eef8ad2a1c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/siege-trebuchet-demolished.obj-1ad9ba59a17a12d7cd7338eef8ad2a1c.mesh"]
+
+source_file="res://assets/misc/kenney_castle-kit/Models/OBJ format/siege-trebuchet-demolished.obj"
+dest_files=["res://.godot/imported/siege-trebuchet-demolished.obj-1ad9ba59a17a12d7cd7338eef8ad2a1c.mesh", "res://.godot/imported/siege-trebuchet-demolished.obj-1ad9ba59a17a12d7cd7338eef8ad2a1c.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmb8sd37cnc61"]
+
+[ext_resource type="PackedScene" uid="uid://byqffxe6glphu" path="res://assets/models/props/torch_mounted.glb" id="1_pf07j"]
+
+[node name="torch_mounted2" instance=ExtResource("1_pf07j")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.67761, 0.33641)
+light_color = Color(1, 0.572549, 0.196078, 1)
+shadow_enabled = true
+omni_range = 15.0

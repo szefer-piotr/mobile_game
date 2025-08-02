@@ -1,10 +1,10 @@
 [gd_scene load_steps=104 format=4 uid="uid://bpiwtmual2xh6"]
 
-[ext_resource type="Texture2D" uid="uid://ijt2oa2h76f0" path="res://assets/fishing_village_pack_Untitled.png" id="1_k0vey"]
-[ext_resource type="Texture2D" uid="uid://bvwok255kmb5n" path="res://assets/MedievalPack/medieval_village_pack_Untitled.png" id="2_10tuq"]
-[ext_resource type="Texture2D" uid="uid://c7oihqeqr8glx" path="res://assets/MedievalPack/medieval_village_pack_Untitled_1.png" id="3_81dwd"]
+[ext_resource type="Texture2D" uid="uid://ijt2oa2h76f0" path="res://assets/misc/FishingVillage/fishing_village_pack_Untitled.png" id="1_k0vey"]
+[ext_resource type="Texture2D" uid="uid://bvwok255kmb5n" path="res://assets/misc/MedievalPack/medieval_village_pack_Untitled.png" id="2_10tuq"]
+[ext_resource type="Texture2D" uid="uid://c7oihqeqr8glx" path="res://assets/misc/MedievalPack/medieval_village_pack_Untitled_1.png" id="3_81dwd"]
 [ext_resource type="Script" uid="uid://dp71xq67gb4b" path="res://kingdoms/forest.gd" id="3_t18tk"]
-[ext_resource type="Texture2D" uid="uid://bynyv7dgb3k3w" path="res://assets/MedievalPack/medieval_village_pack_color palette.png" id="4_i1vm4"]
+[ext_resource type="Texture2D" uid="uid://bynyv7dgb3k3w" path="res://assets/misc/MedievalPack/medieval_village_pack_color palette.png" id="4_i1vm4"]
 [ext_resource type="PackedScene" uid="uid://br63cdal1w7np" path="res://Tree.tscn" id="4_te58d"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_glv2v"]
