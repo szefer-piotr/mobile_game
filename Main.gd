@@ -1,22 +1,25 @@
 extends Node3D
 
 @onready var card_scene = preload("res://Card3D.tscn")
-@onready var card_row = $CardRow
-@onready var card_spawn = $CardSpawn
-@onready var draw_button = $CanvasLayer/DrawButton
-@onready var hold_button = $CanvasLayer/HoldButton
-@onready var score_label = $CanvasLayer/ScoreLabel
-@onready var total_label = $CanvasLayer/TotalScoreLabel
-@onready var result_label = $CanvasLayer/ResultLabel
-@onready var restart_timer = $CanvasLayer/RestartTimer
-@onready var score_bar = $CanvasLayer/ScoreProgressBar
-@onready var score_bar_label = $CanvasLayer/ScoreProgressLabel
-@onready var reward_popup = $CanvasLayer/RewardReadyPopup
+@onready var card_table_scene = preload("res://card_table.tscn")
+
+var card_table_root: Node3D
+var card_row: Node3D
+var card_spawn: Node3D
+var draw_button: Button
+var hold_button: Button
+var score_label: Label
+var total_label: Label
+var result_label: Label
+var restart_timer: Timer
+var score_bar
+var score_bar_label: Label
+var reward_popup
 @onready var cam = $Camera3D
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
-@onready var auto_draw_timer = $CanvasLayer/AutoDrawTimer
+var auto_draw_timer: Timer
 @onready var knight_scene = preload("res://Knight.tscn")
-@onready var deck_spawn = $DeckSpawn
+var deck_spawn: Node3D
 
 # Resources
 var current_score = 0
@@ -56,6 +59,29 @@ var buildings: Dictionary = {}
 var auto_draw_enabled = false
 var force_draw_until_15 = false
 
+
+func show_card_table():
+        card_table_root = card_table_scene.instantiate()
+        add_child(card_table_root)
+
+        card_row = card_table_root.get_node("CardRow")
+        card_spawn = card_table_root.get_node("CardSpawn")
+        draw_button = card_table_root.get_node("CanvasLayer/DrawButton")
+        hold_button = card_table_root.get_node("CanvasLayer/HoldButton")
+        score_label = card_table_root.get_node("CanvasLayer/ScoreLabel")
+        total_label = card_table_root.get_node("CanvasLayer/TotalScoreLabel")
+        result_label = card_table_root.get_node("CanvasLayer/ResultLabel")
+        restart_timer = card_table_root.get_node("CanvasLayer/RestartTimer")
+        score_bar = card_table_root.get_node("CanvasLayer/ScoreProgressBar")
+        score_bar_label = card_table_root.get_node("CanvasLayer/ScoreProgressLabel")
+        reward_popup = card_table_root.get_node("CanvasLayer/RewardReadyPopup")
+        auto_draw_timer = card_table_root.get_node("CanvasLayer/AutoDrawTimer")
+        deck_spawn = card_table_root.get_node("DeckSpawn")
+
+        if draw_button and not draw_button.pressed.is_connected(card_table_root._on_DrawButton_pressed):
+                draw_button.pressed.connect(card_table_root._on_DrawButton_pressed)
+        if hold_button and not hold_button.pressed.is_connected(card_table_root._on_HoldButton_pressed):
+                hold_button.pressed.connect(card_table_root._on_HoldButton_pressed)
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
@@ -171,10 +197,11 @@ func check_kingdom_complete():
 	return true
 
 func _ready():
-	load_reward_path("starter_path")
-	randomize()
-	restart_timer.timeout.connect(_on_restart_timer_timeout)
-	auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+        show_card_table()
+        load_reward_path("starter_path")
+        randomize()
+        restart_timer.timeout.connect(_on_restart_timer_timeout)
+        auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
 
 	default_cam_pos = cam.global_position
 	default_cam_rot = cam.rotation_degrees
@@ -253,14 +280,14 @@ func give_reward(reward: Dictionary):
 	#card.set_target_position(pos)
 
 func start_auto_draw():
-	if current_score < 15:
-		$CanvasLayer/DrawButton.disabled = true
-		$CanvasLayer/HoldButton.disabled = true
-		auto_draw_timer.start()
-	else:
-		auto_draw_timer.stop()
-		$CanvasLayer/DrawButton.disabled = false
-		$CanvasLayer/HoldButton.disabled = current_score < 18
+        if current_score < 15:
+                draw_button.disabled = true
+                hold_button.disabled = true
+                auto_draw_timer.start()
+        else:
+                auto_draw_timer.stop()
+                draw_button.disabled = false
+                hold_button.disabled = current_score < 18
 	
 
 func _on_KingdomButton_pressed():
@@ -273,10 +300,10 @@ func show_kingdom_mode():
 	show_building_ui()
 
 func show_building_ui():
-	$CanvasLayer/KingdomPanel.visible = true
-	$CanvasLayer/DrawButton.visible = false
-	$CanvasLayer/HoldButton.visible = false
-	$CanvasLayer/KingdomButton.visible = false
+        $CanvasLayer/KingdomPanel.visible = true
+        draw_button.visible = false
+        hold_button.visible = false
+        $CanvasLayer/KingdomButton.visible = false
 	var kroot = get_node_or_null("KingdomRoot")
 	if kroot:
 		kroot.visible = true
@@ -407,9 +434,9 @@ func update_all_building_buttons():
 		update_building_button(key, buildings[key])
 
 func hide_building_ui():
-	$CanvasLayer/KingdomPanel.visible = false
-	$CanvasLayer/DrawButton.visible = true
-	$CanvasLayer/HoldButton.visible = true
+        $CanvasLayer/KingdomPanel.visible = false
+        draw_button.visible = true
+        hold_button.visible = true
 
 func hide_kingdom_mode():
 		hide_building_ui()
@@ -450,10 +477,10 @@ func _on_AutoDrawTimer_timeout():
 
 func _on_AutoToggleButton_pressed():
 	auto_draw_enabled = !auto_draw_enabled
-	if auto_draw_enabled:
-		$CanvasLayer/AutoToggleButton.text = "Auto: ON"
-	else:
-		auto_draw_timer.stop()
-		$CanvasLayer/DrawButton.disabled = false
-		$CanvasLayer/HoldButton.disabled = current_score < 18
-		$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
+        if auto_draw_enabled:
+                $CanvasLayer/AutoToggleButton.text = "Auto: ON"
+        else:
+                auto_draw_timer.stop()
+                draw_button.disabled = false
+                hold_button.disabled = current_score < 18
+                $CanvasLayer/AutoToggleButton.text = "Auto: OFF"
