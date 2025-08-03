@@ -226,17 +226,17 @@ func _ready():
 	$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
 
 func _process(delta):
-		if score_bar:
-				if abs(displayed_score_value - target_score_bar_value) > 0.1:
-						displayed_score_value = lerp(
-								displayed_score_value,
-								target_score_bar_value,
-								delta * fill_speed
-						)
-						score_bar.value = round(displayed_score_value)
-				else:
-						displayed_score_value = target_score_bar_value
-						score_bar.value = round(target_score_bar_value)
+	if score_bar:
+		if abs(displayed_score_value - target_score_bar_value) > 0.1:
+			displayed_score_value = lerp(
+				displayed_score_value,
+				target_score_bar_value,
+				delta * fill_speed
+			)
+			score_bar.value = round(displayed_score_value)
+		else:
+			displayed_score_value = target_score_bar_value
+			score_bar.value = round(target_score_bar_value)
 
 func reset_game():
 	current_score = 0
