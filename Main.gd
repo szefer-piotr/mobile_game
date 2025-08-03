@@ -61,27 +61,27 @@ var force_draw_until_15 = false
 
 
 func show_card_table():
-        card_table_root = card_table_scene.instantiate()
-        add_child(card_table_root)
+	card_table_root = card_table_scene.instantiate()
+	add_child(card_table_root)
 
-        card_row = card_table_root.get_node("CardRow")
-        card_spawn = card_table_root.get_node("CardSpawn")
-        draw_button = card_table_root.get_node("CanvasLayer/DrawButton")
-        hold_button = card_table_root.get_node("CanvasLayer/HoldButton")
-        score_label = card_table_root.get_node("CanvasLayer/ScoreLabel")
-        total_label = card_table_root.get_node("CanvasLayer/TotalScoreLabel")
-        result_label = card_table_root.get_node("CanvasLayer/ResultLabel")
-        restart_timer = card_table_root.get_node("CanvasLayer/RestartTimer")
-        score_bar = card_table_root.get_node("CanvasLayer/ScoreProgressBar")
-        score_bar_label = card_table_root.get_node("CanvasLayer/ScoreProgressLabel")
-        reward_popup = card_table_root.get_node("CanvasLayer/RewardReadyPopup")
-        auto_draw_timer = card_table_root.get_node("CanvasLayer/AutoDrawTimer")
-        deck_spawn = card_table_root.get_node("DeckSpawn")
+	card_row = card_table_root.get_node("CardRow")
+	card_spawn = card_table_root.get_node("CardSpawn")
+	draw_button = card_table_root.get_node("CanvasLayer/DrawButton")
+	hold_button = card_table_root.get_node("CanvasLayer/HoldButton")
+	score_label = card_table_root.get_node("CanvasLayer/ScoreLabel")
+	total_label = card_table_root.get_node("CanvasLayer/TotalScoreLabel")
+	result_label = card_table_root.get_node("CanvasLayer/ResultLabel")
+	restart_timer = card_table_root.get_node("CanvasLayer/RestartTimer")
+	score_bar = card_table_root.get_node("CanvasLayer/ScoreProgressBar")
+	score_bar_label = card_table_root.get_node("CanvasLayer/ScoreProgressLabel")
+	reward_popup = card_table_root.get_node("CanvasLayer/RewardReadyPopup")
+	auto_draw_timer = card_table_root.get_node("CanvasLayer/AutoDrawTimer")
+	deck_spawn = card_table_root.get_node("DeckSpawn")
 
-        if draw_button and not draw_button.pressed.is_connected(card_table_root._on_DrawButton_pressed):
-                draw_button.pressed.connect(card_table_root._on_DrawButton_pressed)
-        if hold_button and not hold_button.pressed.is_connected(card_table_root._on_HoldButton_pressed):
-                hold_button.pressed.connect(card_table_root._on_HoldButton_pressed)
+	if draw_button and not draw_button.pressed.is_connected(card_table_root._on_DrawButton_pressed):
+			draw_button.pressed.connect(card_table_root._on_DrawButton_pressed)
+	if hold_button and not hold_button.pressed.is_connected(card_table_root._on_HoldButton_pressed):
+			hold_button.pressed.connect(card_table_root._on_HoldButton_pressed)
 
 func update_score_bar():
 	if current_reward_index >= reward_path.size():
@@ -197,11 +197,11 @@ func check_kingdom_complete():
 	return true
 
 func _ready():
-        show_card_table()
-        load_reward_path("starter_path")
-        randomize()
-        restart_timer.timeout.connect(_on_restart_timer_timeout)
-        auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+	show_card_table()
+	load_reward_path("starter_path")
+	randomize()
+	restart_timer.timeout.connect(_on_restart_timer_timeout)
+	auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
 
 	default_cam_pos = cam.global_position
 	default_cam_rot = cam.rotation_degrees
@@ -280,14 +280,14 @@ func give_reward(reward: Dictionary):
 	#card.set_target_position(pos)
 
 func start_auto_draw():
-        if current_score < 15:
-                draw_button.disabled = true
-                hold_button.disabled = true
-                auto_draw_timer.start()
-        else:
-                auto_draw_timer.stop()
-                draw_button.disabled = false
-                hold_button.disabled = current_score < 18
+	if current_score < 15:
+		draw_button.disabled = true
+		hold_button.disabled = true
+		auto_draw_timer.start()
+	else:
+		auto_draw_timer.stop()
+		draw_button.disabled = false
+		hold_button.disabled = current_score < 18
 	
 
 func _on_KingdomButton_pressed():
@@ -304,10 +304,10 @@ func show_kingdom_mode():
 		auto_draw_timer.stop()
 
 func show_building_ui():
-        $CanvasLayer/KingdomPanel.visible = true
-        draw_button.visible = false
-        hold_button.visible = false
-        $CanvasLayer/KingdomButton.visible = false
+	$CanvasLayer/KingdomPanel.visible = true
+	draw_button.visible = false
+	hold_button.visible = false
+	$CanvasLayer/KingdomButton.visible = false
 	var kroot = get_node_or_null("KingdomRoot")
 	if kroot:
 		kroot.visible = true
@@ -438,26 +438,26 @@ func update_all_building_buttons():
 		update_building_button(key, buildings[key])
 
 func hide_building_ui():
-        $CanvasLayer/KingdomPanel.visible = false
-        draw_button.visible = true
-        hold_button.visible = true
+	$CanvasLayer/KingdomPanel.visible = false
+	draw_button.visible = true
+	hold_button.visible = true
 
 func hide_kingdom_mode():
-		hide_building_ui()
-		#var kroot = get_node_or_null("KingdomRoot")
-		#if kroot:
-				#kroot.visible = false
-		var tween = get_tree().create_tween()
-		tween.tween_property(cam, "global_position", default_cam_pos, 0.05)
-		tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
-		$CanvasLayer/KingdomButton.visible = true
-		if card_table_root:
-			card_table_root.show()
-			if auto_draw_enabled and restart_timer.is_stopped():
-				start_auto_draw()
-		else:
-			show_card_table()
-			reset_game()
+	hide_building_ui()
+	#var kroot = get_node_or_null("KingdomRoot")
+	#if kroot:
+			#kroot.visible = false
+	var tween = get_tree().create_tween()
+	tween.tween_property(cam, "global_position", default_cam_pos, 0.05)
+	tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
+	$CanvasLayer/KingdomButton.visible = true
+	if card_table_root:
+		card_table_root.show()
+		if auto_draw_enabled and restart_timer.is_stopped():
+			start_auto_draw()
+	else:
+		show_card_table()
+		reset_game()
 
 func _unhandled_input(event):
 	if $CanvasLayer/KingdomPanel.visible and event is InputEventMouseButton:
@@ -488,10 +488,10 @@ func _on_AutoDrawTimer_timeout():
 
 func _on_AutoToggleButton_pressed():
 	auto_draw_enabled = !auto_draw_enabled
-        if auto_draw_enabled:
-                $CanvasLayer/AutoToggleButton.text = "Auto: ON"
-        else:
-                auto_draw_timer.stop()
-                draw_button.disabled = false
-                hold_button.disabled = current_score < 18
-                $CanvasLayer/AutoToggleButton.text = "Auto: OFF"
+	if auto_draw_enabled:
+			$CanvasLayer/AutoToggleButton.text = "Auto: ON"
+	else:
+			auto_draw_timer.stop()
+			draw_button.disabled = false
+			hold_button.disabled = current_score < 18
+			$CanvasLayer/AutoToggleButton.text = "Auto: OFF"

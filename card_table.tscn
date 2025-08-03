@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://dfkgd251da7vy"]
 
-[ext_resource type="Script" path="res://CardTable.gd" id="1_vn8pc"]
+[ext_resource type="Script" uid="uid://b6i1158c3kvps" path="res://CardTable.gd" id="1_vn8pc"]
 [ext_resource type="PackedScene" uid="uid://m222llrppvl2" path="res://assets/models/building/floor_stone.glb" id="2_tk758"]
 [ext_resource type="PackedScene" uid="uid://dk8ngwlaasy1b" path="res://assets/card_table.tscn" id="3_a57dv"]
 [ext_resource type="PackedScene" uid="uid://byqffxe6glphu" path="res://assets/models/props/torch_mounted.glb" id="4_043sh"]

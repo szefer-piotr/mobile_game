@@ -1,11 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcrd14o24qurl"]
+[gd_scene load_steps=3 format=3 uid="uid://dcrd14o24qurl"]
 
 [ext_resource type="Script" uid="uid://byg21kjff3r27" path="res://Main.gd" id="1_glv2v"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xlr5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h12kk"]
-bg_color = Color(0.961903, 0.812809, 0.389271, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27khb"]
 corner_radius_top_left = 32
