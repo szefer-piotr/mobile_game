@@ -468,22 +468,22 @@ func _unhandled_input(event):
 
 
 func _on_AutoDrawTimer_timeout():
-        if not auto_draw_enabled:
-                auto_draw_timer.stop()
-                return
+	if not auto_draw_enabled:
+		auto_draw_timer.stop()
+		return
 
-        card_table_root.draw_card()
-        hold_button.disabled = card_table_root.current_score < 18
-        if card_table_root.current_score >= 21:
-                return
+	card_table_root.draw_card()
+	hold_button.disabled = card_table_root.current_score < 18
+	if card_table_root.current_score >= 21:
+		return
 
-        if card_table_root.current_score >= 18:
-                if randi() % 2 == 0:
-                        card_table_root._on_HoldButton_pressed()
-                else:
-                        auto_draw_timer.start()
-        else:
-                auto_draw_timer.start()
+	if card_table_root.current_score >= 18:
+		if randi() % 2 == 0:
+			card_table_root._on_HoldButton_pressed()
+		else:
+			auto_draw_timer.start()
+	else:
+		auto_draw_timer.start()
 
 
 func _on_AutoToggleButton_pressed():
