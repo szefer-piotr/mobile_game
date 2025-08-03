@@ -64,19 +64,19 @@ func show_card_table():
 	card_table_root = card_table_scene.instantiate()
 	add_child(card_table_root)
 
-        card_row = card_table_root.get_node("CardRow")
-        card_spawn = card_table_root.get_node("CardSpawn")
-        draw_button = card_table_root.get_node("CanvasLayer/DrawButton")
-        hold_button = card_table_root.get_node("CanvasLayer/HoldButton")
-        score_label = card_table_root.get_node("CanvasLayer/ScoreLabel")
-        total_label = card_table_root.get_node("CanvasLayer/TotalScoreLabel")
-        result_label = card_table_root.get_node_or_null("CanvasLayer/ResultLabel")
-        restart_timer = card_table_root.get_node("CanvasLayer/RestartTimer")
-        score_bar = card_table_root.get_node_or_null("CanvasLayer/ScoreProgressBar")
-        score_bar_label = card_table_root.get_node_or_null("CanvasLayer/ScoreProgressLabel")
-        reward_popup = card_table_root.get_node_or_null("CanvasLayer/RewardReadyPopup")
-        auto_draw_timer = card_table_root.get_node_or_null("CanvasLayer/AutoDrawTimer")
-        deck_spawn = card_table_root.get_node("DeckSpawn")
+	card_row = card_table_root.get_node("CardRow")
+	card_spawn = card_table_root.get_node("CardSpawn")
+	draw_button = card_table_root.get_node("CanvasLayer/DrawButton")
+	hold_button = card_table_root.get_node("CanvasLayer/HoldButton")
+	score_label = card_table_root.get_node("CanvasLayer/ScoreLabel")
+	total_label = card_table_root.get_node("CanvasLayer/TotalScoreLabel")
+	result_label = card_table_root.get_node_or_null("CanvasLayer/ResultLabel")
+	restart_timer = card_table_root.get_node("CanvasLayer/RestartTimer")
+	score_bar = card_table_root.get_node_or_null("CanvasLayer/ScoreProgressBar")
+	score_bar_label = card_table_root.get_node_or_null("CanvasLayer/ScoreProgressLabel")
+	reward_popup = card_table_root.get_node_or_null("CanvasLayer/RewardReadyPopup")
+	auto_draw_timer = card_table_root.get_node_or_null("CanvasLayer/AutoDrawTimer")
+	deck_spawn = card_table_root.get_node("DeckSpawn")
 
 	if draw_button and not draw_button.pressed.is_connected(card_table_root._on_DrawButton_pressed):
 			draw_button.pressed.connect(card_table_root._on_DrawButton_pressed)
@@ -84,26 +84,26 @@ func show_card_table():
 			hold_button.pressed.connect(card_table_root._on_HoldButton_pressed)
 
 func update_score_bar():
-        if score_bar == null or score_bar_label == null:
-                return
-        if current_reward_index >= reward_path.size():
-                target_score_bar_value = score_bar.max_value
-                score_bar_label.text = "Path Complete!"
-                return
+		if score_bar == null or score_bar_label == null:
+				return
+		if current_reward_index >= reward_path.size():
+				target_score_bar_value = score_bar.max_value
+				score_bar_label.text = "Path Complete!"
+				return
 
-        var reward = reward_path[current_reward_index]
-        var current_goal = reward["points_needed"]
-        var ratio = float(progress_towards_current) / current_goal
-        target_score_bar_value = ratio * score_bar.max_value
+		var reward = reward_path[current_reward_index]
+		var current_goal = reward["points_needed"]
+		var ratio = float(progress_towards_current) / current_goal
+		target_score_bar_value = ratio * score_bar.max_value
 
-        var reward_type = reward.get("reward_type", "")
-        var reward_amount = reward.get("amount", 0)
-        score_bar_label.text = "%d / %d -> %s %d" % [
-                progress_towards_current,
-                current_goal,
-                reward_type,
-                reward_amount
-        ]
+		var reward_type = reward.get("reward_type", "")
+		var reward_amount = reward.get("amount", 0)
+		score_bar_label.text = "%d / %d -> %s %d" % [
+				progress_towards_current,
+				current_goal,
+				reward_type,
+				reward_amount
+		]
 
 func load_reward_path(path_name: String):
 	var file_path = "res://reward_paths/%s.json" % path_name
@@ -202,22 +202,22 @@ func _ready():
 	show_card_table()
 	load_reward_path("starter_path")
 	randomize()
-        if restart_timer:
-                restart_timer.timeout.connect(_on_restart_timer_timeout)
-        if auto_draw_timer:
-                auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+	if restart_timer:
+		restart_timer.timeout.connect(_on_restart_timer_timeout)
+	if auto_draw_timer:
+		auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
 
 	default_cam_pos = cam.global_position
 	default_cam_rot = cam.rotation_degrees
 
-        if score_bar:
-                score_bar.min_value = 0
-                score_bar.max_value = 100
-                score_bar.value = 0
-        displayed_score_value = 0.0
-        target_score_bar_value = 0.0
-        if reward_popup:
-                reward_popup.visible = false
+	if score_bar:
+		score_bar.min_value = 0
+		score_bar.max_value = 100
+		score_bar.value = 0
+	displayed_score_value = 0.0
+	target_score_bar_value = 0.0
+	if reward_popup:
+		reward_popup.visible = false
 
 	setup_kingdoms()
 	print("Loading kingdoms...")
@@ -226,17 +226,17 @@ func _ready():
 	$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
 
 func _process(delta):
-        if score_bar:
-                if abs(displayed_score_value - target_score_bar_value) > 0.1:
-                        displayed_score_value = lerp(
-                                displayed_score_value,
-                                target_score_bar_value,
-                                delta * fill_speed
-                        )
-                        score_bar.value = round(displayed_score_value)
-                else:
-                        displayed_score_value = target_score_bar_value
-                        score_bar.value = round(target_score_bar_value)
+		if score_bar:
+				if abs(displayed_score_value - target_score_bar_value) > 0.1:
+						displayed_score_value = lerp(
+								displayed_score_value,
+								target_score_bar_value,
+								delta * fill_speed
+						)
+						score_bar.value = round(displayed_score_value)
+				else:
+						displayed_score_value = target_score_bar_value
+						score_bar.value = round(target_score_bar_value)
 
 func reset_game():
 	current_score = 0
@@ -244,14 +244,14 @@ func reset_game():
 	for icon in available_icons:
 		icon_counts[icon] = 0
 	cards.clear()
-        score_label.text = "Score: 0"
-        if result_label:
-                result_label.text = ""
-        draw_button.disabled = false
-        hold_button.disabled = true
-        force_draw_until_15 = false
-        if auto_draw_timer:
-                auto_draw_timer.stop()
+	score_label.text = "Score: 0"
+	if result_label:
+		result_label.text = ""
+	draw_button.disabled = false
+	hold_button.disabled = true
+	force_draw_until_15 = false
+	if auto_draw_timer:
+		auto_draw_timer.stop()
 	
 	for c in card_row.get_children():
 		c.queue_free()
@@ -289,16 +289,16 @@ func give_reward(reward: Dictionary):
 	#card.set_target_position(pos)
 
 func start_auto_draw():
-        if current_score < 15:
-                draw_button.disabled = true
-                hold_button.disabled = true
-                if auto_draw_timer:
-                        auto_draw_timer.start()
-        else:
-                if auto_draw_timer:
-                        auto_draw_timer.stop()
-                draw_button.disabled = false
-                hold_button.disabled = current_score < 18
+		if current_score < 15:
+				draw_button.disabled = true
+				hold_button.disabled = true
+				if auto_draw_timer:
+						auto_draw_timer.start()
+		else:
+				if auto_draw_timer:
+						auto_draw_timer.stop()
+				draw_button.disabled = false
+				hold_button.disabled = current_score < 18
 	
 
 func _on_KingdomButton_pressed():
@@ -359,9 +359,9 @@ func connect_building_buttons():
 			btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
 
 func end_game(msg: String, gave_reward: bool):
-        if result_label:
-                result_label.text = msg
-        total_label.text = "Total: " + str(total_score)
+	if result_label:
+		result_label.text = msg
+	total_label.text = "Total: " + str(total_score)
 
 	var reward = 0
 	if current_score == 21:
@@ -373,26 +373,26 @@ func end_game(msg: String, gave_reward: bool):
 		
 	add_score(reward)
 
-        draw_button.disabled = true
-        hold_button.disabled = true
-        force_draw_until_15 = false
-        if auto_draw_timer:
-                auto_draw_timer.stop()
-        restart_timer.start()
+	draw_button.disabled = true
+	hold_button.disabled = true
+	force_draw_until_15 = false
+	if auto_draw_timer:
+			auto_draw_timer.stop()
+	restart_timer.start()
 
 func show_reward_popup(text: String = ""):
-        if reward_popup == null:
-                return
-        if text != "":
-                reward_popup.text = text
-        reward_popup.visible = true
-        reward_popup.modulate.a = 0
+	if reward_popup == null:
+		return
+	if text != "":
+		reward_popup.text = text
+	reward_popup.visible = true
+	reward_popup.modulate.a = 0
 
-        var tween = get_tree().create_tween()
-        tween.tween_property(reward_popup, "modulate:a", 1.0, 0.4).as_relative()
-        tween.tween_interval(1.2)
-        tween.tween_property(reward_popup, "modulate:a", -1.0, 0.5).as_relative()
-        tween.tween_callback(reward_popup.hide)
+	var tween = get_tree().create_tween()
+	tween.tween_property(reward_popup, "modulate:a", 1.0, 0.4).as_relative()
+	tween.tween_interval(1.2)
+	tween.tween_property(reward_popup, "modulate:a", -1.0, 0.5).as_relative()
+	tween.tween_callback(reward_popup.hide)
 
 func _on_restart_timer_timeout():
 	reset_game()
@@ -483,10 +483,10 @@ func _unhandled_input(event):
 
 
 func _on_AutoDrawTimer_timeout():
-        if not auto_draw_enabled:
-                if auto_draw_timer:
-                        auto_draw_timer.stop()
-                return
+	if not auto_draw_enabled:
+		if auto_draw_timer:
+			auto_draw_timer.stop()
+		return
 
 	card_table_root.draw_card()
 	hold_button.disabled = card_table_root.current_score < 18
@@ -494,23 +494,23 @@ func _on_AutoDrawTimer_timeout():
 		return
 
 	if card_table_root.current_score >= 18:
-                if randi() % 2 == 0:
-                        card_table_root._on_HoldButton_pressed()
-                else:
-                        if auto_draw_timer:
-                                auto_draw_timer.start()
-        else:
-                if auto_draw_timer:
-                        auto_draw_timer.start()
+		if randi() % 2 == 0:
+			card_table_root._on_HoldButton_pressed()
+		else:
+			if auto_draw_timer:
+				auto_draw_timer.start()
+	else:
+		if auto_draw_timer:
+				auto_draw_timer.start()
 
 
 func _on_AutoToggleButton_pressed():
 	auto_draw_enabled = !auto_draw_enabled
-        if auto_draw_enabled:
-                        $CanvasLayer/AutoToggleButton.text = "Auto: ON"
-        else:
-                        if auto_draw_timer:
-                                auto_draw_timer.stop()
-                        draw_button.disabled = false
-                        hold_button.disabled = current_score < 18
-                        $CanvasLayer/AutoToggleButton.text = "Auto: OFF"
+	if auto_draw_enabled:
+		$CanvasLayer/AutoToggleButton.text = "Auto: ON"
+	else:
+		if auto_draw_timer:
+			auto_draw_timer.stop()
+		draw_button.disabled = false
+		hold_button.disabled = current_score < 18
+		$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
