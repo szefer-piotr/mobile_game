@@ -53,6 +53,21 @@ offset_top = 320.0
 offset_right = 60.0
 offset_bottom = 343.0
 
+[node name="ScoreProgressLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 230.0
+offset_right = 60.0
+offset_bottom = 253.0
+
+[node name="ScoreProgressBar" type="ProgressBar" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 260.0
+offset_right = 260.0
+offset_bottom = 280.0
+min_value = 0.0
+max_value = 100.0
+value = 0.0
+
 [node name="DrawButton" type="Button" parent="CanvasLayer"]
 anchors_preset = 7
 anchor_left = 0.5
