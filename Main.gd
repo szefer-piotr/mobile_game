@@ -298,6 +298,10 @@ func show_kingdom_mode():
 	tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
 	tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
 	show_building_ui()
+	if card_table_root:
+		card_table_root.hide()
+	if auto_draw_timer:
+		auto_draw_timer.stop()
 
 func show_building_ui():
         $CanvasLayer/KingdomPanel.visible = true
@@ -447,6 +451,13 @@ func hide_kingdom_mode():
 		tween.tween_property(cam, "global_position", default_cam_pos, 0.05)
 		tween.tween_property(cam, "rotation_degrees", default_cam_rot, 0.25)
 		$CanvasLayer/KingdomButton.visible = true
+		if card_table_root:
+			card_table_root.show()
+			if auto_draw_enabled and restart_timer.is_stopped():
+				start_auto_draw()
+		else:
+			show_card_table()
+			reset_game()
 
 func _unhandled_input(event):
 	if $CanvasLayer/KingdomPanel.visible and event is InputEventMouseButton:
