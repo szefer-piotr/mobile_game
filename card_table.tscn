@@ -97,8 +97,26 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "HOLD"
 
+[node name="AutoToggleButton" type="Button" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 180.0
+offset_right = 160.0
+offset_bottom = 220.0
+text = "Auto: OFF"
+
+[node name="RewardReadyPopup" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 150.0
+offset_right = 200.0
+offset_bottom = 170.0
+visible = false
+
 [node name="RestartTimer" type="Timer" parent="CanvasLayer"]
 one_shot = true
+
+[node name="AutoDrawTimer" type="Timer" parent="CanvasLayer"]
+one_shot = true
+wait_time = 0.5
 
 [node name="Chest" parent="." instance=ExtResource("5_ud6sj")]
 transform = Transform3D(0.63388, 0, 0.773431, 0, 1, 0, -0.773431, 0, 0.63388, 1.97483, 0, 7.39904)
@@ -272,3 +290,6 @@ transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -5, 0, 8
 
 [connection signal="pressed" from="CanvasLayer/DrawButton" to="." method="_on_DrawButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/HoldButton" to="." method="_on_HoldButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/AutoToggleButton" to="." method="_on_AutoToggleButton_pressed"]
+[connection signal="timeout" from="CanvasLayer/AutoDrawTimer" to="." method="_on_AutoDrawTimer_timeout"]
+[connection signal="timeout" from="CanvasLayer/RestartTimer" to="." method="_on_restart_timer_timeout"]
