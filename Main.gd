@@ -127,12 +127,155 @@ func load_kingdom(index: int):
         update_all_building_buttons()
 
 func check_kingdom_complete():
-        for key in buildings.keys():
-                var data = buildings[key]
-                if data["level"] < data["costs"].size():
-                        return false
-        load_kingdom(current_kingdom_idx + 1)
-        return true
+	for key in buildings.keys():
+		var data = buildings[key]
+		if data["level"] < data["costs"].size():
+			return false
+	load_kingdom(current_kingdom_idx + 1)
+	return true
+
+func _ready():
+	show_card_table()
+	load_reward_path("starter_path")
+	randomize()
+	if restart_timer:
+		restart_timer.timeout.connect(_on_restart_timer_timeout)
+	if auto_draw_timer:
+		auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+
+	default_cam_pos = cam.global_position
+	default_cam_rot = cam.rotation_degrees
+
+	if score_bar:
+		score_bar.min_value = 0
+		score_bar.max_value = 100
+		score_bar.value = 0
+	displayed_score_value = 0.0
+	target_score_bar_value = 0.0
+	if reward_popup:
+		reward_popup.visible = false
+
+	setup_kingdoms()
+	print("Loading kingdoms...")
+	load_kingdom(0)
+	reset_game()
+	$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
+
+func _process(delta):
+	if score_bar:
+		if abs(displayed_score_value - target_score_bar_value) > 0.1:
+			displayed_score_value = lerp(
+				displayed_score_value,
+				target_score_bar_value,
+				delta * fill_speed
+			)
+			score_bar.value = round(displayed_score_value)
+		else:
+			displayed_score_value = target_score_bar_value
+			score_bar.value = round(target_score_bar_value)
+
+func reset_game():
+	current_score = 0
+	icon_counts.clear()
+	for icon in available_icons:
+		icon_counts[icon] = 0
+	cards.clear()
+	score_label.text = "Score: 0"
+	if result_label:
+		result_label.text = ""
+	draw_button.disabled = false
+	hold_button.disabled = true
+	force_draw_until_15 = false
+	if auto_draw_timer:
+		auto_draw_timer.stop()
+	
+	for c in card_row.get_children():
+		c.queue_free()
+
+func add_score(amount: int):
+	#current_score += amount
+	progress_towards_current += amount
+	
+	while current_reward_index < reward_path.size():
+		var reward = reward_path[current_reward_index]
+		var required = reward["points_needed"]
+		if progress_towards_current < required:
+			break
+		progress_towards_current -= required
+		give_reward(reward)
+		current_reward_index += 1
+		
+	update_score_bar()
+	
+	if current_reward_index >= reward_path.size():
+		load_reward_path("kingdom_path")
+
+
+func give_reward(reward: Dictionary):
+	CurrencyManager.add_currency(reward["reward_type"], reward["amount"])
+	var text = "Recieved %d %s!" % [reward["amount"], reward["reward_type"]]
+	show_reward_popup(text)
+
+
+#func _position_new_card(card):
+	#var target_x = float(cards.size() - 1) * 0.25
+	#var target_y = float(cards.size() - 1) * 0.025
+	#var target_z = randf_range(-0.025, 0.025)
+	#var pos = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
+	#card.set_target_position(pos)
+
+func start_auto_draw():
+		if current_score < 15:
+				draw_button.disabled = true
+				hold_button.disabled = true
+				if auto_draw_timer:
+						auto_draw_timer.start()
+		else:
+				if auto_draw_timer:
+						auto_draw_timer.stop()
+				draw_button.disabled = false
+				hold_button.disabled = current_score < 18
+	
+
+func _on_KingdomButton_pressed():
+	show_kingdom_mode()
+
+func show_kingdom_mode():
+	var tween = get_tree().create_tween()
+	tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
+	tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
+	show_building_ui()
+	if card_table_root:
+		card_table_root.hide()
+	if auto_draw_timer:
+		auto_draw_timer.stop()
+
+func show_building_ui():
+	$CanvasLayer/KingdomPanel.visible = true
+	draw_button.visible = false
+	hold_button.visible = false
+	$CanvasLayer/KingdomButton.visible = false
+	var kroot = get_node_or_null("KingdomRoot")
+	if kroot:
+		kroot.visible = true
+	var list = $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList
+	
+	for child in list.get_children():
+		child.queue_free()
+
+	for key in buildings.keys():
+		var entry = building_entry_scene.instantiate()
+		var base = key.replace(" ", "")
+		entry.name = base
+		list.add_child(entry)
+
+		var label: Label = entry.get_node("Label")
+		label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
+
+		var btn: Button = entry.get_node("Button")
+		btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
+	
+	update_all_building_buttons()
 
 func get_building_button(key: String) -> Button:
         var base = key.replace(" ", "")
