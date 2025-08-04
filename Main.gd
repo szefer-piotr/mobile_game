@@ -188,14 +188,14 @@ func _on_KingdomButton_pressed():
 	show_kingdom_mode()
 
 func show_kingdom_mode():
-	var tween = get_tree().create_tween()
-	tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
-	tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
-	show_building_ui()
-	if card_table_root:
-		card_table_root.hide()
-	if auto_draw_timer:
-		auto_draw_timer.stop()
+        var tween = get_tree().create_tween()
+        tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
+        tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
+        if card_table_root:
+                card_table_root.hide()
+        if auto_draw_timer:
+                auto_draw_timer.stop()
+        show_building_ui()
 
 func show_building_ui():
 	$CanvasLayer/KingdomPanel.visible = true
