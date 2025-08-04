@@ -13,14 +13,6 @@ var buildings: Dictionary = {}
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
 
-func _ready():
-		randomize()
-		default_cam_pos = cam.global_position
-		default_cam_rot = cam.rotation_degrees
-		setup_kingdoms()
-		print("Loading kingdoms...")
-		load_kingdom(0)
-
 func _on_KingdomButton_pressed():
 		show_kingdom_mode()
 
@@ -136,30 +128,14 @@ func check_kingdom_complete():
 
 func _ready():
         randomize()
-        if restart_timer:
-                restart_timer.timeout.connect(_on_restart_timer_timeout)
-        if auto_draw_timer:
-                auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
-
         default_cam_pos = cam.global_position
         default_cam_rot = cam.rotation_degrees
-
-        if score_bar:
-                score_bar.min_value = 0
-                score_bar.max_value = 100
-                score_bar.value = 0
-        displayed_score_value = 0.0
-        target_score_bar_value = 0.0
-        if reward_popup:
-                reward_popup.visible = false
-
         setup_kingdoms()
         print("Loading kingdoms...")
         load_kingdom(0)
         cam.global_position = default_cam_pos
         cam.rotation_degrees = default_cam_rot
         show_building_ui()
-        $CanvasLayer/AutoToggleButton.text = "Auto: OFF"
 
 func _process(delta):
 	if score_bar:
