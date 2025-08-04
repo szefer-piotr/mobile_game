@@ -135,31 +135,31 @@ func check_kingdom_complete():
 	return true
 
 func _ready():
-	show_card_table()
-	load_reward_path("starter_path")
-	randomize()
-	if restart_timer:
-		restart_timer.timeout.connect(_on_restart_timer_timeout)
-	if auto_draw_timer:
-		auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+        randomize()
+        if restart_timer:
+                restart_timer.timeout.connect(_on_restart_timer_timeout)
+        if auto_draw_timer:
+                auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
 
-	default_cam_pos = cam.global_position
-	default_cam_rot = cam.rotation_degrees
+        default_cam_pos = cam.global_position
+        default_cam_rot = cam.rotation_degrees
 
-	if score_bar:
-		score_bar.min_value = 0
-		score_bar.max_value = 100
-		score_bar.value = 0
-	displayed_score_value = 0.0
-	target_score_bar_value = 0.0
-	if reward_popup:
-		reward_popup.visible = false
+        if score_bar:
+                score_bar.min_value = 0
+                score_bar.max_value = 100
+                score_bar.value = 0
+        displayed_score_value = 0.0
+        target_score_bar_value = 0.0
+        if reward_popup:
+                reward_popup.visible = false
 
-	setup_kingdoms()
-	print("Loading kingdoms...")
-	load_kingdom(0)
-	reset_game()
-	$CanvasLayer/AutoToggleButton.text = "Auto: OFF"
+        setup_kingdoms()
+        print("Loading kingdoms...")
+        load_kingdom(0)
+        cam.global_position = default_cam_pos
+        cam.rotation_degrees = default_cam_rot
+        show_building_ui()
+        $CanvasLayer/AutoToggleButton.text = "Auto: OFF"
 
 func _process(delta):
 	if score_bar:
@@ -188,14 +188,14 @@ func reset_game():
 	force_draw_until_15 = false
 	if auto_draw_timer:
 		auto_draw_timer.stop()
-	
+
 	for c in card_row.get_children():
 		c.queue_free()
 
 func add_score(amount: int):
 	#current_score += amount
 	progress_towards_current += amount
-	
+
 	while current_reward_index < reward_path.size():
 		var reward = reward_path[current_reward_index]
 		var required = reward["points_needed"]
@@ -204,9 +204,9 @@ func add_score(amount: int):
 		progress_towards_current -= required
 		give_reward(reward)
 		current_reward_index += 1
-		
+
 	update_score_bar()
-	
+
 	if current_reward_index >= reward_path.size():
 		load_reward_path("kingdom_path")
 
@@ -235,7 +235,7 @@ func start_auto_draw():
 						auto_draw_timer.stop()
 				draw_button.disabled = false
 				hold_button.disabled = current_score < 18
-	
+
 
 func _on_KingdomButton_pressed():
 	show_kingdom_mode()
@@ -259,7 +259,7 @@ func show_building_ui():
 	if kroot:
 		kroot.visible = true
 	var list = $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList
-	
+
 	for child in list.get_children():
 		child.queue_free()
 
@@ -274,7 +274,7 @@ func show_building_ui():
 
 		var btn: Button = entry.get_node("Button")
 		btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
-	
+
 	update_all_building_buttons()
 
 func get_building_button(key: String) -> Button:
