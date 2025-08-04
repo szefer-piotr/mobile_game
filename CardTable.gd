@@ -8,6 +8,11 @@ extends Node3D
 @onready var score_label = $CanvasLayer/ScoreLabel
 @onready var total_label = $CanvasLayer/TotalScoreLabel
 @onready var restart_timer = $CanvasLayer/RestartTimer
+@onready var score_bar = $CanvasLayer/ScoreProgressBar
+@onready var score_bar_label = $CanvasLayer/ScoreProgressLabel
+@onready var auto_draw_timer = $CanvasLayer/AutoDrawTimer
+@onready var auto_toggle_button = $CanvasLayer/AutoToggleButton
+@onready var reward_popup = $CanvasLayer/RewardReadyPopup
 
 var current_score = 0
 var total_score = 0
@@ -15,12 +20,53 @@ var cards = []
 var icon_counts: Dictionary = {}
 var available_icons := ["attack", "shield", "gold", "pillage", "special_item"]
 var icon_textures = {
-	"attack": preload("res://item_icons/attack_256_256.png"),
-	"shield": preload("res://item_icons/shield_256_256.png"),
-	"gold": preload("res://item_icons/gold_256_256.png"),
-	"pillage": preload("res://item_icons/pillage_256_256.png"),
-	"special_item": preload("res://item_icons/special_item_256_256.png"),
+        "attack": preload("res://item_icons/attack_256_256.png"),
+        "shield": preload("res://item_icons/shield_256_256.png"),
+        "gold": preload("res://item_icons/gold_256_256.png"),
+        "pillage": preload("res://item_icons/pillage_256_256.png"),
+        "special_item": preload("res://item_icons/special_item_256_256.png"),
 }
+
+var current_path_name: String = ""
+var reward_path: Array = []
+var current_reward_index: int = 0
+var progress_towards_current: int = 0
+
+var displayed_score_value: float = 0.0
+var target_score_bar_value: float = 0.0
+var fill_speed = 6.0
+
+var auto_draw_enabled = false
+var force_draw_until_15 = false
+
+func _ready():
+        randomize()
+        if restart_timer:
+                restart_timer.timeout.connect(_on_restart_timer_timeout)
+        if auto_draw_timer:
+                auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+        if auto_toggle_button:
+                auto_toggle_button.text = "Auto: OFF"
+                auto_toggle_button.pressed.connect(_on_AutoToggleButton_pressed)
+        if score_bar:
+                score_bar.min_value = 0
+                score_bar.max_value = 100
+                score_bar.value = 0
+        displayed_score_value = 0.0
+        target_score_bar_value = 0.0
+        if reward_popup:
+                reward_popup.visible = false
+        load_reward_path("starter_path")
+        reset_game()
+
+func _process(delta):
+        if score_bar:
+                if abs(displayed_score_value - target_score_bar_value) > 0.1:
+                        displayed_score_value = lerp(displayed_score_value, target_score_bar_value, delta * fill_speed)
+                        score_bar.value = round(displayed_score_value)
+                else:
+                        displayed_score_value = target_score_bar_value
+                        score_bar.value = round(target_score_bar_value)
 
 func draw_card():
 	if current_score == 0:
@@ -98,14 +144,171 @@ func _on_DrawButton_pressed():
 		hold_button.disabled = current_score < 18
 
 func _on_HoldButton_pressed():
-	if current_score >= 18:
-		total_score += current_score
-		end_game("👍 Scored " + str(current_score), true)
-	else:
-		end_game("😐 Low score...", false)
+        if current_score >= 18:
+                total_score += current_score
+                end_game("👍 Scored " + str(current_score), true)
+        else:
+                end_game("😐 Low score...", false)
 
 func end_game(msg: String, gave_reward: bool):
-	total_label.text = "Total: " + str(total_score)
-	draw_button.disabled = true
-	hold_button.disabled = true
-	restart_timer.start()
+        total_label.text = "Total: " + str(total_score)
+
+        var reward = 0
+        if current_score == 21:
+                reward = 50
+        elif current_score >= 18 and current_score < 21:
+                reward = current_score
+        else:
+                reward = 0
+
+        add_score(reward)
+
+        draw_button.disabled = true
+        hold_button.disabled = true
+        force_draw_until_15 = false
+        if auto_draw_timer:
+                auto_draw_timer.stop()
+        restart_timer.start()
+
+func reset_game():
+        current_score = 0
+        icon_counts.clear()
+        for icon in available_icons:
+                icon_counts[icon] = 0
+        cards.clear()
+        score_label.text = "Score: 0"
+        draw_button.disabled = false
+        hold_button.disabled = true
+        force_draw_until_15 = false
+        if auto_draw_timer:
+                auto_draw_timer.stop()
+        for c in card_row.get_children():
+                c.queue_free()
+
+func add_score(amount: int):
+        progress_towards_current += amount
+
+        while current_reward_index < reward_path.size():
+                var reward = reward_path[current_reward_index]
+                var required = reward["points_needed"]
+                if progress_towards_current < required:
+                        break
+                progress_towards_current -= required
+                give_reward(reward)
+                current_reward_index += 1
+
+        update_score_bar()
+
+        if current_reward_index >= reward_path.size():
+                load_reward_path("kingdom_path")
+
+func give_reward(reward: Dictionary):
+        CurrencyManager.add_currency(reward["reward_type"], reward["amount"])
+        var text = "Recieved %d %s!" % [reward["amount"], reward["reward_type"]]
+        show_reward_popup(text)
+
+func show_reward_popup(text: String = ""):
+        if reward_popup == null:
+                return
+        if text != "":
+                reward_popup.text = text
+        reward_popup.visible = true
+        reward_popup.modulate.a = 0
+
+        var tween = get_tree().create_tween()
+        tween.tween_property(reward_popup, "modulate:a", 1.0, 0.4).as_relative()
+        tween.tween_interval(1.2)
+        tween.tween_property(reward_popup, "modulate:a", -1.0, 0.5).as_relative()
+        tween.tween_callback(reward_popup.hide)
+
+func update_score_bar():
+        if score_bar == null or score_bar_label == null:
+                return
+        if current_reward_index >= reward_path.size():
+                target_score_bar_value = score_bar.max_value
+                score_bar_label.text = "Path Complete!"
+                return
+
+        var reward = reward_path[current_reward_index]
+        var current_goal = reward["points_needed"]
+        var ratio = float(progress_towards_current) / current_goal
+        target_score_bar_value = ratio * score_bar.max_value
+
+        var reward_type = reward.get("reward_type", "")
+        var reward_amount = reward.get("amount", 0)
+        score_bar_label.text = "%d / %d -> %s %d" % [
+                progress_towards_current,
+                current_goal,
+                reward_type,
+                reward_amount
+        ]
+
+func load_reward_path(path_name: String):
+        var file_path = "res://reward_paths/%s.json" % path_name
+        if not FileAccess.file_exists(file_path):
+                push_error("Reward path not found: " + file_path)
+                return
+
+        var file = FileAccess.open(file_path, FileAccess.READ)
+        var data = file.get_as_text()
+        var result = JSON.parse_string(data)
+
+        if typeof(result) == TYPE_ARRAY:
+                reward_path = result
+                current_path_name = path_name
+                current_reward_index = 0
+                progress_towards_current = 0
+                update_score_bar()
+                print("Loaded reward path: ", path_name)
+        else:
+                push_error("Failed to parse JSON reward path.")
+
+func start_auto_draw():
+        if current_score < 15:
+                draw_button.disabled = true
+                hold_button.disabled = true
+                if auto_draw_timer:
+                        auto_draw_timer.start()
+        else:
+                if auto_draw_timer:
+                        auto_draw_timer.stop()
+                draw_button.disabled = false
+                hold_button.disabled = current_score < 18
+
+func _on_restart_timer_timeout():
+        reset_game()
+        if auto_draw_enabled:
+                start_auto_draw()
+
+func _on_AutoDrawTimer_timeout():
+        if not auto_draw_enabled:
+                if auto_draw_timer:
+                        auto_draw_timer.stop()
+                return
+
+        draw_card()
+        hold_button.disabled = current_score < 18
+        if current_score >= 21:
+                return
+
+        if current_score >= 18:
+                if randi() % 2 == 0:
+                        _on_HoldButton_pressed()
+                else:
+                        if auto_draw_timer:
+                                auto_draw_timer.start()
+        else:
+                if auto_draw_timer:
+                        auto_draw_timer.start()
+
+func _on_AutoToggleButton_pressed():
+        auto_draw_enabled = !auto_draw_enabled
+        if auto_draw_enabled:
+                auto_toggle_button.text = "Auto: ON"
+                start_auto_draw()
+        else:
+                if auto_draw_timer:
+                        auto_draw_timer.stop()
+                draw_button.disabled = false
+                hold_button.disabled = current_score < 18
+                auto_toggle_button.text = "Auto: OFF"
