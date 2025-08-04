@@ -13,35 +13,6 @@ var buildings: Dictionary = {}
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
 
-func _on_KingdomButton_pressed():
-		show_kingdom_mode()
-
-func show_kingdom_mode():
-		var tween = get_tree().create_tween()
-		tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
-		tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
-		show_building_ui()
-
-func show_building_ui():
-		$CanvasLayer/KingdomPanel.visible = true
-		$CanvasLayer/KingdomButton.visible = false
-		var kroot = get_node_or_null("KingdomRoot")
-		if kroot:
-				kroot.visible = true
-		var list = $CanvasLayer/KingdomPanel/ScrollContainer/BuildingList
-		for child in list.get_children():
-				child.queue_free()
-		for key in buildings.keys():
-				var entry = building_entry_scene.instantiate()
-				var base = key.replace(" ", "")
-				entry.name = base
-				list.add_child(entry)
-				var label: Label = entry.get_node("Label")
-				label.text = "%s (Lv. %d)" % [key, buildings[key]["level"]]
-				var btn: Button = entry.get_node("Button")
-				btn.pressed.connect(_on_BuildingButton_pressed.bind(key))
-		update_all_building_buttons()
-
 func hide_building_ui():
 		$CanvasLayer/KingdomPanel.visible = false
 		$CanvasLayer/KingdomButton.visible = true
