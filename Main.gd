@@ -1,9 +1,5 @@
 extends Node3D
 
-@onready var cam = $Camera3D
-@onready var building_entry_scene = preload("res://BuildingEntry.tscn")
-@onready var knight_scene = preload("res://Knight.tscn")
-
 const KingdomData = preload("res://KingdomData.gd")
 
 var kingdoms: Array = []
@@ -12,6 +8,10 @@ var buildings: Dictionary = {}
 
 var default_cam_pos = Vector3()
 var default_cam_rot = Vector3()
+
+@onready var cam = $Camera3D
+@onready var building_entry_scene = preload("res://BuildingEntry.tscn")
+@onready var knight_scene = preload("res://Knight.tscn")
 
 func hide_building_ui():
 		$CanvasLayer/KingdomPanel.visible = false
