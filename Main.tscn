@@ -39,6 +39,20 @@ text = "🏰
 BUILD"
 metadata/_edit_use_anchors_ = true
 
+[node name="CardTableButton" type="Button" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.984375
+anchor_bottom = 1.01953
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 123.0
+offset_bottom = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Play Cards"
+metadata/_edit_use_anchors_ = true
+
 [node name="KingdomPanel" type="Panel" parent="CanvasLayer"]
 visible = false
 anchors_preset = -1
@@ -168,4 +182,5 @@ layout_mode = 2
 text = "Build (140 Coins)"
 
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/CardTableButton" to="." method="show_card_table"]
 [connection signal="pressed" from="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]
