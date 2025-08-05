@@ -15,10 +15,6 @@ var default_cam_rot = Vector3()
 
 var card_table_scene = preload("res://card_table.tscn")
 var card_table_root: Node3D = null
-var draw_button: Button = null
-var hold_button: Button = null
-var score_bar: ProgressBar = null
-var auto_draw_timer: Timer = null
 
 func hide_building_ui():
 				$CanvasLayer/KingdomPanel.visible = false
@@ -106,121 +102,36 @@ func check_kingdom_complete():
 	return true
 
 func _ready():
-		randomize()
-		default_cam_pos = cam.global_position
-		default_cam_rot = cam.rotation_degrees
-		setup_kingdoms()
-		print("Loading kingdoms...")
-		load_kingdom(0)
-		cam.global_position = default_cam_pos
-		cam.rotation_degrees = default_cam_rot
-		show_building_ui()
-
-func _process(delta):
-	if score_bar:
-		if abs(displayed_score_value - target_score_bar_value) > 0.1:
-			displayed_score_value = lerp(
-				displayed_score_value,
-				target_score_bar_value,
-				delta * fill_speed
-			)
-			score_bar.value = round(displayed_score_value)
-		else:
-			displayed_score_value = target_score_bar_value
-			score_bar.value = round(target_score_bar_value)
-
-func reset_game():
-	current_score = 0
-	icon_counts.clear()
-	for icon in available_icons:
-		icon_counts[icon] = 0
-	cards.clear()
-	score_label.text = "Score: 0"
-	if result_label:
-		result_label.text = ""
-	draw_button.disabled = false
-	hold_button.disabled = true
-	force_draw_until_15 = false
-	if auto_draw_timer:
-		auto_draw_timer.stop()
-
-	for c in card_row.get_children():
-		c.queue_free()
-
-func add_score(amount: int):
-	#current_score += amount
-	progress_towards_current += amount
-
-	while current_reward_index < reward_path.size():
-		var reward = reward_path[current_reward_index]
-		var required = reward["points_needed"]
-		if progress_towards_current < required:
-			break
-		progress_towards_current -= required
-		give_reward(reward)
-		current_reward_index += 1
-
-	update_score_bar()
-
-	if current_reward_index >= reward_path.size():
-		load_reward_path("kingdom_path")
-
-
-func give_reward(reward: Dictionary):
-	CurrencyManager.add_currency(reward["reward_type"], reward["amount"])
-	var text = "Recieved %d %s!" % [reward["amount"], reward["reward_type"]]
-	show_reward_popup(text)
-
-
-#func _position_new_card(card):
-	#var target_x = float(cards.size() - 1) * 0.25
-	#var target_y = float(cards.size() - 1) * 0.025
-	#var target_z = randf_range(-0.025, 0.025)
-	#var pos = card_row.global_transform.origin + Vector3(target_x, target_y, target_z)
-	#card.set_target_position(pos)
-
-func start_auto_draw():
-				if current_score < 15:
-								draw_button.disabled = true
-								hold_button.disabled = true
-								if auto_draw_timer:
-												auto_draw_timer.start()
-				else:
-								if auto_draw_timer:
-												auto_draw_timer.stop()
-								draw_button.disabled = false
-								hold_button.disabled = current_score < 18
-
-
+                randomize()
+                default_cam_pos = cam.global_position
+                default_cam_rot = cam.rotation_degrees
+                setup_kingdoms()
+                print("Loading kingdoms...")
+                load_kingdom(0)
+                cam.global_position = default_cam_pos
+                cam.rotation_degrees = default_cam_rot
+                show_building_ui()
 func _on_KingdomButton_pressed():
-		show_kingdom_mode()
+                show_kingdom_mode()
 
 func show_card_table():
 		hide_building_ui()
 		$CanvasLayer/KingdomButton.visible = false
 		$CanvasLayer/CardTableButton.visible = false
-		var kroot = get_node_or_null("KingdomRoot")
-		if kroot:
-				kroot.visible = false
-		if card_table_root == null:
-				card_table_root = card_table_scene.instantiate()
-				add_child(card_table_root)
-		card_table_root.show()
-		var ct_cam = card_table_root.get_node_or_null("Camera3D")
-		if ct_cam:
-				ct_cam.make_current()
-		if draw_button == null:
-				draw_button = card_table_root.get_node_or_null("CanvasLayer/DrawButton")
-		if hold_button == null:
-				hold_button = card_table_root.get_node_or_null("CanvasLayer/HoldButton")
-		if score_bar == null:
-				score_bar = card_table_root.get_node_or_null("CanvasLayer/ScoreProgressBar")
-		if auto_draw_timer == null:
-				auto_draw_timer = card_table_root.get_node_or_null("CanvasLayer/AutoDrawTimer")
+                var kroot = get_node_or_null("KingdomRoot")
+                if kroot:
+                                kroot.visible = false
+                if card_table_root == null:
+                                card_table_root = card_table_scene.instantiate()
+                                add_child(card_table_root)
+                card_table_root.show()
+                var ct_cam = card_table_root.get_node_or_null("Camera3D")
+                if ct_cam:
+                                ct_cam.make_current()
 
 func hide_card_table():
-		if card_table_root:
-				card_table_root.hide()
+                if card_table_root:
+                                card_table_root.hide()
 		cam.make_current()
 		cam.global_position = default_cam_pos
 		cam.rotation_degrees = default_cam_rot
@@ -230,23 +141,17 @@ func hide_card_table():
 		hide_building_ui()
 
 func show_kingdom_mode():
-		var tween = get_tree().create_tween()
-		tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
-		tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
-		if card_table_root:
-				card_table_root.hide()
-		if auto_draw_timer:
-				auto_draw_timer.stop()
-		show_building_ui()
+                var tween = get_tree().create_tween()
+                tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
+                tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
+                if card_table_root:
+                                card_table_root.hide()
+                show_building_ui()
 
 func show_building_ui():
-		$CanvasLayer/KingdomPanel.visible = true
-		if draw_button:
-				draw_button.visible = false
-		if hold_button:
-				hold_button.visible = false
-		$CanvasLayer/KingdomButton.visible = false
-		$CanvasLayer/CardTableButton.visible = false
+                $CanvasLayer/KingdomPanel.visible = true
+                $CanvasLayer/KingdomButton.visible = false
+                $CanvasLayer/CardTableButton.visible = false
 	var kroot = get_node_or_null("KingdomRoot")
 	if kroot:
 		kroot.visible = true
