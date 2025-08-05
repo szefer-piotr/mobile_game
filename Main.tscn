@@ -12,7 +12,7 @@ corner_radius_bottom_left = 32
 script = ExtResource("1_glv2v")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 5.94966, 1.73001)
+transform = Transform3D(1, 0, 0, 0, 0.645524, 0.76374, 0, -0.76374, 0.645524, 0, 16.5984, 16.0818)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.873636, 0.48658, 1.2915e-08, -0.0176858, 0.0317542, 0.999339, 0.486258, -0.873059, 0.0363472, -4.21687, 2.41694, -4.02756)
