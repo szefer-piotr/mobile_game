@@ -13,9 +13,17 @@ var default_cam_rot = Vector3()
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
 @onready var knight_scene = preload("res://Knight.tscn")
 
+var card_table_scene = preload("res://card_table.tscn")
+var card_table_root: Node3D = null
+var draw_button: Button = null
+var hold_button: Button = null
+var score_bar: ProgressBar = null
+var auto_draw_timer: Timer = null
+
 func hide_building_ui():
-		$CanvasLayer/KingdomPanel.visible = false
-		$CanvasLayer/KingdomButton.visible = true
+                $CanvasLayer/KingdomPanel.visible = false
+                $CanvasLayer/KingdomButton.visible = true
+                $CanvasLayer/CardTableButton.visible = true
 
 func hide_kingdom_mode():
 		hide_building_ui()
@@ -172,20 +180,54 @@ func give_reward(reward: Dictionary):
 	#card.set_target_position(pos)
 
 func start_auto_draw():
-		if current_score < 15:
-				draw_button.disabled = true
-				hold_button.disabled = true
-				if auto_draw_timer:
-						auto_draw_timer.start()
-		else:
-				if auto_draw_timer:
-						auto_draw_timer.stop()
-				draw_button.disabled = false
-				hold_button.disabled = current_score < 18
+                if current_score < 15:
+                                draw_button.disabled = true
+                                hold_button.disabled = true
+                                if auto_draw_timer:
+                                                auto_draw_timer.start()
+                else:
+                                if auto_draw_timer:
+                                                auto_draw_timer.stop()
+                                draw_button.disabled = false
+                                hold_button.disabled = current_score < 18
 
 
 func _on_KingdomButton_pressed():
-	show_kingdom_mode()
+        show_kingdom_mode()
+
+func show_card_table():
+        hide_building_ui()
+        $CanvasLayer/KingdomButton.visible = false
+        $CanvasLayer/CardTableButton.visible = false
+        var kroot = get_node_or_null("KingdomRoot")
+        if kroot:
+                kroot.visible = false
+        if card_table_root == null:
+                card_table_root = card_table_scene.instantiate()
+                add_child(card_table_root)
+        card_table_root.show()
+        var ct_cam = card_table_root.get_node_or_null("Camera3D")
+        if ct_cam:
+                ct_cam.make_current()
+        if draw_button == null:
+                draw_button = card_table_root.get_node_or_null("CanvasLayer/DrawButton")
+        if hold_button == null:
+                hold_button = card_table_root.get_node_or_null("CanvasLayer/HoldButton")
+        if score_bar == null:
+                score_bar = card_table_root.get_node_or_null("CanvasLayer/ScoreProgressBar")
+        if auto_draw_timer == null:
+                auto_draw_timer = card_table_root.get_node_or_null("CanvasLayer/AutoDrawTimer")
+
+func hide_card_table():
+        if card_table_root:
+                card_table_root.hide()
+        cam.make_current()
+        cam.global_position = default_cam_pos
+        cam.rotation_degrees = default_cam_rot
+        var kroot = get_node_or_null("KingdomRoot")
+        if kroot:
+                kroot.visible = true
+        hide_building_ui()
 
 func show_kingdom_mode():
         var tween = get_tree().create_tween()
@@ -198,10 +240,13 @@ func show_kingdom_mode():
         show_building_ui()
 
 func show_building_ui():
-	$CanvasLayer/KingdomPanel.visible = true
-	draw_button.visible = false
-	hold_button.visible = false
-	$CanvasLayer/KingdomButton.visible = false
+        $CanvasLayer/KingdomPanel.visible = true
+        if draw_button:
+                draw_button.visible = false
+        if hold_button:
+                hold_button.visible = false
+        $CanvasLayer/KingdomButton.visible = false
+        $CanvasLayer/CardTableButton.visible = false
 	var kroot = get_node_or_null("KingdomRoot")
 	if kroot:
 		kroot.visible = true
