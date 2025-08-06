@@ -91,17 +91,13 @@ func draw_card():
 	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
 	if icon_counts[icon_type] == 3:
 		print("Collected three %s icons" % icon_type)
-
+	card_row.add_child(card)
 	var i = cards.size()
 	var col = i % 4
 	var row = i / 4
-	card.global_position = card_spawn.global_position + Vector3(col * 0.5, row * 1.5, row + 2.0)
-
-	card_row.add_child(card)
+	card.global_position = card_spawn.global_position #+ Vector3(col * 0.5, row * 1.5, row + 2.0)
 	cards.append(card)
-
 	call_deferred("_finalize_card_position", card)
-
 	if current_score == 21:
 		total_score += 50
 		end_game("🎉 Jackpot! +50", true)

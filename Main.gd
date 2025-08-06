@@ -110,16 +110,16 @@ func _ready():
 	show_building_ui()
 
 func _on_KingdomButton_pressed():
-        show_kingdom_mode()
+		show_kingdom_mode()
 
 func _on_CardTableButton_pressed():
-        get_tree().change_scene_to_file("res://card_table.tscn")
+		get_tree().change_scene_to_file("res://card_table.tscn")
 
 func show_kingdom_mode():
-        var tween = get_tree().create_tween()
-        tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
-        tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
-        show_building_ui()
+		var tween = get_tree().create_tween()
+		tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
+		tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
+		show_building_ui()
 
 func show_building_ui():
 	$CanvasLayer/KingdomPanel.visible = true
