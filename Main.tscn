@@ -182,5 +182,5 @@ layout_mode = 2
 text = "Build (140 Coins)"
 
 [connection signal="pressed" from="CanvasLayer/KingdomButton" to="." method="_on_KingdomButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/CardTableButton" to="." method="show_card_table"]
+[connection signal="pressed" from="CanvasLayer/CardTableButton" to="." method="_on_CardTableButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/KingdomPanel/ScrollContainer/BuildingList/WallContainer/WallButton" to="." method="_on_BuildingButton_pressed"]

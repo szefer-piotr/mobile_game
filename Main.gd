@@ -13,9 +13,6 @@ var default_cam_rot = Vector3()
 @onready var building_entry_scene = preload("res://BuildingEntry.tscn")
 @onready var knight_scene = preload("res://Knight.tscn")
 
-var card_table_scene = preload("res://card_table.tscn")
-var card_table_root: Node3D = null
-
 func hide_building_ui():
 	$CanvasLayer/KingdomPanel.visible = false
 	$CanvasLayer/KingdomButton.visible = true
@@ -113,41 +110,16 @@ func _ready():
 	show_building_ui()
 
 func _on_KingdomButton_pressed():
-	show_kingdom_mode()
+        show_kingdom_mode()
 
-func show_card_table():
-	hide_building_ui()
-	$CanvasLayer/KingdomButton.visible = false
-	$CanvasLayer/CardTableButton.visible = false
-	var kroot = get_node_or_null("KingdomRoot")
-	if kroot:
-		kroot.visible = false
-	if card_table_root == null:
-		card_table_root = card_table_scene.instantiate()
-		add_child(card_table_root)
-	card_table_root.show()
-	var ct_cam = card_table_root.get_node_or_null("Camera3D")
-	if ct_cam:
-		ct_cam.make_current()
-
-func hide_card_table():
-	if card_table_root:
-		card_table_root.hide()
-	cam.make_current()
-	cam.global_position = default_cam_pos
-	cam.rotation_degrees = default_cam_rot
-	var kroot = get_node_or_null("KingdomRoot")
-	if kroot:
-		kroot.visible = true
-	hide_building_ui()
+func _on_CardTableButton_pressed():
+        get_tree().change_scene_to_file("res://card_table.tscn")
 
 func show_kingdom_mode():
-	var tween = get_tree().create_tween()
-	tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
-	tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
-	if card_table_root:
-		card_table_root.hide()
-	show_building_ui()
+        var tween = get_tree().create_tween()
+        tween.tween_property(cam, "global_position", Vector3(0, 10, 10), 0.5)
+        tween.tween_property(cam, "rotation_degrees", Vector3(-40, 0, 0), 0.15)
+        show_building_ui()
 
 func show_building_ui():
 	$CanvasLayer/KingdomPanel.visible = true
