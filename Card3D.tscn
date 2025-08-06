@@ -11,7 +11,7 @@ size = Vector3(0.504227, 0.0574655, 0.692005)
 script = ExtResource("1_eeaw3")
 
 [node name="MeshInstance3D" type="CSGMesh3D" parent="."]
-transform = Transform3D(-0.5, 0, -6.01469e-08, 0, 0.014, 0, 4.37114e-08, 0, -0.688, 0.00791931, 0.0203909, 0.0781486)
+transform = Transform3D(0.5, 0, 1.03885e-07, 0, -0.014, 0, -7.54979e-08, 0, 0.688, 0.00791931, 0.0203909, 0.0781486)
 mesh = SubResource("BoxMesh_axxlu")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="MeshInstance3D"]

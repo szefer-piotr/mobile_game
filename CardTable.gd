@@ -113,7 +113,7 @@ func _finalize_card_position(card):
 	var row = i / 4
 	var base_pos = card_row.global_transform.origin
 
-	var spacing = Vector3(0.9, -0, -1.5)
+	var spacing = Vector3(0.6, -0, -1.0)
 	var offset = Vector3(col, 0, row) * spacing
 
 	var rand_offset = Vector3(
