@@ -11,19 +11,19 @@ var stars: int = 0
 @onready var star_label = null
 
 func _ready():
-        get_tree().connect("scene_changed", Callable(self, "_on_scene_changed"))
-        _on_scene_changed(get_tree().current_scene)
+	get_tree().connect("scene_changed", Callable(self, "_on_scene_changed"))
+	_on_scene_changed(get_tree().current_scene)
 
 func _on_scene_changed(scene):
-        var root = get_tree().root
-        var base_path = "Main/CanvasLayer"
-        if scene and scene.name == "CardTable":
-                base_path = "CardTable/CanvasLayer"
-        coin_label = root.get_node_or_null(base_path + "/CoinLabel")
-        draw_label = root.get_node_or_null(base_path + "/DrawLabel")
-        gem_label = root.get_node_or_null(base_path + "/GemLabel")
-        star_label = root.get_node_or_null(base_path + "/StarLabel")
-        update_all_ui()
+	var root = get_tree().root
+	var base_path = "Main/CanvasLayer"
+	if scene and scene.name == "CardTable":
+		base_path = "CardTable/CanvasLayer"
+	coin_label = root.get_node_or_null(base_path + "/CoinLabel")
+	draw_label = root.get_node_or_null(base_path + "/DrawLabel")
+	gem_label = root.get_node_or_null(base_path + "/GemLabel")
+	star_label = root.get_node_or_null(base_path + "/StarLabel")
+	update_all_ui()
 
 func add_currency(type: String, amount: int):
 	match type:

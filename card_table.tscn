@@ -41,22 +41,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.2, 6)
 [node name="CoinLabel" type="Label" parent="CanvasLayer"]
 offset_left = 20.0
 offset_top = 20.0
-text = "\U0001fa99 Coins: 0"
+text = " 99 Coins: 0"
 
 [node name="DrawLabel" type="Label" parent="CanvasLayer"]
 offset_left = 20.0
 offset_top = 40.0
-text = "\U0001f3af Draws: 0"
+text = " af Draws: 0"
 
 [node name="GemLabel" type="Label" parent="CanvasLayer"]
 offset_left = 20.0
 offset_top = 60.0
-text = "\U0001f48e Gems: 0"
+text = " 8e Gems: 0"
 
 [node name="StarLabel" type="Label" parent="CanvasLayer"]
 offset_left = 20.0
 offset_top = 80.0
-text = "\u2b50 Stars: 0"
+text = "  Stars: 0"
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
 offset_left = 300.0
