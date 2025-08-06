@@ -13,6 +13,7 @@ extends Node3D
 @onready var auto_draw_timer = $CanvasLayer/AutoDrawTimer
 @onready var auto_toggle_button = $CanvasLayer/AutoToggleButton
 @onready var reward_popup = $CanvasLayer/RewardReadyPopup
+@onready var kingdom_button = $CanvasLayer/KingdomButton
 
 var current_score = 0
 var total_score = 0
@@ -20,11 +21,11 @@ var cards = []
 var icon_counts: Dictionary = {}
 var available_icons := ["attack", "shield", "gold", "pillage", "special_item"]
 var icon_textures = {
-		"attack": preload("res://item_icons/attack_256_256.png"),
-		"shield": preload("res://item_icons/shield_256_256.png"),
-		"gold": preload("res://item_icons/gold_256_256.png"),
-		"pillage": preload("res://item_icons/pillage_256_256.png"),
-		"special_item": preload("res://item_icons/special_item_256_256.png"),
+	"attack": preload("res://item_icons/attack_256_256.png"),
+	"shield": preload("res://item_icons/shield_256_256.png"),
+	"gold": preload("res://item_icons/gold_256_256.png"),
+	"pillage": preload("res://item_icons/pillage_256_256.png"),
+	"special_item": preload("res://item_icons/special_item_256_256.png"),
 }
 
 var current_path_name: String = ""
@@ -40,22 +41,24 @@ var auto_draw_enabled = false
 var force_draw_until_15 = false
 
 func _ready():
-		randomize()
-		if restart_timer:
-				restart_timer.timeout.connect(_on_restart_timer_timeout)
-		if auto_draw_timer:
-				auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
-		if auto_toggle_button:
-				auto_toggle_button.text = "Auto: OFF"
-				auto_toggle_button.pressed.connect(_on_AutoToggleButton_pressed)
-		if score_bar:
-				score_bar.min_value = 0
-				score_bar.max_value = 100
-				score_bar.value = 0
-		displayed_score_value = 0.0
-		target_score_bar_value = 0.0
-		if reward_popup:
-				reward_popup.visible = false
+	randomize()
+	if restart_timer:
+		restart_timer.timeout.connect(_on_restart_timer_timeout)
+	if auto_draw_timer:
+		auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+	if auto_toggle_button:
+		auto_toggle_button.text = "Auto: OFF"
+		auto_toggle_button.pressed.connect(_on_AutoToggleButton_pressed)
+	if score_bar:
+		score_bar.min_value = 0
+		score_bar.max_value = 100
+		score_bar.value = 0
+	displayed_score_value = 0.0
+	target_score_bar_value = 0.0
+	if reward_popup:
+		reward_popup.visible = false
+	if kingdom_button:
+		kingdom_button.pressed.connect(_on_KingdomButton_pressed)
 		load_reward_path("starter_path")
 		reset_game()
 
@@ -281,34 +284,41 @@ func _on_restart_timer_timeout():
 				start_auto_draw()
 
 func _on_AutoDrawTimer_timeout():
-		if not auto_draw_enabled:
-				if auto_draw_timer:
-						auto_draw_timer.stop()
-				return
+	if not auto_draw_enabled:
+		if auto_draw_timer:
+				auto_draw_timer.stop()
+		return
 
-		draw_card()
-		hold_button.disabled = current_score < 18
-		if current_score >= 21:
-				return
+	draw_card()
+	hold_button.disabled = current_score < 18
+	if current_score >= 21:
+		return
 
-		if current_score >= 18:
-				if randi() % 2 == 0:
-						_on_HoldButton_pressed()
-				else:
-						if auto_draw_timer:
-								auto_draw_timer.start()
+	if current_score >= 18:
+		if randi() % 2 == 0:
+			_on_HoldButton_pressed()
 		else:
-				if auto_draw_timer:
-						auto_draw_timer.start()
+			if auto_draw_timer:
+				auto_draw_timer.start()
+	else:
+		if auto_draw_timer:
+			auto_draw_timer.start()
 
 func _on_AutoToggleButton_pressed():
-		auto_draw_enabled = !auto_draw_enabled
-		if auto_draw_enabled:
-				auto_toggle_button.text = "Auto: ON"
-				start_auto_draw()
-		else:
-				if auto_draw_timer:
-						auto_draw_timer.stop()
-				draw_button.disabled = false
-				hold_button.disabled = current_score < 18
-				auto_toggle_button.text = "Auto: OFF"
+	auto_draw_enabled = !auto_draw_enabled
+	if auto_draw_enabled:
+		auto_toggle_button.text = "Auto: ON"
+		start_auto_draw()
+	else:
+		if auto_draw_timer:
+			auto_draw_timer.stop()
+		draw_button.disabled = false
+		hold_button.disabled = current_score < 18
+		auto_toggle_button.text = "Auto: OFF"
+
+func _on_KingdomButton_pressed():
+	if restart_timer:
+		restart_timer.stop()
+	reset_game()
+	get_tree().change_scene_to_file("res://Main.tscn")
+			
