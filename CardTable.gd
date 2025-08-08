@@ -82,7 +82,6 @@ func draw_card():
 
 	var card = card_scene.instantiate()
 	card.value = value
-
 	var icon_type = available_icons[randi() % available_icons.size()]
 	if icon_textures.has(icon_type):
 		card.icon_texture = icon_textures[icon_type]
@@ -91,11 +90,16 @@ func draw_card():
 	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
 	if icon_counts[icon_type] == 3:
 		print("Collected three %s icons" % icon_type)
+	
+	card.global_transform.origin = card_spawn.global_position
+	card.rotation_degrees = Vector3(90,0,0)
+	
 	card_row.add_child(card)
 	var i = cards.size()
 	var col = i % 4
 	var row = i / 4
-	card.global_position = card_spawn.global_position #+ Vector3(col * 0.5, row * 1.5, row + 2.0)
+	card.global_position = card_spawn.global_position
+	card.rotation_degrees = Vector3(180, 0, 0)
 	cards.append(card)
 	call_deferred("_finalize_card_position", card)
 	if current_score == 21:
@@ -103,6 +107,7 @@ func draw_card():
 		end_game("🎉 Jackpot! +50", true)
 	elif current_score > 21:
 		end_game("💥 Bust!", false)
+
 
 func _finalize_card_position(card):
 	if not card_row.is_inside_tree():
@@ -126,12 +131,8 @@ func _finalize_card_position(card):
 	
 	var target_pos = base_pos + offset + rand_offset
 	card.global_position = target_pos
-	
-	card.rotation_degrees = Vector3(
-		0,
-		randf_range(-10, 10),
-		0
-	)
+	card.throw_to(target_pos)
+	card.rotation_degrees.y = randf_range(-10, 10)
 
 func _on_DrawButton_pressed():
 	draw_button.disabled = true

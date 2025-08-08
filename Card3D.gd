@@ -13,6 +13,19 @@ func set_target_position(pos: Vector3):
 	apply_impulse(Vector3.ZERO, impulse)
 
 func _ready():
+	pass
+	#update_label()
+	#update_icon()
+
+func throw_to(target_pos: Vector3):
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "global_position", target_pos, 0.4)
+	tween.parallel().tween_property(self, "rotation_degrees:x", 0.0, 0.4)
+	tween.parallel().tween_callback(_show_front).set_delay(0.2)
+	
+func _show_front():
+	# change material/texture so the front is visible
 	update_label()
 	update_icon()
 
