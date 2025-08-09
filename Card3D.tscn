@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://c8xbm7nysu3da" path="res://Card3D.gd" id="1_eeaw3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eeaw3"]
-friction = 0.1
-bounce = 0.1
+friction = 0.5
+bounce = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1810p"]
 
