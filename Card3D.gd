@@ -7,7 +7,7 @@ extends RigidBody3D
 var label_assigned := false
 var front_shown := false
 var landed := false
-var slide_damp := 0.1
+var slide_damp := 0.5
 
 
 func set_target_position(pos: Vector3):
@@ -19,20 +19,20 @@ func set_target_position(pos: Vector3):
 
 func _ready():
 	linear_damp = slide_damp
-	
-	
+
+
 func throw_to(target_pos: Vector3):
 	var launch = target_pos - global_position
 	launch.y += 1.0
 	var dir = launch.normalized()
 	linear_velocity = dir * 0.5
-	apply_impulse(Vector3.ZERO, dir*2.0)
+	apply_impulse(Vector3.ZERO, dir * 2.0)
 	rotation_degrees.z = 180.0
 	angular_velocity = Vector3(0.0, 0.0, -3.0)
 	front_shown = false
 	landed = false
 	linear_damp = slide_damp
-	
+
 
 func throw_with_physics(target_pos: Vector3):
 	var launch = target_pos - global_position
@@ -41,10 +41,9 @@ func throw_with_physics(target_pos: Vector3):
 	linear_velocity = dir * 0.5
 	apply_impulse(Vector3.ZERO, dir * 2.0)
 	apply_torque_impulse(Vector3(0.0, 0.0, -3.0))
-	front_shown =  false
+	front_shown = false
 	landed = false
-	linear_damp = 0.5
-	
+	linear_damp = 0.1
 
 func _physics_process(_delta):
 	if not front_shown and rotation_degrees.z < 90.0:
@@ -52,7 +51,7 @@ func _physics_process(_delta):
 		_show_front()
 	if not landed and get_contact_count() > 0:
 		landed = true
-		linear_damp = slide_damp
+		linear_damp = 2.0
 
 
 func _show_front():

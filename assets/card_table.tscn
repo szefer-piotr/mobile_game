@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://jlrji8gbqcoy" path="res://assets/models/props/table_medium.glb" id="1_coeb0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_coeb0"]
-friction = 0.1
-bounce = 0.1
+friction = 0.5
+bounce = 0.05
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8h5ek"]
 size = Vector3(3.02101, 0.997131, 2.98854)
