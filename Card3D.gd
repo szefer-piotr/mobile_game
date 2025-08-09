@@ -45,7 +45,6 @@ func throw_with_physics(target_pos: Vector3):
 	landed = false
 	linear_damp = 0.1
 
-
 func _physics_process(_delta):
 	if not front_shown and rotation_degrees.z < 90.0:
 		front_shown = true
