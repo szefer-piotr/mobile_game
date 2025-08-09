@@ -27,8 +27,8 @@
 [node name="CardTable" type="Node3D"]
 script = ExtResource("1_vn8pc")
 
-[node name="CardSpawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.51692, 3)
+[node name="CardSpawn" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -3)
 
 [node name="CardRow" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96023, 1.10593, 5.99826)
