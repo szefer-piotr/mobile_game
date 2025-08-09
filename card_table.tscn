@@ -320,3 +320,5 @@ fov = 97.1105
 [connection signal="pressed" from="CanvasLayer/AutoToggleButton" to="." method="_on_AutoToggleButton_pressed"]
 [connection signal="timeout" from="CanvasLayer/RestartTimer" to="." method="_on_restart_timer_timeout"]
 [connection signal="timeout" from="CanvasLayer/AutoDrawTimer" to="." method="_on_AutoDrawTimer_timeout"]
+
+[editable path="Floor/table_medium2"]

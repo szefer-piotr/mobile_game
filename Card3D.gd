@@ -18,10 +18,7 @@ func set_target_position(pos: Vector3):
 
 
 func _ready():
-	var mat := PhysicsMaterial.new()
-	mat.friction = 0.1
-	physics_material_override = mat
-	linear_damp = 0.5
+	linear_damp = slide_damp
 	
 	
 func throw_to(target_pos: Vector3):
@@ -33,6 +30,18 @@ func throw_to(target_pos: Vector3):
 	rotation_degrees.z = 180.0
 	angular_velocity = Vector3(0.0, 0.0, -3.0)
 	front_shown = false
+	landed = false
+	linear_damp = slide_damp
+	
+
+func throw_with_physics(target_pos: Vector3):
+	var launch = target_pos - global_position
+	launch.y += 1.0
+	var dir = launch.normalized()
+	linear_velocity = dir * 0.5
+	apply_impulse(Vector3.ZERO, dir * 2.0)
+	apply_torque_impulse(Vector3(0.0, 0.0, -3.0))
+	front_shown =  false
 	landed = false
 	linear_damp = 0.5
 	

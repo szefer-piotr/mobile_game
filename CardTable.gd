@@ -62,6 +62,7 @@ func _ready():
 		load_reward_path("starter_path")
 		reset_game()
 
+
 func _process(delta):
 	if score_bar:
 		if abs(displayed_score_value - target_score_bar_value) > 0.1:
@@ -70,6 +71,7 @@ func _process(delta):
 		else:
 			displayed_score_value = target_score_bar_value
 			score_bar.value = round(target_score_bar_value)
+
 
 func draw_card():
 	if current_score == 0:
@@ -95,13 +97,11 @@ func draw_card():
 	card.rotation_degrees = Vector3(90,0,0)
 	
 	card_row.add_child(card)
-	var i = cards.size()
-	var col = i % 4
-	var row = i / 4
 	card.global_position = card_spawn.global_position
 	card.rotation_degrees = Vector3(180, 0, 0)
 	cards.append(card)
 	call_deferred("_finalize_card_position", card)
+	
 	if current_score == 21:
 		total_score += 50
 		end_game("🎉 Jackpot! +50", true)
@@ -127,11 +127,8 @@ func _finalize_card_position(card):
 		randf_range(-0.1, 0.1)
 	)
 
-	#card.set_target_position(base_pos + offset + rand_offset)
-	
 	var target_pos = base_pos + offset + rand_offset
-	card.global_position = target_pos
-	card.throw_to(target_pos)
+	card.throw_with_physics(target_pos)
 	card.rotation_degrees.y = randf_range(-10, 10)
 
 func _on_DrawButton_pressed():

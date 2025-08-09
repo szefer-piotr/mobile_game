@@ -1,6 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://bqiltepaituur"]
+[gd_scene load_steps=7 format=4 uid="uid://bqiltepaituur"]
 
 [ext_resource type="Script" uid="uid://c8xbm7nysu3da" path="res://Card3D.gd" id="1_eeaw3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eeaw3"]
+friction = 0.1
+bounce = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1810p"]
 
@@ -40,6 +44,7 @@ shadow_mesh = SubResource("ArrayMesh_sqy4j")
 size = Vector3(0.499836, 0.0574655, 0.813138)
 
 [node name="Card3D" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_eeaw3")
 script = ExtResource("1_eeaw3")
 
 [node name="Cube_002" type="MeshInstance3D" parent="."]
