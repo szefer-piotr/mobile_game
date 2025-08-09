@@ -95,12 +95,14 @@ func draw_card():
                 print("Collected three %s icons" % icon_type)
 
         var spawn_transform = _get_spawn_transform()
-        card_spawn.global_transform = spawn_transform
-        card_row.add_child(card)
-        card.global_transform = spawn_transform
-        card.rotation_degrees = Vector3(180, 0, 0)
-        cards.append(card)
-        call_deferred("_finalize_card_position", card)
+        if card_spawn:
+                card_spawn.global_transform = spawn_transform
+        if card:
+                card_row.add_child(card)
+                card.global_transform = spawn_transform
+                card.rotation_degrees = Vector3(180, 0, 0)
+                cards.append(card)
+                call_deferred("_finalize_card_position", card)
 
         if current_score == 21:
                 total_score += 50
