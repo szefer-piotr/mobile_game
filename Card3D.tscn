@@ -45,6 +45,7 @@ size = Vector3(0.499836, 0.0574655, 0.813138)
 
 [node name="Card3D" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_eeaw3")
+continuous_cd = true
 script = ExtResource("1_eeaw3")
 
 [node name="Cube_002" type="MeshInstance3D" parent="."]

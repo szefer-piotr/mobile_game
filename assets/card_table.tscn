@@ -14,7 +14,7 @@ size = Vector3(3.02101, 0.997131, 2.98854)
 [node name="table_medium_tablecloth" parent="." index="0"]
 transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
 
-[node name="Table" type="RigidBody3D" parent="." index="1"]
+[node name="Table" type="StaticBody3D" parent="." index="1"]
 physics_material_override = SubResource("PhysicsMaterial_coeb0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Table" index="0"]

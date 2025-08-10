@@ -83,41 +83,41 @@ func draw_card():
 	hold_button.disabled = current_score < 18
 	score_label.text = "Score: " + str(current_score)
 
-        var card = card_scene.instantiate()
-        card.value = value
-        var icon_type = available_icons[randi() % available_icons.size()]
-        if icon_textures.has(icon_type):
-                card.icon_texture = icon_textures[icon_type]
-        if "icon_type" in card:
-                card.icon_type = icon_type
-        icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
-        if icon_counts[icon_type] == 3:
-                print("Collected three %s icons" % icon_type)
+	var card = card_scene.instantiate()
+	card.value = value
+	var icon_type = available_icons[randi() % available_icons.size()]
+	if icon_textures.has(icon_type):
+		card.icon_texture = icon_textures[icon_type]
+	if "icon_type" in card:
+		card.icon_type = icon_type
+	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
+	if icon_counts[icon_type] == 3:
+		print("Collected three %s icons" % icon_type)
 
-        var spawn_transform = _get_spawn_transform()
-        if card_spawn:
-                card_spawn.global_transform = spawn_transform
-        if card:
-                card_row.add_child(card)
-                card.global_transform = spawn_transform
-                card.rotation_degrees = Vector3(180, 0, 0)
-                cards.append(card)
-                call_deferred("_finalize_card_position", card)
+	var spawn_transform = _get_spawn_transform()
+	if card_spawn:
+		card_spawn.global_transform = spawn_transform
+	if card:
+		card_row.add_child(card)
+		card.global_transform = spawn_transform
+		card.rotation_degrees = Vector3(180, 0, 0)
+		cards.append(card)
+		call_deferred("_finalize_card_position", card)
 
-        if current_score == 21:
-                total_score += 50
-                end_game("🎉 Jackpot! +50", true)
-        elif current_score > 21:
-                end_game("💥 Bust!", false)
+	if current_score == 21:
+		total_score += 50
+		end_game("🎉 Jackpot! +50", true)
+	elif current_score > 21:
+		end_game("💥 Bust!", false)
 
 
 func _get_spawn_transform() -> Transform3D:
-        var viewport_size = get_viewport().get_visible_rect().size
-        var screen_pos = Vector2(viewport_size.x * 0.5, viewport_size.y * 0.9)
-        var origin = camera.project_ray_origin(screen_pos)
-        var dir = camera.project_ray_normal(screen_pos)
-        var position = origin + dir * 2.0
-        return Transform3D(camera.global_transform.basis, position)
+		var viewport_size = get_viewport().get_visible_rect().size
+		var screen_pos = Vector2(viewport_size.x * 0.5, viewport_size.y * 0.9)
+		var origin = camera.project_ray_origin(screen_pos)
+		var dir = camera.project_ray_normal(screen_pos)
+		var position = origin + dir * 2.0
+		return Transform3D(camera.global_transform.basis, position)
 
 
 func _finalize_card_position(card):

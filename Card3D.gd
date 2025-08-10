@@ -8,6 +8,7 @@ var label_assigned := false
 var front_shown := false
 var landed := false
 var slide_damp := 0.5
+@export var angular_slide_damp: float = 10.0
 
 
 func set_target_position(pos: Vector3):
@@ -19,6 +20,7 @@ func set_target_position(pos: Vector3):
 
 func _ready():
 	linear_damp = slide_damp
+	angular_damp = 0.1
 
 
 func throw_to(target_pos: Vector3):
@@ -32,6 +34,7 @@ func throw_to(target_pos: Vector3):
 	front_shown = false
 	landed = false
 	linear_damp = slide_damp
+	angular_damp = 0.1
 
 
 func throw_with_physics(target_pos: Vector3):
@@ -44,6 +47,7 @@ func throw_with_physics(target_pos: Vector3):
 	front_shown = false
 	landed = false
 	linear_damp = 0.1
+	angular_damp = 0.1
 
 func _physics_process(_delta):
 	if not front_shown and rotation_degrees.z < 90.0:
@@ -52,6 +56,8 @@ func _physics_process(_delta):
 	if not landed and get_contact_count() > 0:
 		landed = true
 		linear_damp = 2.0
+		angular_damp = angular_slide_damp
+		angular_velocity = Vector3.ZERO
 
 
 func _show_front():
