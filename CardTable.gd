@@ -102,7 +102,7 @@ func draw_card():
 		card.global_transform = spawn_transform
 		card.rotation_degrees = Vector3(180, 0, 0)
 		cards.append(card)
-		call_deferred("_finalize_card_position", card)
+		call_deferred("_finalize_card_position", card, spawn_transform)
 
 	if current_score == 21:
 		total_score += 50
@@ -120,22 +120,24 @@ func _get_spawn_transform() -> Transform3D:
 		return Transform3D(camera.global_transform.basis, position)
 
 
-func _finalize_card_position(card):
+func _finalize_card_position(card, spawn_transform: Transform3D):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
+	
+	card.global_transform = spawn_transform
 
 	var i = cards.size() - 1
 	var col = i % 4
 	var row = i / 4
-	var base_pos = card_row.global_transform.origin
-
-	var spacing = Vector3(0.6, -0, -1.0)
+	var base_pos = card.global_transform.origin
+	
+	var spacing = Vector3(0.7, 0, -1.0)
 	var offset = Vector3(col, 0, row) * spacing
 
 	var rand_offset = Vector3(
-		randf_range(-0.1, 0.1),
-		randf_range(-0.1, 0.1),
-		randf_range(-0.1, 0.1)
+		randf_range(-0.05, 0.05),
+		0,
+		randf_range(-0.05, 0.05)
 	)
 
 	var target_pos = base_pos + offset + rand_offset
