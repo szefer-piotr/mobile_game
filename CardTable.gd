@@ -126,23 +126,23 @@ func _finalize_card_position(card, spawn_transform: Transform3D):
 	
 	card.global_transform = spawn_transform
 
-	var i = cards.size() - 1
-	var col = i % 4
-	var row = i / 4
-	var base_pos = card.global_transform.origin
-	
-	var spacing = Vector3(0.7, 0, -1.3)
-	var offset = Vector3(col, 0, row) * spacing
+        var i = cards.size() - 1
+        var col = i % 4
+        var row = i / 4
+        var base_pos = card_row.global_transform.origin
 
-	var rand_offset = Vector3(
-		randf_range(-0.05, 0.05),
-		0,
-		randf_range(-0.05, 0.05)
-	)
+        var spacing = Vector3(0.8, 0, -1.0)
+        var offset = Vector3(col, 0, row) * spacing
 
-	var target_pos = base_pos + offset + rand_offset
-	card.throw_with_physics(target_pos)
-	card.rotation_degrees.y = randf_range(-10, 10)
+        var rand_offset = Vector3(
+                randf_range(-0.05, 0.05),
+                0,
+                randf_range(-0.05, 0.05)
+        )
+
+        var target_pos = base_pos + offset + rand_offset
+        card.throw_with_physics(target_pos)
+        card.rotation_degrees.y = randf_range(-10, 10)
 
 func _on_DrawButton_pressed():
 	draw_button.disabled = true
