@@ -131,7 +131,7 @@ func _finalize_card_position(card, spawn_transform: Transform3D):
 	var row = i / 4
 	var base_pos = card.global_transform.origin
 	
-	var spacing = Vector3(0.7, 0, -1.0)
+	var spacing = Vector3(0.7, 0, -1.3)
 	var offset = Vector3(col, 0, row) * spacing
 
 	var rand_offset = Vector3(

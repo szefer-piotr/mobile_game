@@ -6,7 +6,7 @@ extends RigidBody3D
 @export var angular_slide_damp: float = 10.0
 @export var rotation_speed_z: float = -0.25
 @export var throw_linear_velocity: float = 0.5
-@export var throw_impulse_magnitude: float = 2.0
+@export var throw_impulse_magnitude: float = 0
 
 var label_assigned := false
 var front_shown := false
@@ -29,9 +29,10 @@ func _ready():
 func throw_to(target_pos: Vector3):
 	var launch = target_pos - global_position
 	launch.y += 1.0
-	var dir = launch.normalized()
-	linear_velocity = dir * throw_linear_velocity
-	apply_impulse(Vector3.ZERO, dir * throw_impulse_magnitude)
+	launch.z -= 2.0
+	launch = launch.normalized()
+	linear_velocity = launch * throw_linear_velocity
+	apply_impulse(Vector3.ZERO, launch * throw_impulse_magnitude)
 	rotation_degrees.z = 180.0
 	angular_velocity = Vector3(0.0, 0.0, rotation_speed_z)
 	front_shown = false
@@ -43,9 +44,10 @@ func throw_to(target_pos: Vector3):
 func throw_with_physics(target_pos: Vector3):
 	var launch = target_pos - global_position
 	launch.y += 1.0
-	var dir = launch.normalized()
-	linear_velocity = dir * throw_linear_velocity
-	apply_impulse(Vector3.ZERO, dir * throw_impulse_magnitude)
+	launch.z -= 2.0
+	launch = launch.normalized()
+	linear_velocity = launch * throw_linear_velocity
+	apply_impulse(Vector3.ZERO, launch * throw_impulse_magnitude)
 	apply_torque_impulse(Vector3(0.0, 0.0, rotation_speed_z))
 	front_shown = false
 	landed = false
