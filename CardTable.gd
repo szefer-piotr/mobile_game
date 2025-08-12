@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var card_scene = preload("res://Card3D.tscn")
 @onready var card_row = $CardRow
-@onready var camera = $Camera3D
+@onready var camera: Camera3D = $Camera3D
 @onready var card_spawn = $Camera3D/CardSpawn
 @onready var draw_button = $CanvasLayer/DrawButton
 @onready var hold_button = $CanvasLayer/HoldButton
@@ -112,37 +112,57 @@ func draw_card():
 
 
 func _get_spawn_transform() -> Transform3D:
-		var viewport_size = get_viewport().get_visible_rect().size
-		var screen_pos = Vector2(viewport_size.x * 0.5, viewport_size.y * 0.9)
-		var origin = camera.project_ray_origin(screen_pos)
-		var dir = camera.project_ray_normal(screen_pos)
-		var position = origin + dir * 2.0
-		return Transform3D(camera.global_transform.basis, position)
+	var viewport_rect: Rect2i = get_viewport().get_visible_rect()
+	var viewport_size: Vector2 = Vector2(viewport_rect.size)  # cast from Vector2i
+	var screen_pos: Vector2 = Vector2(viewport_size.x * 0.5, viewport_size.y * 0.85)
+
+	var origin: Vector3 = camera.project_ray_origin(screen_pos)
+	var dir: Vector3 = camera.project_ray_normal(screen_pos)
+
+	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	var params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(
+		origin, origin + dir * 60.0
+	)
+	# params.collision_mask = 1 << 2  # (optional) if your table is on a specific layer
+
+	var hit: Dictionary = space_state.intersect_ray(params)
+
+	var spawn_pos: Vector3
+	if not hit.is_empty():
+		spawn_pos = (hit["position"] as Vector3) + Vector3(0, 0.2, 0)
+	else:
+		spawn_pos = origin + dir * 2.0
+
+	return Transform3D(camera.global_transform.basis, spawn_pos)
+
 
 
 func _finalize_card_position(card, spawn_transform: Transform3D):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
-	
+
 	card.global_transform = spawn_transform
 
-        var i = cards.size() - 1
-        var col = i % 4
-        var row = i / 4
-        var base_pos = card_row.global_transform.origin
+	var i = cards.size() - 1
+	var col = i % 4
+	var row = i / 4
+	var base_pos = card_row.global_transform.origin
 
-        var spacing = Vector3(0.8, 0, -1.0)
-        var offset = Vector3(col, 0, row) * spacing
+	var spacing = Vector3(0.8, 0, -1.0)
+	var offset = Vector3(col, 0, row) * spacing
 
-        var rand_offset = Vector3(
-                randf_range(-0.05, 0.05),
-                0,
-                randf_range(-0.05, 0.05)
-        )
+	var rand_offset = Vector3(
+		randf_range(-0.05, 0.05),
+		0,
+		randf_range(-0.05, 0.05)
+	)
 
-        var target_pos = base_pos + offset + rand_offset
-        card.throw_with_physics(target_pos)
-        card.rotation_degrees.y = randf_range(-10, 10)
+	var target_pos = base_pos + offset + rand_offset
+
+	# Single flip + land
+	card.deal_physics(target_pos, 0.35)
+	#card.throw_ballistic(target_pos, 0.6)
+
 
 func _on_DrawButton_pressed():
 	draw_button.disabled = true

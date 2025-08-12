@@ -49,20 +49,20 @@ continuous_cd = true
 script = ExtResource("1_eeaw3")
 
 [node name="Cube_002" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.240096, 0, 0, 0, 0.35, 0, 0, 0, 0.213121, 0.0319901, -0.00571728, 0.0787686)
+transform = Transform3D(-0.24, 0, 3.21621e-08, 0, 0.1, 0, -3.6239e-08, 0, -0.213, -0.015191, -0.00571728, -0.027605)
 mesh = SubResource("ArrayMesh_eeaw3")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0131053, 0.0116058, 0.0781566)
+transform = Transform3D(-1, 0, 9.10235e-08, 0, 0.47334, 0, -8.74228e-08, 0, -1.04119, 0.00369375, 0.00439957, -0.026993)
 shape = SubResource("BoxShape3D_eeaw3")
 
 [node name="IconSprite" type="Sprite3D" parent="."]
-transform = Transform3D(-0.677359, 5.92715e-08, 2.59084e-15, 0, -2.87398e-08, 0.65749, 5.92166e-08, 0.677987, 2.96358e-08, 0.0101576, 0.0437193, 0.162388)
+transform = Transform3D(0.677359, 7.10543e-15, 3.81165e-21, 2.1038e-22, -2.87398e-08, 0.65749, 1.06581e-14, -0.677987, -2.96358e-08, 0.00664146, 0.0437193, -0.111224)
 pixel_size = 0.002
 
 [node name="ValueLabel" type="Label3D" parent="."]
-transform = Transform3D(-0.987736, 7.10996e-08, 2.37139e-15, 0, -3.4475e-08, 0.601798, 8.63507e-08, 0.813285, 2.71255e-08, -0.0216549, 0.0396926, -0.216986)
+transform = Transform3D(0.987736, 3.55271e-14, -3.38813e-21, 3.06779e-22, -3.4475e-08, 0.601798, -7.10543e-14, -0.813285, -2.71255e-08, 0.0384539, 0.0396926, 0.26815)
 offset = Vector2(0, 20)
 modulate = Color(0.92549, 0.952941, 0.176471, 1)
 outline_modulate = Color(0.866667, 0.545098, 0.239216, 1)
