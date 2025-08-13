@@ -95,6 +95,7 @@ func draw_card():
 		print("Collected three %s icons" % icon_type)
 
 	var spawn_transform = _get_spawn_transform()
+	spawn_transform.basis = spawn_transform.basis.rotated(Vector3(1,0,0), -45)
 	if card_spawn:
 		card_spawn.global_transform = spawn_transform
 	if card:

@@ -21,8 +21,8 @@ CurrencyManager="*res://CurrencyManager.gd"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="viewport"
 
 [physics]
