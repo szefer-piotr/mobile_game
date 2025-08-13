@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c8xbm7nysu3da" path="res://Card3D.gd" id="1_eeaw3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eeaw3"]
-friction = 0.5
+friction = 0.25
 bounce = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1810p"]
@@ -54,7 +54,7 @@ mesh = SubResource("ArrayMesh_eeaw3")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-1, 0, 9.10235e-08, 0, 0.47334, 0, -8.74228e-08, 0, -1.04119, 0.00369375, 0.00439957, -0.026993)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0.00369375, 0.00439957, -0.026993)
 shape = SubResource("BoxShape3D_eeaw3")
 
 [node name="IconSprite" type="Sprite3D" parent="."]
@@ -62,10 +62,9 @@ transform = Transform3D(0.677359, 7.10543e-15, 3.81165e-21, 2.1038e-22, -2.87398
 pixel_size = 0.002
 
 [node name="ValueLabel" type="Label3D" parent="."]
-transform = Transform3D(0.987736, 3.55271e-14, -3.38813e-21, 3.06779e-22, -3.4475e-08, 0.601798, -7.10543e-14, -0.813285, -2.71255e-08, 0.0384539, 0.0396926, 0.26815)
-offset = Vector2(0, 20)
-modulate = Color(0.92549, 0.952941, 0.176471, 1)
-outline_modulate = Color(0.866667, 0.545098, 0.239216, 1)
+transform = Transform3D(0.987736, 3.55271e-14, -3.38813e-21, 3.06779e-22, -3.4475e-08, 0.601798, -7.10543e-14, -0.813285, -2.71255e-08, 0.0100822, 0.0396926, 0.189882)
+modulate = Color(0.584314, 0.376471, 0.176471, 1)
+outline_modulate = Color(0.22969, 0.0842521, 0.0132424, 1)
 text = "0"
 font_size = 38
 outline_size = 13

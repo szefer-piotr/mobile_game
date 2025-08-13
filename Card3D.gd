@@ -25,8 +25,8 @@ var slide_timer := 0.0
 func _ready():
 	contact_monitor = true
 	max_contacts_reported = 4
-	linear_damp = 0.0
-	angular_damp = 0.1
+	linear_damp = 1.5
+	angular_damp = 4.0
 
 
 func _ballistic_velocity_to(target_pos: Vector3, flight_time: float) -> Vector3:
@@ -103,25 +103,38 @@ func _physics_process(_delta: float) -> void:
 				)
 
 
-
 func _show_front():
 	update_label()
 	update_icon()
 
 
-func deal_physics(target_pos: Vector3, t: float = 0.35) -> void:
-	var g_mag: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
-	var g := Vector3(0.0, -g_mag, 0.0)
-	var to := target_pos - global_position
-	t = max(0.2, t)
-	var v0: Vector3 = (to - 0.5 * g * t * t) / t
-	rotation_degrees.z = 180.0  # start face-down
-	linear_velocity = v0
-	angular_velocity = Vector3.ZERO
-	linear_damp = 0.0
-	angular_damp = 0.0
-	front_shown = false
-	landed = false
+@export var min_throw_speed: float = 3.0    # bump these up
+@export var max_throw_speed: float = 8.0
+@export var extra_slide_damp_delay: float = 0.35
+
+func deal_physics(target: Vector3, strength: float = 0.5) -> void:
+	var start: Vector3 = global_transform.origin
+	var to_vec: Vector3 = target - start
+	var dist: float = to_vec.length()
+
+	# Map distance to speed (tune 'dist_for_max' to your table size)
+	var dist_for_max: float = 4.0  # meters at which we use max speed
+	var t: float = clamp(dist / dist_for_max, 0.0, 1.0)
+	var base: float = lerpf(min_throw_speed, max_throw_speed, max(t, strength))
+
+	var v: Vector3 = to_vec.normalized() * base
+	# Nudge downward so it lands (keeps arc subtle)
+	v.y = v.y - 1.0
+
+	linear_velocity = v
+	angular_velocity = Vector3(0.0, randf_range(-1.0, 1.0), 0.0)
+	sleeping = false
+
+	await get_tree().create_timer(extra_slide_damp_delay).timeout
+	self.linear_damp = 6.0
+	self.angular_damp = 8.0
+
+
 
 
 func update_label():

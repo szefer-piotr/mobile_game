@@ -36,7 +36,7 @@ script = ExtResource("1_vn8pc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -3)
 
 [node name="CardRow" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96023, 1.10593, 5.99826)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29026, 1.10593, 6.22355)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -317,7 +317,7 @@ transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -5, 0, 8)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.999961, -0.00449465, -0.00765137, -0.00855886, 0.716215, 0.697827, 0.00234351, 0.697865, -0.716226, -1.9476, 3.1471, 3.62551)
+transform = Transform3D(-0.999961, -0.00449471, -0.00765138, -0.00846086, 0.742909, 0.669339, 0.0026758, 0.669377, -0.742918, -1.9476, 3.56998, 3.86062)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_043sh")

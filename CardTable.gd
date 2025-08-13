@@ -137,32 +137,29 @@ func _get_spawn_transform() -> Transform3D:
 	return Transform3D(camera.global_transform.basis, spawn_pos)
 
 
-
 func _finalize_card_position(card, spawn_transform: Transform3D):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
-
 	card.global_transform = spawn_transform
-
-	var i = cards.size() - 1
-	var col = i % 4
-	var row = i / 4
-	var base_pos = card_row.global_transform.origin
-
-	var spacing = Vector3(0.8, 0, -1.0)
-	var offset = Vector3(col, 0, row) * spacing
-
-	var rand_offset = Vector3(
+	const CARDS_PER_ROW: int = 4
+	const SPACING_X: float = 0.8
+	const SPACING_Z: float = 1.0
+	var i: int = cards.size() - 1
+	var col: int = i % CARDS_PER_ROW
+	var row: int = i / CARDS_PER_ROW
+	var base: Transform3D = card_row.global_transform
+	var origin: Vector3 = base.origin
+	var right: Vector3 = base.basis.x.normalized()
+	var forward: Vector3 = (-base.basis.z).normalized()    # local +forward
+	var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
+	var rand_offset: Vector3 = Vector3(
 		randf_range(-0.05, 0.05),
-		0,
+		0.0,
 		randf_range(-0.05, 0.05)
 	)
+	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z) + rand_offset
+	card.deal_physics(target_pos, 0.5)
 
-	var target_pos = base_pos + offset + rand_offset
-
-	# Single flip + land
-	card.deal_physics(target_pos, 0.35)
-	#card.throw_ballistic(target_pos, 0.6)
 
 
 func _on_DrawButton_pressed():
