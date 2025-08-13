@@ -14,10 +14,12 @@ extends RigidBody3D
 @export var angular_slide_damp: float = 10.0
 @export var flight_time: float = 0.35
 @export var reveal_delay: float = 0.15
+@export var slide_time: float = 1
 
 var label_assigned := false
 var front_shown := false
 var landed := false
+var slide_timer := 0.0
 
 
 func _ready():
@@ -79,25 +81,26 @@ func _physics_process(_delta: float) -> void:
 		landed = true
 
 		# Stop all motion
-		linear_damp = 2.0
+		linear_damp = landed_linear_damp
 		angular_damp = angular_slide_damp
 		angular_velocity = Vector3.ZERO
 		rotation_degrees.z = 180.0  # make sure we’re face-down on contact
-
-		# Freeze so physics doesn't fight the tween
-		freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
-		freeze = true
-
-		var t := get_tree().create_tween()
-		t.tween_interval(reveal_delay)
-		t.tween_property(self, "rotation_degrees:z", 0.0, 0.18)\
-			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-		t.tween_callback(func ():
-			_show_front()
-			# Keep frozen so it stays perfectly still after flipping.
-			# If you want physics back, uncomment the next line:
-			# freeze = false
-		)
+		
+		slide_timer = slide_time
+		
+	elif landed and not freeze:
+		if slide_timer > 0.0:
+			slide_timer -= _delta
+		if slide_timer <= 0.0 or linear_velocity.length() < 0.05:
+			freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
+			freeze = true
+			var t := get_tree().create_tween()
+			t.tween_interval(reveal_delay)
+			t.tween_property(self, "rotation_degrees:z", 0.0, 0.18)\
+				.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+			t.tween_callback(func ():
+				_show_front()
+				)
 
 
 
