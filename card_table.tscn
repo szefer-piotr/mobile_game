@@ -137,6 +137,20 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="IconBars" type="VBoxContainer" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 100.0
+
+[node name="IconBarTemplate" type="HBoxContainer" parent="CanvasLayer/IconBars"]
+visible = false
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/IconBars/IconBarTemplate"]
+custom_min_size = Vector2(32, 32)
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/IconBars/IconBarTemplate"]
+max_value = 6.0
+size_flags_horizontal = 3
+
 [node name="KingdomButton" type="Button" parent="CanvasLayer"]
 offset_left = 600.0
 offset_top = 1120.0
