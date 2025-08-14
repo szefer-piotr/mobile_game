@@ -15,6 +15,9 @@ extends Node3D
 @onready var auto_toggle_button = $CanvasLayer/AutoToggleButton
 @onready var reward_popup = $CanvasLayer/RewardReadyPopup
 @onready var kingdom_button = $CanvasLayer/KingdomButton
+@onready var icon_bar_container = $CanvasLayer/IconBars
+@onready var icon_bar_template = $CanvasLayer/IconBars/IconBarTemplate
+@onready var icon_bars = {}
 
 var current_score = 0
 var total_score = 0
@@ -42,26 +45,51 @@ var auto_draw_enabled = false
 var force_draw_until_15 = false
 
 func _ready():
-	randomize()
-	if restart_timer:
-		restart_timer.timeout.connect(_on_restart_timer_timeout)
-	if auto_draw_timer:
-		auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
-	if auto_toggle_button:
-		auto_toggle_button.text = "Auto: OFF"
-		auto_toggle_button.pressed.connect(_on_AutoToggleButton_pressed)
-	if score_bar:
-		score_bar.min_value = 0
-		score_bar.max_value = 100
-		score_bar.value = 0
-	displayed_score_value = 0.0
-	target_score_bar_value = 0.0
-	if reward_popup:
-		reward_popup.visible = false
-	if kingdom_button:
-		kingdom_button.pressed.connect(_on_KingdomButton_pressed)
-		load_reward_path("starter_path")
-		reset_game()
+        randomize()
+        if restart_timer:
+                restart_timer.timeout.connect(_on_restart_timer_timeout)
+        if auto_draw_timer:
+                auto_draw_timer.timeout.connect(_on_AutoDrawTimer_timeout)
+        if auto_toggle_button:
+                auto_toggle_button.text = "Auto: OFF"
+                auto_toggle_button.pressed.connect(_on_AutoToggleButton_pressed)
+        if score_bar:
+                score_bar.min_value = 0
+                score_bar.max_value = 100
+                score_bar.value = 0
+        displayed_score_value = 0.0
+        target_score_bar_value = 0.0
+        if reward_popup:
+                reward_popup.visible = false
+        if kingdom_button:
+                kingdom_button.pressed.connect(_on_KingdomButton_pressed)
+        _setup_icon_bars()
+        load_reward_path("starter_path")
+        reset_game()
+
+
+func _setup_icon_bars():
+        icon_bar_template.hide()
+        for icon in available_icons:
+                var bar = icon_bar_template.duplicate()
+                bar.visible = false
+                var texture_rect: TextureRect = bar.get_node("Icon")
+                if icon_textures.has(icon):
+                        texture_rect.texture = icon_textures[icon]
+                var progress: ProgressBar = bar.get_node("ProgressBar")
+                progress.max_value = 6
+                progress.value = 0
+                icon_bar_container.add_child(bar)
+                icon_bars[icon] = progress
+
+
+func _update_icon_bar(icon_type: String):
+        if not icon_bars.has(icon_type):
+                return
+        var bar: ProgressBar = icon_bars[icon_type]
+        var count = icon_counts.get(icon_type, 0)
+        bar.value = min(count, 6)
+        bar.visible = count >= 3
 
 
 func _process(delta):
@@ -88,11 +116,12 @@ func draw_card():
 	var icon_type = available_icons[randi() % available_icons.size()]
 	if icon_textures.has(icon_type):
 		card.icon_texture = icon_textures[icon_type]
-	if "icon_type" in card:
-		card.icon_type = icon_type
-	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
-	if icon_counts[icon_type] == 3:
-		print("Collected three %s icons" % icon_type)
+        if "icon_type" in card:
+                card.icon_type = icon_type
+        icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
+        _update_icon_bar(icon_type)
+        if icon_counts[icon_type] == 3:
+                print("Collected three %s icons" % icon_type)
 
 	var spawn_transform = _get_spawn_transform()
 	spawn_transform.basis = spawn_transform.basis.rotated(Vector3(1,0,0), -45)
@@ -209,11 +238,14 @@ func reset_game():
 	score_label.text = "Score: 0"
 	draw_button.disabled = false
 	hold_button.disabled = true
-	force_draw_until_15 = false
-	if auto_draw_timer:
-		auto_draw_timer.stop()
-	for c in card_row.get_children():
-		c.queue_free()
+        force_draw_until_15 = false
+        if auto_draw_timer:
+                auto_draw_timer.stop()
+        for c in card_row.get_children():
+                c.queue_free()
+        for bar in icon_bars.values():
+                bar.value = 0
+                bar.visible = false
 
 func add_score(amount: int):
 	progress_towards_current += amount
