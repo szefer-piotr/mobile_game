@@ -317,7 +317,9 @@ transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -5, 0, 8)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.999961, -0.00449471, -0.00765138, -0.00846086, 0.742909, 0.669339, 0.0026758, 0.669377, -0.742918, -1.9476, 3.56998, 3.86062)
+transform = Transform3D(-0.999961, -0.0044947, -0.00765138, -0.00870795, 0.662985, 0.748582, 0.0017081, 0.748619, -0.662998, -1.9476, 3.56998, 3.44912)
+fov = 40.0
+near = 0.07
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_043sh")
