@@ -123,11 +123,10 @@ offset_bottom = 720.0
 text = "Auto: OFF"
 
 [node name="RewardReadyPopup" type="Label" parent="CanvasLayer"]
-visible = false
-offset_left = 20.0
-offset_top = 150.0
-offset_right = 200.0
-offset_bottom = 170.0
+offset_left = 500.0
+offset_top = 240.0
+offset_right = 780.0
+offset_bottom = 340.0
 
 [node name="RestartTimer" type="Timer" parent="CanvasLayer"]
 one_shot = true

@@ -37,6 +37,9 @@ var reward_path: Array = []
 var current_reward_index: int = 0
 var progress_towards_current: int = 0
 
+var reward_message_queue: Array[String] = []
+var reward_popup_active: bool = false
+
 var displayed_score_value: float = 0.0
 var target_score_bar_value: float = 0.0
 var fill_speed = 6.0
@@ -72,12 +75,11 @@ func _setup_icon_bars():
 	icon_bar_template.hide()
 	for icon in available_icons:
 		var bar = icon_bar_template.duplicate()
-		bar.visible = false
 		var texture_rect: TextureRect = bar.get_node("Icon")
 		if icon_textures.has(icon):
 			texture_rect.texture = icon_textures[icon]
 		var progress: ProgressBar = bar.get_node("ProgressBar")
-		progress.max_value = 6
+		progress.max_value = 4
 		progress.value = 0
 		icon_bar_container.add_child(bar)
 		icon_bars[icon] = progress
@@ -88,8 +90,17 @@ func _update_icon_bar(icon_type: String):
 		return
 	var bar: ProgressBar = icon_bars[icon_type]
 	var count = icon_counts.get(icon_type, 0)
-	bar.value = min(count, 6)
-	bar.get_parent().visible = count >= 3
+	bar.value = min(count, 4)
+	bar.get_parent().visible = true
+
+
+func _highlight_icon_bar(icon_type: String):
+	if not icon_bars.has(icon_type):
+		return
+	var bar_parent: Control = icon_bars[icon_type].get_parent()
+	var tween = get_tree().create_tween()
+	tween.tween_property(bar_parent, "modulate", Color(1, 1, 0), 0.2)
+	tween.tween_property(bar_parent, "modulate", Color(1, 1, 1), 0.6)
 
 
 func _process(delta):
@@ -120,8 +131,9 @@ func draw_card():
 		card.icon_type = icon_type
 	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
 	_update_icon_bar(icon_type)
-	if icon_counts[icon_type] == 3:
-		print("Collected three %s icons" % icon_type)
+	if icon_counts[icon_type] == 4:
+		show_reward_popup("Collected three %s icons!" % icon_type)
+		_highlight_icon_bar(icon_type)
 
 	var spawn_transform = _get_spawn_transform()
 	spawn_transform.basis = spawn_transform.basis.rotated(Vector3(1,0,0), -45)
@@ -271,15 +283,28 @@ func show_reward_popup(text: String = ""):
 	if reward_popup == null:
 		return
 	if text != "":
-		reward_popup.text = text
-	reward_popup.visible = true
-	reward_popup.modulate.a = 0
+		reward_message_queue.append(text)
+	if reward_popup_active:
+		return
+	_display_next_reward_popup()
 
+	
+func _display_next_reward_popup():
+	if reward_message_queue.is_empty():
+		reward_popup_active = false
+		return
+	reward_popup_active = true
+	reward_popup.text = reward_message_queue.pop_front()
+	reward_popup.visible = true
+	reward_popup.modulate = 0
+		
 	var tween = get_tree().create_tween()
 	tween.tween_property(reward_popup, "modulate:a", 1.0, 0.4).as_relative()
 	tween.tween_interval(1.2)
 	tween.tween_property(reward_popup, "modulate:a", -1.0, 0.5).as_relative()
 	tween.tween_callback(reward_popup.hide)
+	tween.tween_callback(_display_next_reward_popup)
+
 
 func update_score_bar():
 	if score_bar == null or score_bar_label == null:
