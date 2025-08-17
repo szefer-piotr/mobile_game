@@ -138,14 +138,14 @@ one_shot = true
 
 [node name="IconBars" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = -1
-anchor_left = 0.719
-anchor_top = 0.028
-anchor_right = 1.0
-anchor_bottom = 0.389
-offset_left = 59.6799
-offset_top = 39.84
-offset_right = -40.0
-offset_bottom = -20.08
+anchor_left = 0.766
+anchor_top = 0.083
+anchor_right = 0.812
+anchor_bottom = 0.121
+offset_left = -0.480164
+offset_top = 0.239998
+offset_right = 200.64
+offset_bottom = -0.120003
 
 [node name="IconBarTemplate" type="HBoxContainer" parent="CanvasLayer/IconBars"]
 layout_mode = 2
