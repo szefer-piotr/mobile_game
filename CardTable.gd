@@ -134,7 +134,7 @@ func draw_card():
 	icon_counts[icon_type] = icon_counts.get(icon_type, 0) + 1
 	_update_icon_bar(icon_type)
 	if icon_counts[icon_type] == 4:
-		show_reward_popup("Collected three %s icons!" % icon_type)
+		show_reward_popup("Collected four %s icons!" % icon_type)
 		_highlight_icon_bar(icon_type)
 
 	var spawn_transform = _get_spawn_transform()
@@ -142,12 +142,12 @@ func draw_card():
 	if card_spawn:
 		card_spawn.global_transform = spawn_transform
 	if card:
-				card_row.add_child(card)
-				card.global_transform = spawn_transform
-				card.rotation_degrees = Vector3(0, 0, 180)
-				var idx := cards.size()
-				cards.append(card)
-				call_deferred("_finalize_card_position", card, spawn_transform, idx)
+		card_row.add_child(card)
+		card.global_transform = spawn_transform
+		card.rotation_degrees = Vector3(0, 0, 180)
+		var idx := cards.size()
+		cards.append(card)
+		call_deferred("_finalize_card_position", card, spawn_transform, idx)
 
 	if current_score == 21:
 		total_score += 50
@@ -186,8 +186,8 @@ func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 		await get_tree().process_frame
 	card.global_transform = spawn_transform
 	const CARDS_PER_ROW: int = 4
-	const SPACING_X: float = 0.8
-	const SPACING_Z: float = 1.0
+	const SPACING_X: float = 0.6
+	const SPACING_Z: float = 0.8
 	var col: int = idx % CARDS_PER_ROW
 	var row: int = idx / CARDS_PER_ROW
 	var base: Transform3D = card_row.global_transform
