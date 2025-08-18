@@ -154,12 +154,14 @@ offset_bottom = -0.120003
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/IconBars/IconBarTemplate"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/IconBars/IconBarTemplate"]
 layout_mode = 2
 size_flags_horizontal = 3
-max_value = 6.0
+max_value = 4.0
+show_percentage = false
 
 [node name="KingdomButton" type="Button" parent="CanvasLayer"]
 offset_left = 1160.0
