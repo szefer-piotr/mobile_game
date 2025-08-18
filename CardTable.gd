@@ -78,6 +78,8 @@ func _setup_icon_bars():
 		var texture_rect: TextureRect = bar.get_node("Icon")
 		if icon_textures.has(icon):
 			texture_rect.texture = icon_textures[icon]
+		texture_rect.custom_minimum_size = Vector2(32, 32)      # desired size
+		texture_rect.stretch_mode = TextureRect.STRETCH_SCALE   # let it scale
 		var progress: ProgressBar = bar.get_node("ProgressBar")
 		progress.max_value = 4
 		progress.value = 0
@@ -193,13 +195,8 @@ func _finalize_card_position(card, spawn_transform: Transform3D):
 	var right: Vector3 = base.basis.x.normalized()
 	var forward: Vector3 = (-base.basis.z).normalized()    # local +forward
 	var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
-	var rand_offset: Vector3 = Vector3(
-		randf_range(-0.05, 0.05),
-		0.0,
-		randf_range(-0.05, 0.05)
-	)
-	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z) + rand_offset
-	card.deal_physics(target_pos, 0.5)
+	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z)
+	card.throw_ballistic(target_pos, 0.6)
 
 
 

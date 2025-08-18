@@ -127,6 +127,10 @@ offset_left = 500.0
 offset_top = 240.0
 offset_right = 780.0
 offset_bottom = 340.0
+theme_override_colors/font_color = Color(0.890196, 0.729412, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.568627, 0.184314, 0.184314, 1)
+theme_override_colors/font_outline_color = Color(0.650998, 0.361152, 0.258907, 1)
+theme_override_font_sizes/font_size = 20
 
 [node name="RestartTimer" type="Timer" parent="CanvasLayer"]
 one_shot = true
