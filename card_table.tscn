@@ -36,7 +36,7 @@ script = ExtResource("1_vn8pc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -3)
 
 [node name="CardRow" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29026, 1.10593, 6.22355)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29026, 1.10593, 6.22355)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
