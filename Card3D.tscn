@@ -1,10 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://bqiltepaituur"]
+[gd_scene load_steps=5 format=4 uid="uid://bqiltepaituur"]
 
 [ext_resource type="Script" uid="uid://c8xbm7nysu3da" path="res://Card3D.gd" id="1_eeaw3"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eeaw3"]
-friction = 0.25
-bounce = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1810p"]
 
@@ -40,22 +36,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_sqy4j")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_eeaw3"]
-size = Vector3(0.499836, 0.0574655, 0.813138)
-
-[node name="Card3D" type="RigidBody3D"]
-physics_material_override = SubResource("PhysicsMaterial_eeaw3")
-continuous_cd = true
+[node name="Card3D" type="Node3D"]
 script = ExtResource("1_eeaw3")
 
 [node name="Cube_002" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.24, 0, 3.21621e-08, 0, 0.1, 0, -3.6239e-08, 0, -0.213, -0.015191, -0.00571728, -0.027605)
 mesh = SubResource("ArrayMesh_eeaw3")
 skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0.00369375, 0.00439957, -0.026993)
-shape = SubResource("BoxShape3D_eeaw3")
 
 [node name="IconSprite" type="Sprite3D" parent="."]
 transform = Transform3D(0.677359, 7.10543e-15, 3.81165e-21, 2.1038e-22, -2.87398e-08, 0.65749, 1.06581e-14, -0.677987, -2.96358e-08, 0.00664146, 0.0437193, -0.111224)
