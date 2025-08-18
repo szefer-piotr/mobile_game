@@ -142,11 +142,12 @@ func draw_card():
 	if card_spawn:
 		card_spawn.global_transform = spawn_transform
 	if card:
-		card_row.add_child(card)
-		card.global_transform = spawn_transform
-		card.rotation_degrees = Vector3(180, 0, 0)
-		cards.append(card)
-		call_deferred("_finalize_card_position", card, spawn_transform)
+                card_row.add_child(card)
+                card.global_transform = spawn_transform
+                card.rotation_degrees = Vector3(0, 0, 180)
+                var idx := cards.size()
+                cards.append(card)
+                call_deferred("_finalize_card_position", card, spawn_transform, idx)
 
 	if current_score == 21:
 		total_score += 50
@@ -180,23 +181,22 @@ func _get_spawn_transform() -> Transform3D:
 	return Transform3D(camera.global_transform.basis, spawn_pos)
 
 
-func _finalize_card_position(card, spawn_transform: Transform3D):
+func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
 	card.global_transform = spawn_transform
 	const CARDS_PER_ROW: int = 4
 	const SPACING_X: float = 0.8
 	const SPACING_Z: float = 1.0
-	var i: int = cards.size() - 1
-	var col: int = i % CARDS_PER_ROW
-	var row: int = i / CARDS_PER_ROW
+	var col: int = idx % CARDS_PER_ROW
+	var row: int = idx / CARDS_PER_ROW
 	var base: Transform3D = card_row.global_transform
 	var origin: Vector3 = base.origin
-	var right: Vector3 = base.basis.x.normalized()
-	var forward: Vector3 = (-base.basis.z).normalized()    # local +forward
-	var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
-	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z)
-	card.throw_ballistic(target_pos, 0.6)
+        var right: Vector3 = (-base.basis.x).normalized()
+        var forward: Vector3 = (-base.basis.z).normalized()    # local +forward
+        var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
+        var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z)
+        card.fly_to(target_pos)
 
 
 
