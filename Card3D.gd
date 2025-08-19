@@ -7,13 +7,18 @@ extends Node3D
 @export var reveal_delay: float = 0.1
 
 var label_assigned := false
+var spawn_pos: Vector3
 
 func _ready():
-	rotation_degrees = Vector3(0, 0, 180)
+	#rotation_degrees = Vector3(0, 0, 180)
 	update_label()
 	update_icon()
 
-func fly_to(target_pos: Vector3) -> void:
+func fly_to(target_pos: Vector3, spawn_pos: Vector3) -> void:
+	var offset = global_position + (global_position - spawn_pos)
+	look_at(offset, Vector3.ZERO)
+	rotate_z(deg_to_rad(180))
+	
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", target_pos, flight_time).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_callback(func():

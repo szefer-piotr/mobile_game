@@ -144,6 +144,7 @@ func draw_card():
 	if card:
 		card_row.add_child(card)
 		card.global_transform = spawn_transform
+		card.spawn_pos = spawn_transform.origin
 		card.rotation_degrees = Vector3(0, 0, 180)
 		var idx := cards.size()
 		cards.append(card)
@@ -185,9 +186,11 @@ func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
 	card.global_transform = spawn_transform
+	
 	const CARDS_PER_ROW: int = 4
 	const SPACING_X: float = 0.6
 	const SPACING_Z: float = 0.8
+	
 	var col: int = idx % CARDS_PER_ROW
 	var row: int = idx / CARDS_PER_ROW
 	var base: Transform3D = card_row.global_transform
@@ -196,7 +199,8 @@ func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 	var forward: Vector3 = (-base.basis.z).normalized()    # local +forward
 	var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
 	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z)
-	card.fly_to(target_pos)
+	
+	card.fly_to(target_pos, spawn_transform.origin)
 
 
 
