@@ -16,7 +16,8 @@ func _ready():
 
 
 func fly_to(target_pos: Vector3) -> void:
-	var offset = global_position + (global_position - spawn_pos)
+	var direction = (spawn_pos- target_pos).normalized()
+	var offset = spawn_pos - direction
 	look_at(offset, Vector3.UP)
 	rotate_z(deg_to_rad(180))
 	var tween = get_tree().create_tween()
