@@ -200,7 +200,7 @@ func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 	var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
 	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z)
 	
-	card.fly_to(target_pos, spawn_transform.origin)
+	card.fly_to(target_pos)
 
 
 

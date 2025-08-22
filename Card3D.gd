@@ -14,11 +14,11 @@ func _ready():
 	update_label()
 	update_icon()
 
-func fly_to(target_pos: Vector3, spawn_pos: Vector3) -> void:
+
+func fly_to(target_pos: Vector3) -> void:
 	var offset = global_position + (global_position - spawn_pos)
-	look_at(offset, Vector3.ZERO)
+	look_at(offset, Vector3.UP)
 	rotate_z(deg_to_rad(180))
-	
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", target_pos, flight_time).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_callback(func():
