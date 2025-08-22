@@ -16,10 +16,9 @@ func _ready():
 
 
 func fly_to(target_pos: Vector3) -> void:
-	var direction = (spawn_pos- target_pos).normalized()
-	var offset = spawn_pos - direction
-	look_at(offset, Vector3.UP)
-	rotate_z(deg_to_rad(180))
+	global_position = spawn_pos
+	look_at(target_pos, Vector3.UP)
+	rotate_y(PI)
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", target_pos, flight_time).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_callback(func():
