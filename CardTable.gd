@@ -144,6 +144,7 @@ func draw_card():
 	if card:
 		card_row.add_child(card)
 		card.global_transform = spawn_transform
+		card.spawn_pos = spawn_transform.origin
 		card.rotation_degrees = Vector3(0, 0, 180)
 		var idx := cards.size()
 		cards.append(card)
