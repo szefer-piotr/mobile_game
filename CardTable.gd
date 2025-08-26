@@ -143,8 +143,9 @@ func draw_card():
 		card_spawn.global_transform = spawn_transform
 	if card:
 		card_row.add_child(card)
-		card.global_transform = spawn_transform
-		card.spawn_pos = spawn_transform.origin
+		# Set the spawn position for the card using the new method
+		card.set_spawn_position(spawn_transform.origin)
+		# Start face down (180° rotation) since the 3D model is naturally face up
 		card.rotation_degrees = Vector3(0, 0, 180)
 		var idx := cards.size()
 		cards.append(card)
@@ -169,15 +170,17 @@ func _get_spawn_transform() -> Transform3D:
 	var params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(
 		origin, origin + dir * 60.0
 	)
-	# params.collision_mask = 1 << 2  # (optional) if your table is on a specific layer
+	params.collision_mask = 1  # Only collide with layer 1 (table)
 
 	var hit: Dictionary = space_state.intersect_ray(params)
 
 	var spawn_pos: Vector3
 	if not hit.is_empty():
-		spawn_pos = (hit["position"] as Vector3) + Vector3(0, 0.2, 0)
+		# Spawn slightly above the table surface
+		spawn_pos = (hit["position"] as Vector3) + Vector3(0, 0.5, 0)
 	else:
-		spawn_pos = origin + dir * 2.0
+		# Fallback spawn position
+		spawn_pos = origin + dir * 3.0
 
 	return Transform3D(camera.global_transform.basis, spawn_pos)
 
@@ -185,7 +188,10 @@ func _get_spawn_transform() -> Transform3D:
 func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 	if not card_row.is_inside_tree():
 		await get_tree().process_frame
-	card.global_transform = spawn_transform
+	
+	# Ensure the card has the correct spawn position
+	if card.spawn_pos != spawn_transform.origin:
+		card.set_spawn_position(spawn_transform.origin)
 	
 	const CARDS_PER_ROW: int = 4
 	const SPACING_X: float = 0.6
@@ -200,6 +206,10 @@ func _finalize_card_position(card, spawn_transform: Transform3D, idx):
 	var leftmost: Vector3 = origin - right * ((CARDS_PER_ROW - 1) * 0.5 * SPACING_X)
 	var target_pos: Vector3 = leftmost + right * (col * SPACING_X) + forward * (row * SPACING_Z)
 	
+	# Ensure target position is on the table surface
+	target_pos.y = 1.0  # Table surface height
+	
+	# Start the flight animation
 	card.fly_to(target_pos)
 
 

@@ -3,8 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://jlrji8gbqcoy" path="res://assets/models/props/table_medium.glb" id="1_coeb0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_coeb0"]
-friction = 0.25
-bounce = 0.05
+friction = 0.2
+bounce = 0.02
+rough = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8h5ek"]
 size = Vector3(3.02101, 0.997131, 2.98854)
@@ -15,6 +16,7 @@ size = Vector3(3.02101, 0.997131, 2.98854)
 transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="Table" type="StaticBody3D" parent="." index="1"]
+collision_layer = 1
 physics_material_override = SubResource("PhysicsMaterial_coeb0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Table" index="0"]

@@ -1,0 +1,173 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8lam2n3o4p5q"]
+
+[ext_resource type="Script" uid="uid://clljxbhplntay" path="res://CardTableGB.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://djlelcjts6j6o" path="res://CardDealer.gd" id="2_script"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1"]
+friction = 0.05
+bounce = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+metallic = 0.1
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(8, 1, 6)
+
+[node name="CardTableGB" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Table" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_1")
+
+[node name="TableModel" type="CSGBox3D" parent="Table"]
+size = Vector3(8, 1, 6)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="TableCollision" type="CollisionShape3D" parent="Table"]
+shape = SubResource("BoxShape3D_1")
+
+[node name="CardDeck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -2.5)
+script = ExtResource("2_script")
+
+[node name="DeckModel" type="CSGBox3D" parent="CardDeck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+size = Vector3(0.7, 0.1, 1)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="DeckModel2" type="CSGBox3D" parent="CardDeck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+size = Vector3(0.7, 0.1, 1)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="DeckModel3" type="CSGBox3D" parent="CardDeck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+size = Vector3(0.7, 0.1, 1)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="DeckModel4" type="CSGBox3D" parent="CardDeck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+size = Vector3(0.7, 0.1, 1)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="DeckModel5" type="CSGBox3D" parent="CardDeck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+size = Vector3(0.7, 0.1, 1)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="CardPositions" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.5)
+
+[node name="Row1" type="Node3D" parent="CardPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="Pos1" type="Marker3D" parent="CardPositions/Row1"]
+
+[node name="Pos2" type="Marker3D" parent="CardPositions/Row1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Pos3" type="Marker3D" parent="CardPositions/Row1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Pos4" type="Marker3D" parent="CardPositions/Row1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Pos5" type="Marker3D" parent="CardPositions/Row1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Row2" type="Node3D" parent="CardPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1.2)
+
+[node name="Pos1" type="Marker3D" parent="CardPositions/Row2"]
+
+[node name="Pos2" type="Marker3D" parent="CardPositions/Row2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Pos3" type="Marker3D" parent="CardPositions/Row2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Pos4" type="Marker3D" parent="CardPositions/Row2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Pos5" type="Marker3D" parent="CardPositions/Row2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Row3" type="Node3D" parent="CardPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2.4)
+
+[node name="Pos1" type="Marker3D" parent="CardPositions/Row3"]
+
+[node name="Pos2" type="Marker3D" parent="CardPositions/Row3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Pos3" type="Marker3D" parent="CardPositions/Row3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Pos4" type="Marker3D" parent="CardPositions/Row3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Pos5" type="Marker3D" parent="CardPositions/Row3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Row4" type="Node3D" parent="CardPositions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3.6)
+
+[node name="Pos1" type="Marker3D" parent="CardPositions/Row4"]
+
+[node name="Pos2" type="Marker3D" parent="CardPositions/Row4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Pos3" type="Marker3D" parent="CardPositions/Row4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Pos4" type="Marker3D" parent="CardPositions/Row4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Pos5" type="Marker3D" parent="CardPositions/Row4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6, 6)
+fov = 70.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 1.5
+shadow_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DealButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Deal Cards"
+
+[node name="ResetButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Reset"
+
+[node name="DebugLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+text = "Card Table GB Scene Loaded"
