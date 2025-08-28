@@ -5,7 +5,6 @@ extends RigidBody3D
 @export var icon_type: String = ""
 @export var launch_force: float = 2.0
 @export var reveal_delay: float = 0.5
-@export var arc_height: float = 1.0
 @export var slide_friction: float = 0.85
 @export var slide_threshold: float = 0.1
 
@@ -26,10 +25,10 @@ func _ready():
 	# rotate 180° to make it face down
 	rotation_degrees = Vector3(0, 0, 180)
 	
-	# Set physics properties for realistic flight and sliding
-	gravity_scale = 1.0  # Enable gravity for cards to fall on table
-	linear_damp = 0.2    # Very low air resistance for ballistic flight
-	angular_damp = 0.6   # Low angular resistance for rotation
+        # Set physics properties for straight-line flight and sliding
+        gravity_scale = 0.0  # Disable gravity so cards travel in a straight line
+        linear_damp = 0.2    # Low air resistance for smooth motion
+        angular_damp = 0.6   # Low angular resistance for slight rotation
 	
 	# Set physics material properties
 	var physics_material = PhysicsMaterial.new()
@@ -78,51 +77,32 @@ func fly_to(target_position: Vector3) -> void:
 	freeze = false
 	lock_rotation = false
 	
-	# Calculate ballistic launch velocity for natural arc
-	var direction = (target_pos - spawn_pos).normalized()
-	var distance = spawn_pos.distance_to(target_pos)
-	
-	# Calculate horizontal and vertical components
-	var horizontal_distance = Vector2(target_pos.x - spawn_pos.x, target_pos.z - spawn_pos.z).length()
-	var height_difference = target_pos.y - spawn_pos.y
-	
-	# Calculate time to target based on launch force
-	var time_to_target = distance / launch_force
-	
-	# Calculate velocities for natural arc trajectory
-	var horizontal_velocity = horizontal_distance / time_to_target
-	var vertical_velocity = (arc_height - height_difference) / time_to_target
-	
-	# Create launch velocity vector
-	var launch_velocity = Vector3(
-		direction.x * horizontal_velocity,
-		vertical_velocity,
-		direction.z * horizontal_velocity
-	)
-	
-	# Add slight randomness for natural feel (reduced for more controlled flight)
-	launch_velocity += Vector3(
-		randf_range(-0.3, 0.3),
-		randf_range(-0.2, 0.2),
-		randf_range(-0.3, 0.3)
-	)
-	
-	# Apply launch velocity
-	linear_velocity = launch_velocity
-	
-	# Add realistic angular velocity for card rotation during flight
-	angular_velocity = Vector3(
-		randf_range(-2.0, 2.0),  # Roll
-		randf_range(-3.0, 3.0),  # Pitch (forward/backward tilt)
-		randf_range(-1.0, 1.0)   # Yaw (side-to-side rotation)
-	)
-	
-	# Start monitoring flight
-	set_physics_process(true)
-	
-	# Start a timer to transition to sliding after flight
-	var flight_timer = get_tree().create_timer(time_to_target * 0.9)
-	flight_timer.timeout.connect(_transition_to_sliding)
+        # Calculate straight-line velocity toward target
+        var direction = target_pos - spawn_pos
+        var distance = direction.length()
+        if distance == 0:
+                _transition_to_sliding()
+                return
+        direction = direction.normalized()
+
+        # Apply constant velocity toward the target
+        linear_velocity = direction * launch_force
+
+        # Maintain height during flight
+        global_position.y = spawn_pos.y
+
+        # Add slight angular motion for natural feel
+        angular_velocity = Vector3(
+                randf_range(-1.0, 1.0),
+                randf_range(-1.0, 1.0),
+                randf_range(-0.5, 0.5)
+        )
+
+        # Start monitoring flight and schedule transition to sliding
+        set_physics_process(true)
+        var travel_time = distance / launch_force
+        var flight_timer = get_tree().create_timer(travel_time)
+        flight_timer.timeout.connect(_transition_to_sliding)
 
 func _transition_to_sliding() -> void:
 	if is_flying:
@@ -133,21 +113,16 @@ func _physics_process(delta: float) -> void:
 	if not is_flying and not is_sliding:
 		return
 	
-	if is_flying:
-		# During flight, gradually reduce velocity for smooth landing
-		linear_velocity *= 0.99
-		angular_velocity *= 0.97
-		
-		# Check if card has landed on table (y position close to table surface)
-		if global_position.y <= 1.1:  # Table is at y=0.5, so 1.1 is just above it
-			is_flying = false
-			_start_sliding()
-		
-		# Also check if we're close enough to target to start sliding
-		var distance_to_target = global_position.distance_to(target_pos)
-		if distance_to_target < 0.8:
-			is_flying = false
-			_start_sliding()
+        if is_flying:
+                # During flight, gradually reduce velocity for smoother motion
+                linear_velocity *= 0.99
+                angular_velocity *= 0.97
+
+                # Start sliding when we're very close to the target
+                var distance_to_target = global_position.distance_to(target_pos)
+                if distance_to_target < 0.1:
+                        is_flying = false
+                        _start_sliding()
 	
 	elif is_sliding:
 		# Apply friction to slow down sliding

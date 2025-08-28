@@ -3,7 +3,6 @@ extends Node3D
 @export var card_scene: PackedScene
 @export var deal_speed: float = 0.15  # Time between card deals
 @export var launch_force: float = 8.0
-@export var arc_height: float = 1.5
 @export var slide_friction: float = 0.92
 @export var slide_threshold: float = 0.05
 
@@ -67,14 +66,13 @@ func deal_cards():
 		
 		print("Dealing card ", i, " to position: ", target_pos)
 		
-		# Set card properties - spawn cards higher above the table
-		var spawn_pos = global_position
-		spawn_pos.y = 3.0  # Spawn cards higher up
-		card.set_spawn_position(spawn_pos)
-		card.launch_force = launch_force
-		card.arc_height = arc_height
-		card.slide_friction = slide_friction
-		card.slide_threshold = slide_threshold
+                # Set card properties - spawn cards just above the deck
+                var spawn_pos = global_position
+                spawn_pos.y += 0.1  # Slightly above the deck so they are visible
+                card.set_spawn_position(spawn_pos)
+                card.launch_force = launch_force
+                card.slide_friction = slide_friction
+                card.slide_threshold = slide_threshold
 		
 		# Launch card to target position
 		card.fly_to(target_pos)
