@@ -11,7 +11,7 @@ This is a new simplified card table scene (`card_table_gb.tscn`) that demonstrat
 - **Camera**: Positioned above the table for a good view of the dealing action
 
 ### Dealing Physics
-- **Natural Arc Trajectory**: Cards follow realistic ballistic paths from deck to table
+- **Straight-Line Flight**: Cards move directly from the deck to their positions
 - **Controlled Flight**: Cards maintain stable trajectories with minimal randomness
 - **Realistic Sliding**: Cards slide naturally on the table surface when landing
 - **Smooth Flipping**: Cards flip from face-down to face-up with natural animations
@@ -32,7 +32,6 @@ This is a new simplified card table scene (`card_table_gb.tscn`) that demonstrat
 
 ### Physics Settings
 - **Launch Force**: 8.0 (controls how fast cards travel)
-- **Arc Height**: 1.5 (controls the height of the flight arc)
 - **Slide Friction**: 0.92 (controls how much cards slide)
 - **Slide Threshold**: 0.05 (when sliding stops)
 
@@ -76,7 +75,6 @@ CardTableGB (Node3D)
 Modify the export variables in `CardDealer.gd`:
 - `deal_speed`: Time between card deals
 - `launch_force`: How fast cards travel
-- `arc_height`: Height of the flight arc
 - `slide_friction`: How much cards slide
 - `slide_threshold`: When sliding stops
 
